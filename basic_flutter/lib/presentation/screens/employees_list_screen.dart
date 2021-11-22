@@ -38,8 +38,6 @@ class _EmployeesListScreenState extends State<EmployeesListScreen> {
   @override
   Widget build(BuildContext context) {
     DataProvider dataProvider = DataProvider();
-    const String endpoint =
-        "https://virtserver.swaggerhub.com/flutterteam2/basic-flutter/1.0.0/searchCriteria/post/employeemanagement/v1/employee/search/";
     return Scaffold(
       appBar: AppBar(
         title:
@@ -78,8 +76,7 @@ class EmployeeBlocBuilder extends StatelessWidget {
                 dataProvider: dataProvider,
               );
             },
-            itemCount: //dataProvider.response['content'].length
-                1,
+            itemCount: dataProvider.response.length,
           );
         } else if (state.dataState == DataLoadingStates.dataLoading) {
           return Center(

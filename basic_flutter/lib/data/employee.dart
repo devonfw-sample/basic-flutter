@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Employee {
   late String firstName;
   late String lastName;
@@ -12,10 +10,10 @@ class Employee {
       required this.id,
       required this.lastName});
 
-  // Employee.fromJson(Map<String, dynamic> json) {
-  //   firstName = json['name'];
-  //   lastName = json['surname'];
-  //   id = json['employeeId'];
-  //   email = json['email'];
-  // }
+  Employee.fromJson(Map<String, dynamic> json) {
+    firstName = json['name'];
+    lastName = json['surname'];
+    id = json['employeeId'];
+    email = json['email'];
+  }
 }

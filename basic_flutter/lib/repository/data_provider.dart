@@ -1,14 +1,19 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../data/employee.dart';
 
 class DataProvider {
-  dynamic response;
+  late List<Employee> response;
 
   Future getEmployeesList(String endpoint) async {
     await http.post(Uri.parse(endpoint),
         body: [], headers: {"Content-Type": "application/json"}).then((resp) {
-      response = resp;
-      print(resp.body);
+      if (resp.statusCode == 200) {
+        dynamic employeeListJson = json.decode(resp.body);
+        for (dynamic currentEmployee in employeeListJson) {
+          response.add(Employee.fromJson(currentEmployee));
+        }
+      }
     });
     return response;
   }

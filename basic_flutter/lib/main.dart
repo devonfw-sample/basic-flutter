@@ -19,8 +19,9 @@ class MyApp extends StatelessWidget {
         title: "Employee App",
         home: const MyHomePage(),
         routes: {
-          EmployeesListScreen.routeName: (context) => EmployeesListScreen(),
-          EmployeeDialog.routeName: (context) => EmployeeDialog(),
+          EmployeesListScreen.routeName: (context) =>
+              const EmployeesListScreen(),
+          EmployeeDialog.routeName: (context) => const EmployeeDialog(),
         },
         theme: ThemeData(
             primaryColor: Colors.blue.shade900,

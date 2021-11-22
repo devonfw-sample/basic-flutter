@@ -8,9 +8,9 @@ class EmployeeDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Employee dialog"),
+          title: const Text("Employee dialog"),
           centerTitle: true,
         ),
-        body: Center(child: Text("Employee Dialog")));
+        body: const Center(child: Text("Employee Dialog")));
   }
 }

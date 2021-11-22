@@ -16,7 +16,7 @@ class ResponseCubit extends Cubit<ResponseState> {
     try {
       final employeeList =
           await dataProvider.getEmployeesList(EmployeesListScreen.url);
-      if (employeeList != null) {
+      if (employeeList.length != 0) {
         emit(ResponseState(DataLoadingStates.dataLoaded));
       }
     } catch (error) {
