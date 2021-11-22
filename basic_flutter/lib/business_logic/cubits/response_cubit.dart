@@ -1,9 +1,26 @@
-import 'dart:async';
-
-import 'package:basic_flutter/business_logic/cubits/response_state.dart';
-import 'package:http/http.dart' as http;
+import 'package:basic_flutter/presentation/screens/employees_list_screen.dart';
 import 'package:bloc/bloc.dart';
 
-class InternetCubit extends Cubit<ResponseState> {
-  InternetCubit() : super(DataLoading());
+import '/../repository/data_provider.dart';
+import '/business_logic/cubits/response_state.dart';
+
+class ResponseCubit extends Cubit<ResponseState> {
+  final DataProvider dataProvider;
+
+  ResponseCubit(this.dataProvider)
+      : super(ResponseState(DataLoadingStates.dataLoading)) {
+    getStateData();
+  }
+
+  void getStateData() async {
+    try {
+      final employeeList =
+          await dataProvider.getEmployeesList(EmployeesListScreen.url);
+      if (employeeList != null) {
+        emit(ResponseState(DataLoadingStates.dataLoaded));
+      }
+    } catch (error) {
+      emit(ResponseState(DataLoadingStates.loadingFailed));
+    }
+  }
 }

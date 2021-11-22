@@ -1,8 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:basic_flutter/presentation/screens/employee_dialog.dart';
 
-import 'presentation/screens/employees_list_screen.dart';
+import '/presentation/screens/employees_list_screen.dart';
+import 'package:flutter/material.dart';
+import '../repository/data_provider.dart';
+import './presentation/widgets/list_item.dart';
 
 void main() {
+  DataProvider.postEmployeeData(ListItem.employeesInsertEndpoint);
   runApp(const MyApp());
 }
 
@@ -13,22 +17,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: "Employee App",
-        home: EmployeesListScreen(),
+        home: const MyHomePage(),
         routes: {
-          // EmployeesListScreen.routeName: (context) => EmployeesListScreen(),
-          // MyHomePage.routeName: (context) => MyHomePage()
+          EmployeesListScreen.routeName: (context) => EmployeesListScreen(),
+          EmployeeDialog.routeName: (context) => EmployeeDialog(),
         },
         theme: ThemeData(
             primaryColor: Colors.blue.shade900,
             splashColor: Colors.blue,
             textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: const TextStyle(
-                    fontFamily: "Raleway-Bold", fontSize: 24))));
+                    fontFamily: "Raleway-Bold",
+                    fontSize: 20,
+                    color: Colors.black))));
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  // static const routeName = "/";
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
@@ -42,8 +47,17 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: const Text("Employee App"),
           backgroundColor: Theme.of(context).primaryColor,
+          centerTitle: true,
         ),
-        body: const Center(
-            child: Text("Hello World", style: TextStyle(fontSize: 30))));
+        body: Center(
+            child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, EmployeesListScreen.routeName);
+                },
+                child: const Text("Get Employees List"),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Theme.of(context).primaryColor),
+                ))));
   }
 }
