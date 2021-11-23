@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:employee/Employee%20profile/employee.dart';
 import 'package:employee/Employee%20profile/employee_preferences.dart';
 import 'package:employee/Widgets/appbar_widget.dart';
@@ -7,6 +8,9 @@ import 'package:employee/Widgets/textfield_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -32,13 +36,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
               child: ListView(
                 children: [
                   SizedBox(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.28,
-                      child: ProfileWidget(
-                        imagePath: employee.imagePath,
-                        isEdit: true,
-                        onClicked: () {},
-                      )),
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.28,
+                    child: ProfileWidget(
+                      imagePath: employee.imagePath,
+                      isEdit: true,
+                      onClicked: () async {
+                        final image = await ImagePicker()
+                            .getImage(source: ImageSource.gallery);
+                        if (image == null) return;
+                        final directory =
+                            await getApplicationDocumentsDirectory();
+                        final name = basename(image.path);
+                        final imageFile = File('${directory.path}/$name');
+                        final newImage =
+                            await File(image.path).copy(imageFile.path);
+                        setState(() =>
+                            employee = employee.copy(imagePath: newImage.path));
+                      },
+                    ),
+                  ),
                   const SizedBox(height: 40),
                   TextFieldWidget(
                     label: 'First name and last name',
