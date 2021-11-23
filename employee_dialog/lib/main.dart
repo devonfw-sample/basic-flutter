@@ -1,9 +1,8 @@
 import 'package:employee/Employee profile/employee_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'Employee profile/profile_page.dart';
 
-void main() async {
+void main() {
   runApp(MyApp());
 }
 
