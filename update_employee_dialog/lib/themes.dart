@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyThemes {
-  static final primary = Colors.blue.shade700;
+  static final primary = Colors.blue.shade900;
   static final primaryColor = Colors.blue.shade900;
 
   static final darkTheme = ThemeData(

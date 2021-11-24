@@ -37,7 +37,7 @@ dependencies:
 
   # switch animation between light and dark theme
   animated_theme_switcher: ^2.0.1-nullsafety.0
-  
+
   # persist locally data
   shared_preferences: ^2.0.5
 
