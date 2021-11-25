@@ -4,7 +4,7 @@ import 'package:employee/themes.dart';
 import 'package:flutter/material.dart';
 import 'Employee profile/profile_page.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final employee = EmployeePreferences.myEmployee;
+    const employee = EmployeePreferences.myEmployee;
 
     return ThemeProvider(
         initTheme:
