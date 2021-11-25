@@ -9,7 +9,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(title: "Employee App", home: MyHomePage());
+    return MaterialApp(
+        title: "Employee App",
+        home: const MyHomePage(),
+        theme: ThemeData(
+            primaryColor: Colors.blue.shade900,
+            splashColor: Colors.blue,
+            textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: const TextStyle(
+                    fontFamily: "Raleway-Bold", fontSize: 20))));
   }
 }
 
