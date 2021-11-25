@@ -86,6 +86,10 @@ components:
           x-component: employeemanagement
           description: Entity definition of PageSort
           type: object
+          Samples:
+              Imagefile: employee1.jpg
+              Itemname: Item One
+              URL: https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg
           properties:
             property:
               type: string
@@ -102,6 +106,10 @@ components:
           x-component: employeemanagement
           description: Entity definition of Pageable
           type: object
+          Samples:
+              Imagefile: employee1.jpg
+              Itemname: Item One
+              URL: https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg
           properties:
             pageSize:
               type: integer
@@ -123,6 +131,10 @@ components:
           x-component: employeemanagement
           description: Entity definiton of Employee
           type: object
+          Samples:
+              Imagefile: employee1.jpg
+              Itemname: Item One
+              URL: https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg
           properties:
             employeeId:
               type: string
@@ -173,6 +185,10 @@ components:
           x-component: employeemanagement
           description: Entity definiton of Employee
           type: object
+          Samples:
+              Imagefile: employee1.jpg
+              Itemname: Item One
+              URL: https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg
           properties:
             content:
               type: array
@@ -192,7 +208,11 @@ components:
           x-component: employeemanagement
           description: Entity definiton of Employee
           type: object
-          properties:
+           Samples:
+              Imagefile: employee1.jpg
+              Itemname: Item One
+              URL: https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg
+           properties:
             modificationCounter:
               type: integer
               format: int64
@@ -238,6 +258,10 @@ components:
           x-component: employeemanagement
           description: Entity definiton of Employee
           type: object
+          Samples:
+              Imagefile: employee1.jpg
+              Itemname: Item One
+              URL: https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg
           properties:
             modificationCounter:
               type: integer
@@ -288,6 +312,10 @@ components:
           x-component: employeemanagement
           description: Entity definiton of Employee
           type: object
+           Samples:
+              Imagefile: employee1.jpg
+              Itemname: Item One
+              URL: https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg
           properties:
             name:
               type: string
@@ -326,6 +354,10 @@ components:
           x-component: employeemanagement
           description: Entity definiton of Employee
           type: object
+          Samples:
+              Imagefile: employee1.jpg
+              Itemname: Item One
+              URL: https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg
           properties:
             modificationCounter:
               type: integer
