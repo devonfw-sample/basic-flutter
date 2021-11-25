@@ -1,5 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:employee/presentation/screens/employee_preferences.dart';
+import 'package:employee/data/employee_preferences.dart';
 import 'package:employee/themes.dart';
 import 'package:flutter/material.dart';
 import 'presentation/screens/profile_page.dart';

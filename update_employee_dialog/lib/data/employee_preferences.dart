@@ -14,7 +14,7 @@ class EmployeePreferences {
     profession: 'Senior Delivery Architect CSS',
     country: 'Germany',
     email: 'max.mustermann@muster.com',
-    phone: '+490123456789',
+    phone: '+49012345678',
     location: 'DE-HH-K',
     isDarkMode: false,
   );

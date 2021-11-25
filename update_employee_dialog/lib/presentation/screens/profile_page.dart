@@ -4,7 +4,7 @@ import 'package:employee/presentation/widget/profile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../data/employee.dart';
-import 'employee_preferences.dart';
+import '../../data/employee_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   final Employee employee;

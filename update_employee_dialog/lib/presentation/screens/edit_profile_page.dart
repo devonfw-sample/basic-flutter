@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:employee/data/employee.dart';
-import 'package:employee/presentation/screens/employee_preferences.dart';
+import 'package:employee/data/employee_preferences.dart';
 import 'package:employee/presentation/widget/appbar_widget.dart';
 import 'package:employee/presentation/widget/button_widget.dart';
 import 'package:employee/presentation/widget/profile_widget.dart';
