@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 
 import '/repository/data_provider.dart';
+import '../../data/routes.dart';
 
 class ListItem extends StatelessWidget {
   static const String employeesInsertEndpoint =
       'https://app.swaggerhub.com/apis/flutterteam2/basic-flutter/1.0.0#/employeemanagement/v1/employee';
-  const ListItem(
-      {Key? key,
-      required this.index,
-      required this.switchToEmployeePage,
-      required this.dataProvider})
+  const ListItem({Key? key, required this.index, required this.dataProvider})
       : super(key: key);
 
   final int index;
-  final Function switchToEmployeePage;
   final DataProvider dataProvider;
+
+  void _switchToEmployeePage(BuildContext context) {
+    Navigator.pushNamed(context, Routes.employeeDialogRouteName);
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          switchToEmployeePage(context);
+          _switchToEmployeePage(context);
         },
         child: Card(
           elevation: 10,

@@ -8,7 +8,7 @@ class ResponseCubit extends Cubit<ResponseState> {
   final DataProvider dataProvider;
 
   ResponseCubit(this.dataProvider)
-      : super(ResponseState(DataLoadingStates.dataLoading)) {
+      : super(ResponseState(DataLoadingStates.dataLoading, dataProvider)) {
     getStateData();
   }
 
@@ -16,11 +16,13 @@ class ResponseCubit extends Cubit<ResponseState> {
     try {
       final employeeList =
           await dataProvider.getEmployeesList(EmployeesListScreen.url);
-      if (employeeList.length != 0) {
-        emit(ResponseState(DataLoadingStates.dataLoaded));
+      if (employeeList.isNotEmpty) {
+        emit(ResponseState(DataLoadingStates.dataLoaded, dataProvider));
+      } else {
+        emit(ResponseState(DataLoadingStates.loadingFailed, dataProvider));
       }
     } catch (error) {
-      emit(ResponseState(DataLoadingStates.loadingFailed));
+      emit(ResponseState(DataLoadingStates.loadingFailed, dataProvider));
     }
   }
 }

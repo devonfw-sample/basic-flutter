@@ -1,16 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-import '/presentation/screens/employee_dialog.dart';
 import '/repository/data_provider.dart';
 import '../widgets/list_item.dart';
-import '../../business_logic/cubits/response_cubit.dart';
-import '../../business_logic/cubits/response_state.dart';
+import '/business_logic/cubits/response_cubit.dart';
+import '/business_logic/cubits/response_state.dart';
+import '/data/routes.dart';
 
 class EmployeesListScreen extends StatefulWidget {
-  static const String routeName = "/employees-list-screen";
   static const url =
-      "https://app.swaggerhub.com/apis/flutterteam2/basic-flutter/1.0.0#/searchCriteria/post/employeemanagement/v1/employee/search/";
+      'https://app.swaggerhub.com/apis/flutterteam2/basic-flutter/1.0.0#/searchCriteria/post/employeemanagement/v1/employee/search/';
 
   const EmployeesListScreen({Key? key}) : super(key: key);
 
@@ -19,25 +18,10 @@ class EmployeesListScreen extends StatefulWidget {
 }
 
 class _EmployeesListScreenState extends State<EmployeesListScreen> {
-  void _switchToEmployeePage(BuildContext context) {
-    Navigator.pushNamed(context, EmployeeDialog.routeName);
-  }
-
-  Future buildListViewWidget(
-      DataProvider dataProvider, String endpoint, ResponseState state) {
-    dynamic response = dataProvider.getEmployeesList(endpoint).then((response) {
-      if (response != null) {
-        state.dataState = DataLoadingStates.dataLoaded;
-      } else {
-        state.dataState = DataLoadingStates.loadingFailed;
-      }
-    });
-    return response;
-  }
+  final DataProvider dataProvider = DataProvider();
 
   @override
   Widget build(BuildContext context) {
-    DataProvider dataProvider = DataProvider();
     return Scaffold(
       appBar: AppBar(
         title:
@@ -47,20 +31,14 @@ class _EmployeesListScreenState extends State<EmployeesListScreen> {
       ),
       body: BlocProvider(
           create: (context) => ResponseCubit(dataProvider),
-          child: EmployeeBlocBuilder(
-              switchToEmployeePage: () => _switchToEmployeePage(context),
-              dataProvider: dataProvider)),
+          child: EmployeeBlocBuilder(dataProvider: dataProvider)),
     );
   }
 }
 
 class EmployeeBlocBuilder extends StatelessWidget {
-  const EmployeeBlocBuilder(
-      {Key? key,
-      required this.switchToEmployeePage,
-      required this.dataProvider})
+  const EmployeeBlocBuilder({Key? key, required this.dataProvider})
       : super(key: key);
-  final VoidCallback switchToEmployeePage;
   final DataProvider dataProvider;
 
   @override
@@ -72,11 +50,10 @@ class EmployeeBlocBuilder extends StatelessWidget {
             itemBuilder: (ctx, index) {
               return ListItem(
                 index: index,
-                switchToEmployeePage: switchToEmployeePage,
-                dataProvider: dataProvider,
+                dataProvider: state.dataProvider,
               );
             },
-            itemCount: dataProvider.response.length,
+            itemCount: state.dataProvider.response.length,
           );
         } else if (state.dataState == DataLoadingStates.dataLoading) {
           return Center(
