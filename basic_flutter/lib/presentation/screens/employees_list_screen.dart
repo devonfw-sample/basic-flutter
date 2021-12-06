@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 
 import '/presentation/screens/employee_dialog.dart';
 import '/repository/data_provider.dart';
-import '../widgets/list_item.dart';
 import '../../business_logic/cubits/response_cubit.dart';
 import '../../business_logic/cubits/response_state.dart';
+import '../widgets/employee_bloc_builder.dart';
 
 class EmployeesListScreen extends StatefulWidget {
   static const String routeName = "/employees-list-screen";
-  static const url =
-      "https://app.swaggerhub.com/apis/flutterteam2/basic-flutter/1.0.0#/searchCriteria/post/employeemanagement/v1/employee/search/";
+  static const String deleteEmployeeEndpoint =
+      'https://virtserver.swaggerhub.com/flutterteam2/flutter/1.0.0/employeemanagement/v1/employee/';
+  static const searchEmployeeListEndpoint =
+      "https://virtserver.swaggerhub.com/flutterteam2/flutter/1.0.0/employeemanagement/v1/employee/search";
 
   const EmployeesListScreen({Key? key}) : super(key: key);
 
@@ -21,6 +23,7 @@ class EmployeesListScreen extends StatefulWidget {
 class _EmployeesListScreenState extends State<EmployeesListScreen> {
   void _switchToEmployeePage(BuildContext context) {
     Navigator.pushNamed(context, EmployeeDialog.routeName);
+    // TODO:
   }
 
   Future buildListViewWidget(
@@ -48,58 +51,9 @@ class _EmployeesListScreenState extends State<EmployeesListScreen> {
       body: BlocProvider(
           create: (context) => ResponseCubit(dataProvider),
           child: EmployeeBlocBuilder(
-              switchToEmployeePage: () => _switchToEmployeePage(context),
-              dataProvider: dataProvider)),
-    );
-  }
-}
-
-class EmployeeBlocBuilder extends StatelessWidget {
-  const EmployeeBlocBuilder(
-      {Key? key,
-      required this.switchToEmployeePage,
-      required this.dataProvider})
-      : super(key: key);
-  final VoidCallback switchToEmployeePage;
-  final DataProvider dataProvider;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ResponseCubit, ResponseState>(
-      builder: (context, state) {
-        if (state.dataState == DataLoadingStates.dataLoaded) {
-          return ListView.builder(
-            itemBuilder: (ctx, index) {
-              return ListItem(
-                index: index,
-                switchToEmployeePage: switchToEmployeePage,
-                dataProvider: dataProvider,
-              );
-            },
-            itemCount: dataProvider.response.length,
-          );
-        } else if (state.dataState == DataLoadingStates.dataLoading) {
-          return Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                    Theme.of(context).primaryColor),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                'Data loading',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ],
-          ));
-        } else {
-          return Center(
-              child: Text('Data loading failed',
-                  style: Theme.of(context).textTheme.headline6));
-        }
-      },
+            switchToEmployeePage: () => _switchToEmployeePage(context),
+            dataProvider: dataProvider,
+          )),
     );
   }
 }

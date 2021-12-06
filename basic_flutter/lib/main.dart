@@ -6,7 +6,6 @@ import '../repository/data_provider.dart';
 import './presentation/widgets/list_item.dart';
 
 void main() {
-  DataProvider.postEmployeeData(ListItem.employeesInsertEndpoint);
   runApp(const MyApp());
 }
 

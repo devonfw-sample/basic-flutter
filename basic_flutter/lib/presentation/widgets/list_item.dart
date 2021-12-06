@@ -9,12 +9,14 @@ class ListItem extends StatelessWidget {
       {Key? key,
       required this.index,
       required this.switchToEmployeePage,
-      required this.dataProvider})
+      required this.dataProvider,
+      required this.deleteEntry})
       : super(key: key);
 
   final int index;
   final Function switchToEmployeePage;
   final DataProvider dataProvider;
+  final VoidCallback deleteEntry;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class ListItem extends StatelessWidget {
               ),
             ),
             trailing: TextButton.icon(
-                onPressed: () {},
+                onPressed: deleteEntry,
                 icon: const Icon(Icons.delete_forever),
                 label: const Text("Delete"),
                 style: TextButton.styleFrom(
