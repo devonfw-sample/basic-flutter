@@ -208,11 +208,11 @@ components:
           x-component: employeemanagement
           description: Entity definiton of Employee
           type: object
-           Samples:
+          Samples:
               Imagefile: employee1.jpg
               Itemname: Item One
               URL: https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg
-           properties:
+          properties:
             modificationCounter:
               type: integer
               format: int64
@@ -312,7 +312,7 @@ components:
           x-component: employeemanagement
           description: Entity definiton of Employee
           type: object
-           Samples:
+          Samples:
               Imagefile: employee1.jpg
               Itemname: Item One
               URL: https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg
