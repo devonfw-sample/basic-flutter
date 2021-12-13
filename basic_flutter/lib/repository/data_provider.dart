@@ -5,13 +5,13 @@ import '../data/employee.dart';
 class DataProvider {
   late List<Employee> response;
 
-  Future getEmployeesList(String endpoint) async {
+  Future<List<Employee>> getEmployeesList(String endpoint) async {
     await http.post(
       Uri.parse(endpoint),
       body: [],
     ).then((resp) {
       if (resp.statusCode == 200) {
-        dynamic employeeListJson = json.decode(resp.body);
+        final employeeListJson = json.decode(resp.body);
         for (dynamic currentEmployee in employeeListJson) {
           response.add(Employee.fromJson(currentEmployee));
         }
@@ -20,13 +20,10 @@ class DataProvider {
     return response;
   }
 
-  Future deleteEmployee(String id, String endpoint) async {
+  Future<void> deleteEmployee(String id, String endpoint) async {
     await http.delete(Uri.parse('$endpoint"\$"$id')).then((resp) {
       if (resp.statusCode == 200) {
-        dynamic employeeListJson = json.decode(resp.body);
-        for (dynamic currentEmployee in employeeListJson) {
-          response.add(Employee.fromJson(currentEmployee));
-        }
+        // TODO: handle the boolean whether the item has been deleted
       }
     });
   }

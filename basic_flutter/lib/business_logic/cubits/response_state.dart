@@ -1,10 +1,10 @@
-import '../../repository/data_provider.dart';
+import '../../data/employee.dart';
 
 enum DataLoadingStates { dataLoading, dataLoaded, dataChanged, loadingFailed }
 
 class ResponseState {
   DataLoadingStates dataState;
-  DataProvider stateDataProvider;
+  List<Employee> employeeList;
 
-  ResponseState(this.dataState, this.stateDataProvider);
+  ResponseState(this.dataState, this.employeeList);
 }

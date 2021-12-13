@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '/repository/data_provider.dart';
+import '../../data/employee.dart';
+import '../../data/routes.dart';
 
 class ListItem extends StatelessWidget {
   static const String employeesInsertEndpoint =
@@ -8,22 +9,24 @@ class ListItem extends StatelessWidget {
   const ListItem(
       {Key? key,
       required this.index,
-      required this.switchToEmployeePage,
-      required this.dataProvider,
+      required this.employeeList,
       required this.deleteEntry})
       : super(key: key);
 
+  final List<Employee> employeeList;
   final int index;
-  final Function switchToEmployeePage;
-  final DataProvider dataProvider;
   final VoidCallback deleteEntry;
+
+  void _switchToEmployeePage(BuildContext context) {
+    Navigator.pushNamed(context, Routes.employeeDialogRouteName);
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          switchToEmployeePage(context);
+          _switchToEmployeePage(context);
         },
         child: Card(
           elevation: 10,
@@ -31,22 +34,22 @@ class ListItem extends StatelessWidget {
             title: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                  '${dataProvider.response[index].firstName} ${dataProvider.response[index].lastName} ',
+                  '${employeeList[index].firstName} ${employeeList[index].lastName} ',
                   style: Theme.of(context).textTheme.headline6),
             ),
             subtitle: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                dataProvider.response[index].email,
+                employeeList[index].email,
                 style: const TextStyle(
-                    fontFamily: "Raleway-ExtraBold", fontSize: 16),
+                    fontFamily: 'Raleway-ExtraBold', fontSize: 16),
                 softWrap: true,
               ),
             ),
             trailing: TextButton.icon(
-                onPressed: deleteEntry,
+                onPressed: () => deleteEntry,
                 icon: const Icon(Icons.delete_forever),
-                label: const Text("Delete"),
+                label: const Text('Delete'),
                 style: TextButton.styleFrom(
                     primary: Theme.of(context).errorColor)),
           ),
