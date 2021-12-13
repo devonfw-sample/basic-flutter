@@ -16,6 +16,11 @@ class ListItem extends StatelessWidget {
     Navigator.pushNamed(context, Routes.employeeDialogRouteName);
   }
 
+
+  void _switchToEmployeePage(BuildContext context) {
+    Navigator.pushNamed(context, Routes.employeeDialogRouteName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

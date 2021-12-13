@@ -12,6 +12,7 @@ class EmployeesListScreen extends StatefulWidget {
   static const searchEmployeeListEndpoint =
       "https://virtserver.swaggerhub.com/flutterteam2/flutter/1.0.0/employeemanagement/v1/employee/search";
 
+
   const EmployeesListScreen({Key? key}) : super(key: key);
 
   @override
@@ -21,6 +22,7 @@ class EmployeesListScreen extends StatefulWidget {
 class _EmployeesListScreenState extends State<EmployeesListScreen> {
   final DataProvider dataProvider = DataProvider();
   final List<Employee> employeeList = [];
+
 
   @override
   Widget build(BuildContext context) {

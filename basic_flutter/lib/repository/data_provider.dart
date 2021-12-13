@@ -5,11 +5,11 @@ import '../data/employee.dart';
 class DataProvider {
   late List<Employee> response;
 
-  Future getEmployeesList(String endpoint) async {
+  Future<List<Employee>> getEmployeesList(String endpoint) async {
     await http.post(Uri.parse(endpoint),
         body: [], headers: {"Content-Type": "application/json"}).then((resp) {
       if (resp.statusCode == 200) {
-        dynamic employeeListJson = json.decode(resp.body);
+        final employeeListJson = json.decode(resp.body);
         for (dynamic currentEmployee in employeeListJson) {
           response.add(Employee.fromJson(currentEmployee));
         }
@@ -18,18 +18,7 @@ class DataProvider {
     return response;
   }
 
-  static void postEmployeeData(String url) async {
-    await http.post(Uri.parse(url),
-        body: jsonEncode(<String, dynamic>{
-          'modificationCounter': 0,
-          'id': 1,
-          'employeeId': 1,
-          'name': 'John',
-          'surname': 'Smith',
-          'email': 'john.smith@kisama.com'
-        }));
-  }
-
+  // THIS LIST COULD BE USED FOR TESTING PURPOSES
   // static const List<Employee> dummyList = [
   //   Employee(
   //       id: 1,

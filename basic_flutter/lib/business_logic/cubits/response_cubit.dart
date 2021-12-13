@@ -11,6 +11,7 @@ class ResponseCubit extends Cubit<ResponseState> {
   late int currentListIndex;
   ResponseCubit(this.dataProvider, this.employeeList)
       : super(ResponseState(DataLoadingStates.dataLoading, employeeList)) {
+
     getStateData();
   }
 

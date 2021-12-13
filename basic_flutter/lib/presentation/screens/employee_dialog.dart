@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 
 class EmployeeDialog extends StatelessWidget {
   const EmployeeDialog({Key? key}) : super(key: key);
-  static const routeName = '/employee-dialog';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Employee dialog"),
+          title: const Text('Employee dialog'),
           centerTitle: true,
         ),
-        body: const Center(child: Text("Employee Dialog")));
+        body: const Center(child: Text('Employee Dialog')));
   }
 }
