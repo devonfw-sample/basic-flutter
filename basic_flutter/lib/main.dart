@@ -1,12 +1,12 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:employee/presentation/screens/employee_preferences.dart';
-import 'package:employee/themes.dart';
 import 'package:flutter/material.dart';
-import 'presentation/screens/profile_page.dart';
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import '../themes.dart';
+import '../../presentation/screens/profile_page.dart';
+import '../../presentation/screens/employee_preferences.dart';
 
-Future main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await EmployeePreferences.init();
+  EmployeePreferences.init();
 
   runApp(const MyApp());
 }

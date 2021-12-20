@@ -1,7 +1,6 @@
 import 'dart:convert';
-
-import 'package:employee/data/employee.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../data/employee.dart';
 
 class EmployeePreferences {
   static late SharedPreferences _preferences;
@@ -18,17 +17,21 @@ class EmployeePreferences {
     location: 'DE-HH-K',
     isDarkMode: false,
   );
+  // Future print(I'M here)
+  // print(I'm also here)
 
   static Future init() async =>
       _preferences = await SharedPreferences.getInstance();
 
   static Future setEmployee(Employee employee) async {
     final json = jsonEncode(employee.toJson());
+
     await _preferences.setString(_keyEmployee, json);
   }
 
   static Employee getEmployee() {
     final json = _preferences.getString(_keyEmployee);
+
     return json == null ? myEmployee : Employee.fromJson(jsonDecode(json));
   }
 }

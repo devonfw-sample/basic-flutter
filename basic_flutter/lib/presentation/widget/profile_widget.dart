@@ -1,19 +1,20 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import '../screens/edit_profile_page.dart';
+import '../../presentation/screens/edit_profile_page.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
   final bool isEdit;
   final VoidCallback onClicked;
+  final Widget sentWidget;
 
-  const ProfileWidget({
-    Key? key,
-    required this.imagePath,
-    this.isEdit = false,
-    required this.onClicked,
-  }) : super(key: key);
+  const ProfileWidget(
+      {Key? key,
+      required this.imagePath,
+      this.isEdit = false,
+      required this.onClicked,
+      required this.sentWidget})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +23,7 @@ class ProfileWidget extends StatelessWidget {
       child: Stack(
         children: [
           buildImage(),
-          Positioned(
-            bottom: 0,
-            right: 4,
-            child: buildEditIcon(color, context),
-          ),
+          sentWidget,
         ],
       ),
     );
@@ -46,6 +43,7 @@ class ProfileWidget extends StatelessWidget {
           width: 200,
           height: 200,
           child: InkWell(onTap: onClicked),
+          // Image.network
         ),
       ),
     );

@@ -1,17 +1,15 @@
 import 'dart:io';
-
-import 'package:employee/data/employee.dart';
-import 'package:employee/presentation/screens/employee_preferences.dart';
-import 'package:employee/presentation/widget/appbar_widget.dart';
-import 'package:employee/presentation/widget/button_widget.dart';
-import 'package:employee/presentation/widget/profile_widget.dart';
-import 'package:employee/presentation/widget/textfield_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
+import '../../data/employee.dart';
+import '../../presentation/screens/employee_preferences.dart';
+import '../../presentation/widget/appbar_widget.dart';
+import '../../presentation/widget/button_widget.dart';
+import '../../presentation/widget/profile_widget.dart';
+import '../../presentation/widget/textfield_widget.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -26,9 +24,51 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
-
     employee = EmployeePreferences.getEmployee();
   }
+
+  // Widget buildEditableTextField(
+  //     String label, String text, Function onChangedFunction, String functionString) {
+  //   return TextFieldWidget(
+  //     label: label,
+  //     text: text,
+  //     onChanged: () => onChangedFunction(functionString),
+  //   );
+  // ignore: todo
+  // } TODO: refactor the code
+
+  Widget buildEditIcon(Color color, BuildContext context) => buildCircle(
+        color: Colors.white,
+        all: 3,
+        child: buildCircle(
+          color: color,
+          all: 10,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const EditProfilePage()));
+            },
+            child: const Icon(
+              Icons.add_a_photo,
+              color: Colors.white,
+              size: 20,
+            ),
+          ),
+        ),
+      );
+
+  Widget buildCircle({
+    required Widget child,
+    required double all,
+    required Color color,
+  }) =>
+      ClipOval(
+        child: Container(
+          padding: EdgeInsets.all(all),
+          color: color,
+          child: child,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -65,6 +105,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           setState(() => employee =
                               employee.copy(imagePath: newImage.path));
                         },
+                        sentWidget: Positioned(
+                          bottom: 0,
+                          right: 4,
+                          child: buildEditIcon(Colors.blue.shade900, context),
+                        ),
                       )),
                   const SizedBox(height: 40),
                   TextFieldWidget(

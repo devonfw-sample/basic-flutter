@@ -1,19 +1,27 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import '../../themes.dart';
+import '../../presentation/screens/edit_profile_page.dart';
 
 AppBar buildAppBar(BuildContext context) {
   final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-  final icon = isDarkMode ? CupertinoIcons.sun_max : CupertinoIcons.moon;
+  final icon = isDarkMode ? Icons.light_mode : Icons.dark_mode;
 
   return AppBar(
+    backgroundColor: Colors.blue.shade900,
+    title: const Text('Employee dialog'),
+    centerTitle: true,
     leading: const BackButton(
       color: Colors.white,
     ),
-    backgroundColor: Colors.blue.shade900,
     elevation: 0,
     actions: [
+      IconButton(
+          icon: const Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const EditProfilePage()));
+          }),
       ThemeSwitcher(
         builder: (context) => IconButton(
           icon: Icon(icon),
