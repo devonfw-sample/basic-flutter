@@ -25,7 +25,7 @@ class ResponseCubit extends Cubit<ResponseState> {
         emit(ResponseState(DataLoadingStates.loadingFailed, employeeList));
       }
     } catch (error) {
-      emit(ResponseState(DataLoadingStates.loadingFailed, employeeList));
+      emit(ResponseState(DataLoadingStates.loadingError, employeeList));
     }
   }
 
