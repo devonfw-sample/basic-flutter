@@ -31,8 +31,15 @@ class _EmployeesListScreenState extends State<EmployeesListScreen> {
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
         actions: [
-          TextButton(
-              onPressed: () {}, child: Image.asset('assets/images/dots.png'))
+          Theme(
+              data: Theme.of(context)
+                  .copyWith(iconTheme: IconThemeData(color: Colors.white)),
+              child: PopupMenuButton(
+                color: Colors.white,
+                itemBuilder: (context) => [PopupMenuItem(child: Card())],
+              )),
+          // TextButton(
+          //     onPressed: () {}, child: Image.asset('assets/images/dots.png'))
         ],
       ),
       body: BlocProvider(
