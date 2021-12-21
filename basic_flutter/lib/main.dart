@@ -26,10 +26,9 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.blue,
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: const TextStyle(
-                fontFamily: 'Raleway-Bold',
-                fontSize: 20,
-                color: Colors.black,
-              ),
+                  fontFamily: 'Raleway-Bold',
+                  fontSize: 20,
+                  color: Colors.black),
             ),
       ),
     );

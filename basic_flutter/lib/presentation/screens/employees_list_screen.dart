@@ -10,7 +10,7 @@ class EmployeesListScreen extends StatefulWidget {
   static const String deleteEmployeeEndpoint =
       'https://virtserver.swaggerhub.com/flutterteam2/flutter/1.0.0/employeemanagement/v1/employee/';
   static const searchEmployeeListEndpoint =
-      "https://virtserver.swaggerhub.com/flutterteam2/flutter/1.0.0/employeemanagement/v1/employee/search";
+      "http://localhost:8080/employeemanagement/v1/employee/search/";
 
   const EmployeesListScreen({Key? key}) : super(key: key);
 
@@ -30,10 +30,14 @@ class _EmployeesListScreenState extends State<EmployeesListScreen> {
             const Text('Employees List', style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
+        actions: [
+          TextButton(
+              onPressed: () {}, child: Image.asset('assets/images/dots.png'))
+        ],
       ),
       body: BlocProvider(
           create: (context) => ResponseCubit(dataProvider, employeeList),
-          child: EmployeeBlocBuilder(dataProvider: dataProvider)),
+          child: EmployeeBlocBuilder()),
     );
   }
 }
