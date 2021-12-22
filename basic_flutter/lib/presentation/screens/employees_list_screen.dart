@@ -10,7 +10,6 @@ import '../../data/employee.dart';
 
 class EmployeesListScreen extends StatefulWidget {
   const EmployeesListScreen({Key? key}) : super(key: key);
-  static const url = 'http://localhost:8080/employeemanagement/employee';
 
   @override
   State<EmployeesListScreen> createState() => _EmployeesListScreenState();

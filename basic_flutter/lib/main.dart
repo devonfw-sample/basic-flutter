@@ -46,21 +46,23 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Employee App'),
-          backgroundColor: Theme.of(context).primaryColor,
-          centerTitle: true,
+      appBar: AppBar(
+        title: const Text('Employee App'),
+        backgroundColor: Theme.of(context).primaryColor,
+        centerTitle: true,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.employeeListScreenRouteName);
+          },
+          child: const Text('Get Employees List'),
+          style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(Theme.of(context).primaryColor),
+          ),
         ),
-        body: Center(
-            child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(
-                      context, Routes.employeeListScreenRouteName);
-                },
-                child: const Text('Get Employees List'),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(Theme.of(context).primaryColor),
-                ))));
+      ),
+    );
   }
 }
