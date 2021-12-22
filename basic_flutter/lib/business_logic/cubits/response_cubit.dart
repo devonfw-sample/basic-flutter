@@ -1,10 +1,9 @@
-import 'package:basic_flutter/presentation/screens/employees_list_screen.dart';
+import 'package:basic_flutter/data/endpoints.dart';
 import 'package:basic_flutter/repository/data_provider.dart';
 import 'package:bloc/bloc.dart';
 
 import '../../data/employee.dart';
 import '/business_logic/cubits/response_state.dart';
-import '../../data/routes.dart';
 
 class ResponseCubit extends Cubit<ResponseState> {
   List<Employee> employeeList;
@@ -18,7 +17,7 @@ class ResponseCubit extends Cubit<ResponseState> {
   void getStateData() async {
     try {
       employeeList =
-          await dataProvider.getEmployeesList(EmployeesListScreen.url);
+          await dataProvider.getEmployeesList(Endpoints.searchEndpoint);
       if (employeeList.isNotEmpty) {
         emit(ResponseState(DataLoadingStates.dataLoaded, employeeList));
       } else {
