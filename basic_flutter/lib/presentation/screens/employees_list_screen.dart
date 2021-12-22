@@ -6,19 +6,18 @@ import '../widgets/list_item.dart';
 import '/business_logic/cubits/response_cubit.dart';
 import '/business_logic/cubits/response_state.dart';
 import '/data/routes.dart';
+import '../../data/employee.dart';
 
 class EmployeesListScreen extends StatefulWidget {
-  static const url =
-      'https://app.swaggerhub.com/apis/flutterteam2/basic-flutter/1.0.0#/searchCriteria/post/employeemanagement/v1/employee/search/';
-
   const EmployeesListScreen({Key? key}) : super(key: key);
+  static const url = 'http://localhost:8080/employeemanagement/employee';
 
   @override
   State<EmployeesListScreen> createState() => _EmployeesListScreenState();
 }
 
 class _EmployeesListScreenState extends State<EmployeesListScreen> {
-  final DataProvider dataProvider = DataProvider();
+  final List<Employee> employeeList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +29,16 @@ class _EmployeesListScreenState extends State<EmployeesListScreen> {
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: BlocProvider(
-          create: (context) => ResponseCubit(dataProvider),
-          child: EmployeeBlocBuilder(dataProvider: dataProvider)),
+          create: (context) => ResponseCubit(employeeList),
+          child: EmployeeBlocBuilder(employeeList: employeeList)),
     );
   }
 }
 
 class EmployeeBlocBuilder extends StatelessWidget {
-  const EmployeeBlocBuilder({Key? key, required this.dataProvider})
+  const EmployeeBlocBuilder({Key? key, required this.employeeList})
       : super(key: key);
-  final DataProvider dataProvider;
+  final List<Employee> employeeList;
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +49,10 @@ class EmployeeBlocBuilder extends StatelessWidget {
             itemBuilder: (ctx, index) {
               return ListItem(
                 index: index,
-                dataProvider: state.dataProvider,
+                employeeList: state.employeeList,
               );
             },
-            itemCount: state.dataProvider.response.length,
+            itemCount: state.employeeList.length,
           );
         } else if (state.dataState == DataLoadingStates.dataLoading) {
           return Center(

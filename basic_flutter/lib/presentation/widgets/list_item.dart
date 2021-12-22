@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '/repository/data_provider.dart';
+import '../../data/employee.dart';
 import '../../data/routes.dart';
 
 class ListItem extends StatelessWidget {
   static const String employeesInsertEndpoint =
       'https://app.swaggerhub.com/apis/flutterteam2/basic-flutter/1.0.0#/employeemanagement/v1/employee';
-  const ListItem({Key? key, required this.index, required this.dataProvider})
+  const ListItem({Key? key, required this.index, required this.employeeList})
       : super(key: key);
 
   final int index;
-  final DataProvider dataProvider;
+  final List<Employee> employeeList;
 
   void _switchToEmployeePage(BuildContext context) {
     Navigator.pushNamed(context, Routes.employeeDialogRouteName);
@@ -29,13 +29,13 @@ class ListItem extends StatelessWidget {
             title: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                  '${dataProvider.response[index].firstName} ${dataProvider.response[index].lastName} ',
+                  '${employeeList[index].firstName} ${employeeList[index].lastName} ',
                   style: Theme.of(context).textTheme.headline6),
             ),
             subtitle: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                dataProvider.response[index].email,
+                employeeList[index].email,
                 style: const TextStyle(
                     fontFamily: "Raleway-ExtraBold", fontSize: 16),
                 softWrap: true,
