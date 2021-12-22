@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'data/employee.dart';
+import '/repository/data_provider.dart';
+import '/business_logic/cubits/response_cubit.dart';
 import '/presentation/screens/employees_list_screen.dart';
 import './data/routes.dart';
 import '/presentation/screens/employee_dialog.dart';
@@ -13,25 +17,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Employee App",
-      home: const MyHomePage(),
-      routes: {
-        Routes.employeeListScreenRouteName: (context) =>
-            const EmployeesListScreen(),
-        Routes.employeeDialogRouteName: (context) => const EmployeeDialog(),
-      },
-      theme: ThemeData(
-        primaryColor: Colors.blue.shade900,
-        splashColor: Colors.blue,
-        cardColor: Colors.white,
-        textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: const TextStyle(
-                  fontFamily: 'Raleway-Bold',
-                  fontSize: 20,
-                  color: Colors.black),
-            ),
+    final DataProvider dataProvider = DataProvider();
+    final List<Employee> employeeList = [];
+    bool isDarkModeDefault = false;
+
+    return BlocProvider(
+      create: (context) =>
+          ResponseCubit(dataProvider, employeeList, isDarkModeDefault),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "Employee App",
+        home: const MyHomePage(),
+        routes: {
+          Routes.employeeListScreenRouteName: (context) =>
+              const EmployeesListScreen(),
+          Routes.employeeDialogRouteName: (context) => const EmployeeDialog(),
+        },
+        theme: ThemeData(
+          primaryColor: Colors.blue.shade900,
+          splashColor: Colors.blue,
+          cardColor: Colors.white,
+          canvasColor: isDarkModeDefault ? Colors.black : Colors.white,
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: const TextStyle(
+                    fontFamily: 'Raleway-Bold',
+                    fontSize: 20,
+                    color: Colors.black),
+              ),
+        ),
       ),
     );
   }

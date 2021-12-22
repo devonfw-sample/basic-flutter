@@ -7,9 +7,11 @@ import '../../business_logic/cubits/response_state.dart';
 
 class EmployeeBlocBuilder extends StatelessWidget {
   const EmployeeBlocBuilder({
+    required this.isGrid,
     Key? key,
   }) : super(key: key);
 
+  final bool isGrid;
   // use cubit dataprovider
   // move deleteEmployeeEntry to ResponseCubit
 

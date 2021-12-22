@@ -1,15 +1,16 @@
 import 'package:bloc/bloc.dart';
 
-import '../../presentation/screens/employees_list_screen.dart';
 import '/../repository/data_provider.dart';
 import '/business_logic/cubits/response_state.dart';
 import '../../data/employee.dart';
+import '../../data/endpoints.dart';
 
 class ResponseCubit extends Cubit<ResponseState> {
   late List<Employee> employeeList;
   final DataProvider dataProvider;
   late int currentListIndex;
-  ResponseCubit(this.dataProvider, this.employeeList)
+  bool isDarkMode;
+  ResponseCubit(this.dataProvider, this.employeeList, this.isDarkMode)
       : super(ResponseState(DataLoadingStates.dataLoading, employeeList)) {
     getStateData();
   }
@@ -17,7 +18,7 @@ class ResponseCubit extends Cubit<ResponseState> {
   Future<void> getStateData() async {
     try {
       employeeList = await dataProvider
-          .getEmployeesList(EmployeesListScreen.searchEmployeeListEndpoint);
+          .getEmployeesList(Endpoints.searchEmployeeListEndpoint);
       currentListIndex = employeeList.length;
       if (currentListIndex != 0) {
         emit(ResponseState(DataLoadingStates.dataLoaded, employeeList));
@@ -42,10 +43,16 @@ class ResponseCubit extends Cubit<ResponseState> {
   void deleteEmployeeEntry(List<Employee> employeeList, int index) async {
     if (_detectListUpdate()) {
       await dataProvider.deleteEmployee(
-          index.toString(), EmployeesListScreen.deleteEmployeeEndpoint);
-      dataProvider.response.removeWhere((employee) {
-        return employee.id == dataProvider.response[index].id;
-      });
+          index.toString(), Endpoints.deleteEmployeeEndpoint);
+      dataProvider.response.removeWhere(
+        (employee) {
+          return employee.id == dataProvider.response[index].id;
+        },
+      );
     }
+  }
+
+  void toggleDarkMode(bool darkmode) {
+    isDarkMode = darkmode;
   }
 }
