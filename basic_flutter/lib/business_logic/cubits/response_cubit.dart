@@ -1,28 +1,31 @@
 import 'package:basic_flutter/presentation/screens/employees_list_screen.dart';
+import 'package:basic_flutter/repository/data_provider.dart';
 import 'package:bloc/bloc.dart';
 
-import '/../repository/data_provider.dart';
+import '../../data/employee.dart';
 import '/business_logic/cubits/response_state.dart';
+import '../../data/routes.dart';
 
 class ResponseCubit extends Cubit<ResponseState> {
-  final DataProvider dataProvider;
+  List<Employee> employeeList;
+  DataProvider dataProvider = DataProvider();
 
-  ResponseCubit(this.dataProvider)
-      : super(ResponseState(DataLoadingStates.dataLoading, dataProvider)) {
+  ResponseCubit(this.employeeList)
+      : super(ResponseState(DataLoadingStates.dataLoading, employeeList)) {
     getStateData();
   }
 
   void getStateData() async {
     try {
-      final employeeList =
+      employeeList =
           await dataProvider.getEmployeesList(EmployeesListScreen.url);
       if (employeeList.isNotEmpty) {
-        emit(ResponseState(DataLoadingStates.dataLoaded, dataProvider));
+        emit(ResponseState(DataLoadingStates.dataLoaded, employeeList));
       } else {
-        emit(ResponseState(DataLoadingStates.loadingFailed, dataProvider));
+        emit(ResponseState(DataLoadingStates.loadingFailed, employeeList));
       }
     } catch (error) {
-      emit(ResponseState(DataLoadingStates.loadingFailed, dataProvider));
+      emit(ResponseState(DataLoadingStates.loadingFailed, employeeList));
     }
   }
 }
