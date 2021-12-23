@@ -4,6 +4,10 @@ import '/presentation/screens/employees_list_screen.dart';
 import 'package:flutter/material.dart';
 import './data/routes.dart';
 
+import '/presentation/screens/employees_list_screen.dart';
+import './data/routes.dart';
+import '/presentation/screens/employee_dialog.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -14,7 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Employee App',
+
+      title: "Employee App",
       home: const MyHomePage(),
       routes: {
         Routes.employeeListScreenRouteName: (context) =>
@@ -26,9 +31,10 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.blue,
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: const TextStyle(
-                  fontFamily: 'Raleway-Bold',
-                  fontSize: 20,
-                  color: Colors.black),
+                fontFamily: 'Raleway-Bold',
+                fontSize: 20,
+                color: Colors.black,
+              ),
             ),
       ),
     );

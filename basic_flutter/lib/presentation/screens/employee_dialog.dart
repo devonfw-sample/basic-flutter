@@ -6,10 +6,13 @@ class EmployeeDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Employee dialog'),
-          centerTitle: true,
-        ),
-        body: const Center(child: Text('Employee Dialog')));
+      appBar: AppBar(
+        title: const Text('Employee dialog'),
+        centerTitle: true,
+      ),
+      body: const Center(
+        child: Text('Employee Dialog'),
+      ),
+    );
   }
 }

@@ -1,6 +1,6 @@
 import '../../data/employee.dart';
 
-enum DataLoadingStates { dataLoading, dataLoaded, loadingFailed }
+enum DataLoadingStates { dataLoading, dataLoaded, dataChanged, loadingFailed }
 
 class ResponseState {
   DataLoadingStates dataState;

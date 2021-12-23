@@ -6,11 +6,18 @@ import '../../data/routes.dart';
 class ListItem extends StatelessWidget {
   static const String employeesInsertEndpoint =
       'https://app.swaggerhub.com/apis/flutterteam2/basic-flutter/1.0.0#/employeemanagement/v1/employee';
-  const ListItem({Key? key, required this.index, required this.employeeList})
+
+  const ListItem(
+      {Key? key,
+      required this.index,
+      required this.employeeList,
+      required this.deleteEntry})
       : super(key: key);
 
-  final int index;
   final List<Employee> employeeList;
+  final int index;
+  final VoidCallback deleteEntry;
+
 
   void _switchToEmployeePage(BuildContext context) {
     Navigator.pushNamed(context, Routes.employeeDialogRouteName);
@@ -37,14 +44,14 @@ class ListItem extends StatelessWidget {
               child: Text(
                 employeeList[index].email,
                 style: const TextStyle(
-                    fontFamily: "Raleway-ExtraBold", fontSize: 16),
+                    fontFamily: 'Raleway-ExtraBold', fontSize: 16),
                 softWrap: true,
               ),
             ),
             trailing: TextButton.icon(
-                onPressed: () {},
+                onPressed: () => deleteEntry,
                 icon: const Icon(Icons.delete_forever),
-                label: const Text("Delete"),
+                label: const Text('Delete'),
                 style: TextButton.styleFrom(
                     primary: Theme.of(context).errorColor)),
           ),
