@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '/presentation/screens/employees_list_screen.dart';
+import './data/routes.dart';
+import '/presentation/screens/employee_dialog.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -10,14 +14,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: "Employee App",
-        home: const MyHomePage(),
-        theme: ThemeData(
-            primaryColor: Colors.blue.shade900,
-            splashColor: Colors.blue,
-            textTheme: ThemeData.light().textTheme.copyWith(
-                headline6: const TextStyle(
-                    fontFamily: "Raleway-Bold", fontSize: 20))));
+      debugShowCheckedModeBanner: false,
+      title: "Employee App",
+      home: const MyHomePage(),
+      routes: {
+        Routes.employeeListScreenRouteName: (context) =>
+            const EmployeesListScreen(),
+        Routes.employeeDialogRouteName: (context) => const EmployeeDialog(),
+      },
+      theme: ThemeData(
+        primaryColor: Colors.blue.shade900,
+        splashColor: Colors.blue,
+        cardColor: Colors.white,
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: const TextStyle(
+                  fontFamily: 'Raleway-Bold',
+                  fontSize: 20,
+                  color: Colors.black),
+            ),
+      ),
+    );
   }
 }
 
@@ -32,8 +48,23 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Employee App")),
-        body: const Center(
-            child: Text("Hello World", style: TextStyle(fontSize: 30))));
+      appBar: AppBar(
+        title: const Text('Employee App'),
+        backgroundColor: Theme.of(context).primaryColor,
+        centerTitle: true,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.employeeListScreenRouteName);
+          },
+          child: const Text('Get Employees List'),
+          style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(Theme.of(context).primaryColor),
+          ),
+        ),
+      ),
+    );
   }
 }
