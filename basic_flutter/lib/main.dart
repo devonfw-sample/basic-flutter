@@ -4,16 +4,15 @@ import '../themes.dart';
 import '../../presentation/screens/profile_page.dart';
 import '../../presentation/screens/employee_preferences.dart';
 
-void main() {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   EmployeePreferences.init();
-
+  await EmployeePreferences.init();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   static const String title = 'Employee Profile';
-
   const MyApp({Key? key}) : super(key: key);
 
   @override

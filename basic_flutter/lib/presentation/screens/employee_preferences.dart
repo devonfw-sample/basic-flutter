@@ -4,8 +4,8 @@ import '../../data/employee.dart';
 
 class EmployeePreferences {
   static late SharedPreferences _preferences;
-  static const _keyEmployee = 'employee';
 
+  static const _keyEmployee = 'employee';
   static const myEmployee = Employee(
     imagePath:
         'https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg',
@@ -17,8 +17,6 @@ class EmployeePreferences {
     location: 'DE-HH-K',
     isDarkMode: false,
   );
-  // Future print(I'M here)
-  // print(I'm also here)
 
   static Future init() async =>
       _preferences = await SharedPreferences.getInstance();

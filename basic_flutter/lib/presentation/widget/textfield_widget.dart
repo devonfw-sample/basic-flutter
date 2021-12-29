@@ -24,12 +24,14 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   void initState() {
     super.initState();
+
     controller = TextEditingController(text: widget.text);
   }
 
   @override
   void dispose() {
     controller.dispose();
+
     super.dispose();
   }
 
@@ -39,7 +41,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         children: [
           Text(
             widget.label,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           const SizedBox(height: 8),
           TextField(
