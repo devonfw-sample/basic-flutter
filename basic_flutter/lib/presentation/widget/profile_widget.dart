@@ -18,7 +18,6 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary;
     return Center(
       child: Stack(
         children: [
@@ -43,7 +42,6 @@ class ProfileWidget extends StatelessWidget {
           width: 200,
           height: 200,
           child: InkWell(onTap: onClicked),
-          // Image.network
         ),
       ),
     );

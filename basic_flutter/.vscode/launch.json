@@ -5,9 +5,9 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "employee_dialog1",
+            "name": "basic_flutter",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
         }
     ]
 }

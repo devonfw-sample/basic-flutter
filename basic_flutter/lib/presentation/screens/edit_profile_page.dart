@@ -1,15 +1,15 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:path/path.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import '../../data/employee.dart';
 import '../../presentation/screens/employee_preferences.dart';
-import '../../presentation/widget/appbar_widget.dart';
 import '../../presentation/widget/button_widget.dart';
 import '../../presentation/widget/profile_widget.dart';
 import '../../presentation/widget/textfield_widget.dart';
+import '../../themes.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -27,16 +27,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     employee = EmployeePreferences.getEmployee();
   }
 
-  // Widget buildEditableTextField(
-  //     String label, String text, Function onChangedFunction, String functionString) {
-  //   return TextFieldWidget(
-  //     label: label,
-  //     text: text,
-  //     onChanged: () => onChangedFunction(functionString),
-  //   );
-  // ignore: todo
-  // } TODO: refactor the code
-
   Widget buildEditIcon(Color color, BuildContext context) => buildCircle(
         color: Colors.white,
         all: 3,
@@ -44,9 +34,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
           color: color,
           all: 10,
           child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const EditProfilePage()));
+            onTap: () async {
+              final image =
+                  await ImagePicker().getImage(source: ImageSource.gallery);
+
+              if (image == null) return;
+
+              final directory = await getApplicationDocumentsDirectory();
+              final name = basename(image.path);
+              final imageFile = File('${directory.path}/$name');
+              final newImage = await File(image.path).copy(imageFile.path);
+
+              setState(
+                  () => employee = employee.copy(imagePath: newImage.path));
             },
             child: const Icon(
               Icons.add_a_photo,
@@ -72,7 +72,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: buildAppBar(context),
+      appBar: buildEditAppBar(context),
       body: SingleChildScrollView(
           child: Container(
         padding: EdgeInsets.symmetric(
@@ -89,22 +89,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: ProfileWidget(
                         imagePath: employee.imagePath,
                         isEdit: true,
-                        onClicked: () async {
-                          final image = await ImagePicker()
-                              .getImage(source: ImageSource.gallery);
-
-                          if (image == null) return;
-
-                          final directory =
-                              await getApplicationDocumentsDirectory();
-                          final name = basename(image.path);
-                          final imageFile = File('${directory.path}/$name');
-                          final newImage =
-                              await File(image.path).copy(imageFile.path);
-
-                          setState(() => employee =
-                              employee.copy(imagePath: newImage.path));
-                        },
+                        onClicked: () {},
                         sentWidget: Positioned(
                           bottom: 0,
                           right: 4,
@@ -113,7 +98,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       )),
                   const SizedBox(height: 40),
                   TextFieldWidget(
-                    label: 'First name and last name',
+                    label: 'Full Name',
                     text: employee.name,
                     onChanged: (name) => employee = employee.copy(name: name),
                   ),
@@ -164,4 +149,31 @@ class _EditProfilePageState extends State<EditProfilePage> {
               )),
         ]),
       )));
+}
+
+AppBar buildEditAppBar(BuildContext context) {
+  final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+  final icon = isDarkMode ? Icons.light_mode : Icons.dark_mode;
+
+  return AppBar(
+    backgroundColor: Colors.blue.shade900,
+    title: const Text('Employee dialog'),
+    centerTitle: true,
+    leading: const BackButton(
+      color: Colors.white,
+    ),
+    elevation: 0,
+    actions: [
+      ThemeSwitcher(
+        builder: (context) => IconButton(
+          icon: Icon(icon),
+          onPressed: () {
+            final theme = isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
+            final switcher = ThemeSwitcher.of(context)!;
+            switcher.changeTheme(theme: theme);
+          },
+        ),
+      ),
+    ],
+  );
 }
