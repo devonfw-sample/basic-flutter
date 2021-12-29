@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../../presentation/screens/edit_profile_page.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
@@ -54,10 +53,7 @@ class ProfileWidget extends StatelessWidget {
           color: color,
           all: 10,
           child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const EditProfilePage()));
-            },
+            onTap: () {},
             child: Icon(
               isEdit ? Icons.add_a_photo : Icons.edit,
               color: Colors.white,
