@@ -1,13 +1,11 @@
+import 'package:basic_flutter/presentation/screens/new_employee_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import '../themes.dart';
-import '../../presentation/screens/profile_page.dart';
-import '../../presentation/screens/employee_preferences.dart';
+import 'presentation/screens/home.dart';
 
-Future main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  EmployeePreferences.init();
-  await EmployeePreferences.init();
   runApp(const MyApp());
 }
 
@@ -17,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const employee = EmployeePreferences.myEmployee;
+    const employee = NewEmployeePreferences.newEmployee;
 
     return ThemeProvider(
         initTheme:
@@ -27,8 +25,7 @@ class MyApp extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                   theme: ThemeProvider.of(context),
                   title: title,
-                  home: const ProfilePage(
-                      employee: EmployeePreferences.myEmployee),
+                  home: Home(),
                 )));
   }
 }
