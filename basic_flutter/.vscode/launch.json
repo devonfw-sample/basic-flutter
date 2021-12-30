@@ -7,7 +7,7 @@
         {
             "name": "basic_flutter",
             "request": "launch",
-            "type": "dart",
+            "type": "dart"
         }
     ]
 }
