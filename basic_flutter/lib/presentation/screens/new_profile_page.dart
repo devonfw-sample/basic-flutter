@@ -92,9 +92,14 @@ class _NewProfilePage extends State<NewProfilePage> {
                       )),
                   const SizedBox(height: 40),
                   TextFieldWidget(
-                      label: 'Full Name',
+                      label: 'First Name',
                       text: '',
-                      onChanged: (name) => setState(() {})),
+                      onChanged: (firstName) => setState(() {})),
+                  const SizedBox(height: 40),
+                  TextFieldWidget(
+                      label: 'Last Name',
+                      text: '',
+                      onChanged: (lastName) => setState(() {})),
                   const SizedBox(height: 20),
                   TextFieldWidget(
                     label: 'Profession',
