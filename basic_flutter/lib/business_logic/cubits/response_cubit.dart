@@ -10,8 +10,11 @@ class ResponseCubit extends Cubit<ResponseState> {
   final DataProvider dataProvider;
   late int currentListIndex;
   bool isDarkMode;
-  ResponseCubit(this.dataProvider, this.employeeList, this.isDarkMode)
-      : super(ResponseState(DataLoadingStates.dataLoading, employeeList)) {
+  bool isGridView;
+  ResponseCubit(
+      this.dataProvider, this.employeeList, this.isDarkMode, this.isGridView)
+      : super(ResponseState(DataLoadingStates.dataLoading, employeeList,
+            isDarkMode, isGridView)) {
     getStateData();
   }
 
@@ -21,18 +24,22 @@ class ResponseCubit extends Cubit<ResponseState> {
           .getEmployeesList(Endpoints.searchEmployeeListEndpoint);
       currentListIndex = employeeList.length;
       if (currentListIndex != 0) {
-        emit(ResponseState(DataLoadingStates.dataLoaded, employeeList));
+        emit(ResponseState(DataLoadingStates.dataLoaded, employeeList,
+            isDarkMode, isGridView));
       } else {
-        emit(ResponseState(DataLoadingStates.loadingFailed, employeeList));
+        emit(ResponseState(DataLoadingStates.loadingFailed, employeeList,
+            isDarkMode, isGridView));
       }
     } catch (error) {
-      emit(ResponseState(DataLoadingStates.loadingError, employeeList));
+      emit(ResponseState(DataLoadingStates.loadingError, employeeList,
+          isDarkMode, isGridView));
     }
   }
 
   bool _detectListUpdate() {
-    if (currentListIndex != employeeList.length) {
-      emit(ResponseState(DataLoadingStates.dataChanged, employeeList));
+    if (currentListIndex != state.employeeList.length) {
+      emit(ResponseState(
+          DataLoadingStates.dataChanged, employeeList, isDarkMode, isGridView));
       getStateData();
       return true;
     } else {
@@ -52,7 +59,15 @@ class ResponseCubit extends Cubit<ResponseState> {
     }
   }
 
-  void toggleDarkMode(bool darkmode) {
-    isDarkMode = darkmode;
+  void toggleDarkMode() {
+    isDarkMode = !isDarkMode;
+    emit(ResponseState(
+        state.dataState, state.employeeList, isDarkMode, state.isGridView));
+  }
+
+  void toggleGridView() {
+    isGridView = !isGridView;
+    emit(ResponseState(
+        state.dataState, state.employeeList, state.isDarkMode, isGridView));
   }
 }
