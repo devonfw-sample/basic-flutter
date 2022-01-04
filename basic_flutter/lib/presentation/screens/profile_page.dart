@@ -19,32 +19,35 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(context),
       body: SingleChildScrollView(
-          child: Column(
-        children: [
-          SizedBox(
+        child: Column(
+          children: [
+            SizedBox(
               width: double.infinity,
               height: MediaQuery.of(context).size.height,
               child: Column(
                 children: [
                   SizedBox(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.30,
-                      child: ProfileWidget(
-                        imagePath: employee.imagePath,
-                        onClicked: () {},
-                        sentWidget: const SizedBox(
-                          width: 0.0,
-                          height: 0.0,
-                        ),
-                      )),
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.30,
+                    child: ProfileWidget(
+                      imagePath: employee.imagePath,
+                      onClicked: () {},
+                      sentWidget: const SizedBox(
+                        width: 0.0,
+                        height: 0.0,
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 24),
                   BuildNameWidget(employee: employee),
                   const SizedBox(height: 5),
                   BuildContactWidget(employee: employee),
                 ],
-              )),
-        ],
-      )),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

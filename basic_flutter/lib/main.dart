@@ -20,15 +20,15 @@ class MyApp extends StatelessWidget {
     const employee = EmployeePreferences.myEmployee;
 
     return ThemeProvider(
-        initTheme:
-            employee.isDarkMode ? MyThemes.darkTheme : MyThemes.lightTheme,
-        child: Builder(
-            builder: (context) => MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  theme: ThemeProvider.of(context),
-                  title: title,
-                  home: const ProfilePage(
-                      employee: EmployeePreferences.myEmployee),
-                )));
+      initTheme: employee.isDarkMode ? MyThemes.darkTheme : MyThemes.lightTheme,
+      child: Builder(
+        builder: (context) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeProvider.of(context),
+          title: title,
+          home: const ProfilePage(employee: EmployeePreferences.myEmployee),
+        ),
+      ),
+    );
   }
 }

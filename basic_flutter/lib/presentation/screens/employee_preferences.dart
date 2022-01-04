@@ -9,7 +9,9 @@ class EmployeePreferences {
   static const myEmployee = Employee(
     imagePath:
         'https://raw.githubusercontent.com/devonfw-sample/basic-flutter/d988700d786af494b2b2ef4877cb6a06fc545dda/employee_dialog/assets/employee1.jpg',
-    name: 'Max Mustermann',
+    id: '123456789',
+    firstName: 'Max',
+    lastName: 'Mustermann',
     profession: 'Senior Delivery Architect CSS',
     country: 'Germany',
     email: 'max.mustermann@muster.com',

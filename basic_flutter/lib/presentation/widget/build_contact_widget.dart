@@ -12,30 +12,30 @@ class BuildContactWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.1),
       child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.3,
-          child: ListView(
-            children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: Text("Contact",
-                    textAlign: TextAlign.left,
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
-              ),
-              ListTile(
-                leading: const Icon(Icons.phone),
-                title: Text(employee.phone.toString()),
-              ),
-              ListTile(
-                leading: const Icon(Icons.email),
-                title: Text(employee.email.toString()),
-              ),
-              ListTile(
-                leading: const Icon(Icons.location_on),
-                title: Text(employee.location.toString()),
-              ),
-            ],
-          )),
+        height: MediaQuery.of(context).size.height * 0.3,
+        child: ListView(
+          children: <Widget>[
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Text("Contact",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+            ),
+            ListTile(
+              leading: const Icon(Icons.phone),
+              title: Text(employee.phone.toString()),
+            ),
+            ListTile(
+              leading: const Icon(Icons.email),
+              title: Text(employee.email.toString()),
+            ),
+            ListTile(
+              leading: const Icon(Icons.location_on),
+              title: Text(employee.location.toString()),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

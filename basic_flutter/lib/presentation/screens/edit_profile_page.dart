@@ -72,83 +72,97 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: buildEditAppBar(context),
-      body: SingleChildScrollView(
+        appBar: buildEditAppBar(context),
+        body: SingleChildScrollView(
           child: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.1),
-        child: Column(children: [
-          SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              child: ListView(
-                children: [
-                  SizedBox(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.28,
-                      child: ProfileWidget(
-                        imagePath: employee.imagePath,
-                        isEdit: true,
-                        onClicked: () {},
-                        sentWidget: Positioned(
-                          bottom: 0,
-                          right: 4,
-                          child: buildEditIcon(Colors.blue.shade900, context),
-                        ),
-                      )),
-                  const SizedBox(height: 40),
-                  TextFieldWidget(
-                    label: 'Full Name',
-                    text: employee.name,
-                    onChanged: (name) => employee = employee.copy(name: name),
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.1),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height,
+                  child: ListView(
+                    children: [
+                      SizedBox(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.28,
+                          child: ProfileWidget(
+                            imagePath: employee.imagePath,
+                            isEdit: true,
+                            onClicked: () {},
+                            sentWidget: Positioned(
+                              bottom: 0,
+                              right: 4,
+                              child:
+                                  buildEditIcon(Colors.blue.shade900, context),
+                            ),
+                          )),
+                      const SizedBox(height: 40),
+                      TextFieldWidget(
+                        label: 'First Name',
+                        text: employee.firstName,
+                        onChanged: (firstName) =>
+                            employee = employee.copy(firstName: firstName),
+                      ),
+                      const SizedBox(height: 40),
+                      TextFieldWidget(
+                        label: 'Last Name',
+                        text: employee.lastName,
+                        onChanged: (lastName) =>
+                            employee = employee.copy(lastName: lastName),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFieldWidget(
+                        label: 'Profession',
+                        text: employee.profession,
+                        onChanged: (profession) =>
+                            employee = employee.copy(profession: profession),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFieldWidget(
+                        label: 'Country',
+                        text: employee.country,
+                        onChanged: (country) =>
+                            employee = employee.copy(country: country),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFieldWidget(
+                        label: 'Phone number',
+                        text: employee.phone,
+                        onChanged: (phone) =>
+                            employee = employee.copy(phone: phone),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFieldWidget(
+                        label: 'Email address',
+                        text: employee.email,
+                        onChanged: (email) =>
+                            employee = employee.copy(email: email),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFieldWidget(
+                        label: 'Location',
+                        text: employee.location,
+                        onChanged: (location) =>
+                            employee = employee.copy(location: location),
+                      ),
+                      const SizedBox(height: 40),
+                      ButtonWidget(
+                          text: 'Save',
+                          onClicked: () {
+                            EmployeePreferences.setEmployee(employee);
+                            Navigator.of(context).pop();
+                          }),
+                      const SizedBox(height: 150),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-                  TextFieldWidget(
-                    label: 'Profession',
-                    text: employee.profession,
-                    onChanged: (profession) =>
-                        employee = employee.copy(profession: profession),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFieldWidget(
-                    label: 'Country',
-                    text: employee.country,
-                    onChanged: (country) =>
-                        employee = employee.copy(country: country),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFieldWidget(
-                    label: 'Phone number',
-                    text: employee.phone,
-                    onChanged: (phone) =>
-                        employee = employee.copy(phone: phone),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFieldWidget(
-                    label: 'Email address',
-                    text: employee.email,
-                    onChanged: (email) =>
-                        employee = employee.copy(email: email),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFieldWidget(
-                    label: 'Location',
-                    text: employee.location,
-                    onChanged: (location) =>
-                        employee = employee.copy(location: location),
-                  ),
-                  const SizedBox(height: 40),
-                  ButtonWidget(
-                      text: 'Save',
-                      onClicked: () {
-                        EmployeePreferences.setEmployee(employee);
-                        Navigator.of(context).pop();
-                      }),
-                  const SizedBox(height: 150),
-                ],
-              )),
-        ]),
-      )));
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 }
 
 AppBar buildEditAppBar(BuildContext context) {

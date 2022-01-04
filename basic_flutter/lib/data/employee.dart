@@ -1,6 +1,8 @@
 class Employee {
   final String imagePath;
-  final String name;
+  final String id;
+  final String firstName;
+  final String lastName;
   final String profession;
   final String country;
   final String email;
@@ -10,7 +12,9 @@ class Employee {
 
   const Employee({
     required this.imagePath,
-    required this.name,
+    required this.id,
+    required this.firstName,
+    required this.lastName,
     required this.profession,
     required this.country,
     required this.email,
@@ -21,7 +25,9 @@ class Employee {
 
   Employee copy({
     String? imagePath,
-    String? name,
+    String? id,
+    String? firstName,
+    String? lastName,
     String? profession,
     String? country,
     String? email,
@@ -31,7 +37,9 @@ class Employee {
   }) =>
       Employee(
           imagePath: imagePath ?? this.imagePath,
-          name: name ?? this.name,
+          id: id ?? this.id,
+          firstName: firstName ?? this.firstName,
+          lastName: lastName ?? this.lastName,
           profession: profession ?? this.profession,
           country: country ?? this.country,
           email: email ?? this.email,
@@ -41,7 +49,9 @@ class Employee {
 
   static Employee fromJson(Map<String, dynamic> json) => Employee(
         imagePath: json['imagePath'],
-        name: json['name'],
+        id: json['ID'],
+        firstName: json['First Name'],
+        lastName: json['last Name'],
         profession: json['profession'],
         country: json['country'],
         email: json['email'],
@@ -52,7 +62,9 @@ class Employee {
 
   Map<String, dynamic> toJson() => {
         'imagePath': imagePath,
-        'name': name,
+        'ID': id,
+        'First Name': firstName,
+        'Last Name': lastName,
         'profession': profession,
         'country': country,
         'email': email,
