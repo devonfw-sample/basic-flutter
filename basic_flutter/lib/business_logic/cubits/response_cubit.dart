@@ -1,3 +1,4 @@
+
 import 'package:bloc/bloc.dart';
 
 import '/../repository/data_provider.dart';
@@ -17,6 +18,7 @@ class ResponseCubit extends Cubit<ResponseState> {
             isDarkMode, isGridView)) {
     getStateData();
   }
+
 
   Future<void> getStateData() async {
     try {
