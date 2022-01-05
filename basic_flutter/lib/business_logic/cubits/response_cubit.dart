@@ -1,3 +1,4 @@
+
 import 'package:bloc/bloc.dart';
 
 import '../../presentation/screens/employees_list_screen.dart';
@@ -15,13 +16,14 @@ class ResponseCubit extends Cubit<ResponseState> {
     getStateData();
   }
 
+
   Future<void> getStateData() async {
     try {
       employeeList = await dataProvider
           .getEmployeesList(Routes.searchEmployeeListEndpoint);
       currentListIndex = employeeList.length;
       if (currentListIndex != 0) {
-        emit(ResponseState(DataLoadingStates.dataLoaded, employeeList));
+      emit(ResponseState(DataLoadingStates.dataLoaded, employeeList));
       } else {
         emit(ResponseState(DataLoadingStates.loadingFailed, employeeList));
       }
