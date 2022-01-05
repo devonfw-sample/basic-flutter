@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
+      debugShowCheckedModeBanner: false,
       title: "Employee App",
       home: const MyHomePage(),
       routes: {
@@ -29,12 +29,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.blue.shade900,
         splashColor: Colors.blue,
+        cardColor: Colors.white,
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: const TextStyle(
-                fontFamily: 'Raleway-Bold',
-                fontSize: 20,
-                color: Colors.black,
-              ),
+                  fontFamily: 'Raleway-Bold',
+                  fontSize: 20,
+                  color: Colors.black),
             ),
       ),
     );
