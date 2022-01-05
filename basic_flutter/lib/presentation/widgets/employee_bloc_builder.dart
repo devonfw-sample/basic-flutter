@@ -10,9 +10,6 @@ class EmployeeBlocBuilder extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  // use cubit dataprovider
-  // move deleteEmployeeEntry to ResponseCubit
-
   @override
   Widget build(BuildContext context) {
     final cubitInstance = context.read<ResponseCubit>();

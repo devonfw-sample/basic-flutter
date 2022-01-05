@@ -4,6 +4,7 @@ import '../../presentation/screens/employees_list_screen.dart';
 import '/../repository/data_provider.dart';
 import '/business_logic/cubits/response_state.dart';
 import '../../data/employee.dart';
+import '../../data/routes.dart';
 
 class ResponseCubit extends Cubit<ResponseState> {
   late List<Employee> employeeList;
@@ -17,7 +18,7 @@ class ResponseCubit extends Cubit<ResponseState> {
   Future<void> getStateData() async {
     try {
       employeeList = await dataProvider
-          .getEmployeesList(EmployeesListScreen.searchEmployeeListEndpoint);
+          .getEmployeesList(Routes.searchEmployeeListEndpoint);
       currentListIndex = employeeList.length;
       if (currentListIndex != 0) {
         emit(ResponseState(DataLoadingStates.dataLoaded, employeeList));
@@ -42,7 +43,7 @@ class ResponseCubit extends Cubit<ResponseState> {
   void deleteEmployeeEntry(List<Employee> employeeList, int index) async {
     if (_detectListUpdate()) {
       await dataProvider.deleteEmployee(
-          index.toString(), EmployeesListScreen.deleteEmployeeEndpoint);
+          index.toString(), Routes.deleteEmployeeEndpoint);
       dataProvider.response.removeWhere((employee) {
         return employee.id == dataProvider.response[index].id;
       });
