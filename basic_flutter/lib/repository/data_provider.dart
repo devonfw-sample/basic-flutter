@@ -23,9 +23,7 @@ class DataProvider {
 
   Future<void> deleteEmployee(String id, String endpoint) async {
     await http.delete(Uri.parse('$endpoint"\$"$id')).then((resp) {
-      if (resp.statusCode == 200) {
-        // TODO: handle the boolean whether the item has been deleted
-      }
+      if (resp.statusCode == 200) {}
     });
   }
 
