@@ -4,6 +4,7 @@ import '../data/employee.dart';
 
 class DataProvider {
   late List<Employee> response;
+  bool isDeleted = false;
 
   Future<List<Employee>> getEmployeesList(String endpoint) async {
     await http.post(
@@ -23,7 +24,9 @@ class DataProvider {
 
   Future<void> deleteEmployee(String id, String endpoint) async {
     await http.delete(Uri.parse('$endpoint"\$"$id')).then((resp) {
-      if (resp.statusCode == 200) {}
+      if (resp.statusCode == 200) {
+        isDeleted = true;
+      }
     });
   }
 
