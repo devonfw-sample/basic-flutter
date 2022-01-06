@@ -6,6 +6,7 @@ import '/business_logic/cubits/response_state.dart';
 import '../../data/employee.dart';
 import '../../data/endpoints.dart';
 
+
 class ResponseCubit extends Cubit<ResponseState> {
   late List<Employee> employeeList;
   final DataProvider dataProvider;
@@ -23,8 +24,8 @@ class ResponseCubit extends Cubit<ResponseState> {
 
   Future<void> getStateData() async {
     try {
-      employeeList = await dataProvider
-          .getEmployeesList(Endpoints.searchEmployeeListEndpoint);
+      employeeList = await dataProvider.getEmployeesList(Endpoints.searchEmployeeListEndpoint);
+
       currentListIndex = employeeList.length;
       if (currentListIndex != 0) {
         emit(ResponseState(DataLoadingStates.dataLoaded, employeeList,
@@ -36,6 +37,7 @@ class ResponseCubit extends Cubit<ResponseState> {
     } catch (error) {
       emit(ResponseState(DataLoadingStates.loadingError, employeeList,
           isDarkMode, isGridView));
+
     }
   }
 
@@ -60,6 +62,7 @@ class ResponseCubit extends Cubit<ResponseState> {
           return employee.id == dataProvider.response[index].id;
         },
       );
+
     }
   }
 

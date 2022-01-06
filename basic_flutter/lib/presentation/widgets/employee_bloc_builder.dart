@@ -21,6 +21,7 @@ class EmployeeBlocBuilder extends StatelessWidget {
       child: BlocBuilder<ResponseCubit, ResponseState>(
         builder: (context, state) {
           if (state.dataState == DataLoadingStates.dataLoaded) {
+
             if (state.isGridView) {
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -47,6 +48,7 @@ class EmployeeBlocBuilder extends StatelessWidget {
                 itemCount: state.employeeList.length,
               );
             }
+
           } else if (state.dataState == DataLoadingStates.dataLoading) {
             return Center(
                 child: Column(
@@ -70,6 +72,7 @@ class EmployeeBlocBuilder extends StatelessWidget {
                 child: Text('Data loading failed',
                     style: Theme.of(context).textTheme.headline6),
               ),
+
             );
           }
         },
