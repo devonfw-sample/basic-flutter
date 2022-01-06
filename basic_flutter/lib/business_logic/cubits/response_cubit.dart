@@ -11,6 +11,7 @@ class ResponseCubit extends Cubit<ResponseState> {
   late int currentListIndex;
   bool isDarkMode;
   bool isGridView;
+  late bool isDeleted;
   ResponseCubit(
       this.dataProvider, this.employeeList, this.isDarkMode, this.isGridView)
       : super(ResponseState(DataLoadingStates.dataLoading, employeeList,
@@ -51,6 +52,7 @@ class ResponseCubit extends Cubit<ResponseState> {
     if (_detectListUpdate()) {
       await dataProvider.deleteEmployee(
           index.toString(), Endpoints.deleteEmployeeEndpoint);
+      isDeleted = true;
       dataProvider.response.removeWhere(
         (employee) {
           return employee.id == dataProvider.response[index].id;
@@ -69,5 +71,9 @@ class ResponseCubit extends Cubit<ResponseState> {
     isGridView = !isGridView;
     emit(ResponseState(
         state.dataState, state.employeeList, state.isDarkMode, isGridView));
+  }
+
+  void toggleIsDeleted() {
+    isDeleted = !isDeleted;
   }
 }
