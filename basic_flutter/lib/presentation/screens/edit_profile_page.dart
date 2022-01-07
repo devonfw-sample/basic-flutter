@@ -105,14 +105,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         onChanged: (firstName) =>
                             employee = employee.copy(firstName: firstName),
                       ),
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 20),
                       TextFieldWidget(
                         label: 'Last Name',
                         text: employee.lastName,
                         onChanged: (lastName) =>
                             employee = employee.copy(lastName: lastName),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 40),
                       TextFieldWidget(
                         label: 'Profession',
                         text: employee.profession,
