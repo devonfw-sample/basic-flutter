@@ -1,10 +1,10 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:basic_flutter/presentation/widget/build_name_widget.dart';
+import '../widgets/build_name_widget.dart';
 import 'package:flutter/material.dart';
 import '../../data/employee.dart';
 import '../../presentation/screens/employee_preferences.dart';
-import '../../presentation/widget/profile_widget.dart';
-import '../../presentation/widget/build_contact_widget.dart';
+import '../widgets/profile_widget.dart';
+import '../widgets/build_contact_widget.dart';
 import '../../presentation/screens/edit_profile_page.dart';
 import '../../themes.dart';
 

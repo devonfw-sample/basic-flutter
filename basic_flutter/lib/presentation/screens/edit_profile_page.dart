@@ -6,9 +6,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import '../../data/employee.dart';
 import '../../presentation/screens/employee_preferences.dart';
-import '../../presentation/widget/button_widget.dart';
-import '../../presentation/widget/profile_widget.dart';
-import '../../presentation/widget/textfield_widget.dart';
+import '../../presentation/widgets/button_widget.dart';
+import '../../presentation/widgets/profile_widget.dart';
+import '../../presentation/widgets/textfield_widget.dart';
 import '../../themes.dart';
 
 class EditProfilePage extends StatefulWidget {

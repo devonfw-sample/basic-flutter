@@ -6,9 +6,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../../../data/employee.dart';
 import '../../themes.dart';
-import '../widget/button_widget.dart';
-import '../widget/profile_widget.dart';
-import '../widget/textfield_widget.dart';
+import '../widgets/button_widget.dart';
+import '../widgets/profile_widget.dart';
+import '../widgets/textfield_widget.dart';
 
 class NewProfilePage extends StatefulWidget {
   const NewProfilePage({Key? key}) : super(key: key);
