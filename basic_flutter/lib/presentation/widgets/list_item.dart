@@ -4,8 +4,6 @@ import '../../data/employee.dart';
 import '../../data/routes.dart';
 
 class ListItem extends StatelessWidget {
-  static const String employeesInsertEndpoint =
-      'https://app.swaggerhub.com/apis/flutterteam2/basic-flutter/1.0.0#/employeemanagement/v1/employee';
 
   const ListItem(
       {Key? key,
