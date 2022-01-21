@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,8 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: "Employee App",
-        home: const MyHomePage(),
+        home: const MyHomePage(
+          title: "Employee App",
+        ),
         theme: ThemeData(
             primaryColor: Colors.blue.shade900,
             splashColor: Colors.blue,
@@ -22,18 +24,47 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
+  void initState() {
+    super.initState();
+    Timer(
+      const Duration(seconds: 3),
+      () {
+        // Navigator.of(context)
+        //     .pushReplacement(MaterialPageRoute(builder: (_) => const MyApp()));
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Employee App")),
-        body: const Center(
-            child: Text("Hello World", style: TextStyle(fontSize: 30))));
+      backgroundColor: Colors.blue.shade900,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              'https://raw.githubusercontent.com/devonfw-sample/basic-flutter/45cadd7afb1c0d891c380cd76f068c06426b50b6/basic_flutter/assets/logo.PNG',
+              height: 300,
+              width: 300,
+            ),
+            const SizedBox(height: 20),
+            const CircularProgressIndicator(
+              strokeWidth: 5,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
