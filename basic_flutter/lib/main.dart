@@ -1,4 +1,5 @@
 import 'dart:async';
+import '/dummy_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,15 +12,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: const MyHomePage(
-          title: "Employee App",
-        ),
-        theme: ThemeData(
-            primaryColor: Colors.blue.shade900,
-            splashColor: Colors.blue,
-            textTheme: ThemeData.light().textTheme.copyWith(
-                headline6: const TextStyle(
-                    fontFamily: "Raleway-Bold", fontSize: 20))));
+      home: const MyHomePage(
+        title: "Employee App",
+      ),
+      theme: ThemeData(
+        primaryColor: Colors.blue.shade900,
+        splashColor: Colors.blue,
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6:
+                  const TextStyle(fontFamily: "Raleway-Bold", fontSize: 20),
+            ),
+      ),
+    );
   }
 }
 
@@ -38,8 +42,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Timer(
       const Duration(seconds: 3),
       () {
-        // Navigator.of(context)
-        //     .pushReplacement(MaterialPageRoute(builder: (_) => const MyApp()));
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => const DummyPage(),
+          ),
+        );
       },
     );
   }
