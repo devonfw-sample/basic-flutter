@@ -17,7 +17,7 @@ class HttpClientProvider {
         connectTimeout: CONNECT_TIMEOUT,
         receiveTimeout: RECEIVE_TIMEOUT);
 
-    var dio = Dio(baseOptions);
+    final dio = Dio(baseOptions);
 
     dio.interceptors.add(JWTInterceptor());
     dio.interceptors.add(PrettyDioLogger(
@@ -29,11 +29,11 @@ class HttpClientProvider {
         compact: true,
         maxWidth: 90));
 
-    return new HttpClientProvider._(dio);
+    return HttpClientProvider._(dio);
   }
 
   factory HttpClientProvider.custom(BaseOptions baseOptions) {
-    return new HttpClientProvider._(Dio(baseOptions));
+    return HttpClientProvider._(Dio(baseOptions));
   }
 }
 

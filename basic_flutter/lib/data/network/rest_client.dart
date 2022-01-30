@@ -19,9 +19,6 @@ abstract class RestClient {
   Future<void> login(
       @Body() LoginRequestDto dto, @Path("apiVersion") String apiVersion);
 
-  //@POST("/employeemanagement/{apiVersion}/employee/")
-  //Future<void> add(@Body() EmployeeDetailDto dto, @Path("apiVersion") String apiVersion);
-
   @POST("/employeemanagement/{apiVersion}/employee/search")
   Future<EmployeeListResponseDto> search(@Path("apiVersion") String apiVersion,
       @Body() EmployeeListRequestDto dto);
@@ -34,9 +31,6 @@ abstract class RestClient {
   Future<EmployeeInsertResponseDto> insert(
       @Path("apiVersion") String apiVersion,
       @Body() EmployeeInsertRequestDto dto);
-
-  //@POST("/employeemanagement/{apiVersion}/employee/")
-  //Future<void> update(@Body() EmployeeDetailDto dto, @Path("apiVersion") String apiVersion);
 
   @DELETE("/employeemanagement/{apiVersion}/employee/{id}")
   Future<void> delete(

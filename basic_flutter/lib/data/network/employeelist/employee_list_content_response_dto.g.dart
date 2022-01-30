@@ -9,12 +9,12 @@ part of 'employee_list_content_response_dto.dart';
 EmployeeListContentResponseDto _$EmployeeListContentResponseDtoFromJson(
     Map<String, dynamic> json) {
   return EmployeeListContentResponseDto(
-    json['modificationCounter'] as int,
-    json['id'] as int,
-    json['employeeId'] as int,
-    json['name'] as String,
-    json['surname'] as String,
-    json['email'] as String,
+    modificationCounter: json['modificationCounter'] as int,
+    id: json['id'] as int,
+    employeeId: json['employeeId'] as int,
+    name: json['name'] as String,
+    surname: json['surname'] as String,
+    email: json['email'] as String,
   );
 }
 
