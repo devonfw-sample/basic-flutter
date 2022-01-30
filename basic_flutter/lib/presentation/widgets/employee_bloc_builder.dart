@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/repository/data_provider.dart';
 import '../widgets/list_item.dart';
 import '../../business_logic/cubits/response_cubit.dart';
 import '../../business_logic/cubits/response_state.dart';
@@ -9,12 +8,7 @@ import '../../business_logic/cubits/response_state.dart';
 class EmployeeBlocBuilder extends StatelessWidget {
   const EmployeeBlocBuilder({
     Key? key,
-    required this.dataProvider,
   }) : super(key: key);
-
-  final DataProvider dataProvider;
-  // use cubit dataprovider
-  // move deleteEmployeeEntry to ResponseCubit
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +20,7 @@ class EmployeeBlocBuilder extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (ctx, index) {
                 return ListItem(
-                  index: index,
-                  employeeList: state.employeeList,
+                  employee: state.employeeList[index],
                   deleteEntry: () => context
                       .read<ResponseCubit>()
                       .deleteEmployeeEntry(state.employeeList, index),

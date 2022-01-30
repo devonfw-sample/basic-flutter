@@ -8,10 +8,6 @@ import '../../data/employee.dart';
 import '../widgets/employee_bloc_builder.dart';
 
 class EmployeesListScreen extends StatefulWidget {
-  static const String deleteEmployeeEndpoint =
-      'https://virtserver.swaggerhub.com/flutterteam2/flutter/1.0.0/employeemanagement/v1/employee/';
-  static const searchEmployeeListEndpoint =
-      "https://virtserver.swaggerhub.com/flutterteam2/flutter/1.0.0/employeemanagement/v1/employee/search";
   const EmployeesListScreen({Key? key}) : super(key: key);
 
   @override
@@ -34,7 +30,7 @@ class _EmployeesListScreenState extends State<EmployeesListScreen> {
       ),
       body: BlocProvider(
           create: (context) => ResponseCubit(dataProvider, employeeList),
-          child: EmployeeBlocBuilder(dataProvider: dataProvider)),
+          child: const EmployeeBlocBuilder()),
     );
   }
 }
