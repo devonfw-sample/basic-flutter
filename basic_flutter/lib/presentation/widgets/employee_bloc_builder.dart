@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/list_item.dart';
 import '../../business_logic/cubits/response_cubit.dart';
 import '../../business_logic/cubits/response_state.dart';
+import 'employee_grid_item.dart';
 
 class EmployeeBlocBuilder extends StatelessWidget {
   const EmployeeBlocBuilder({
@@ -12,6 +13,7 @@ class EmployeeBlocBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<ResponseCubit, ResponseState>(
       builder: (context, state) {
         if (state.dataState == DataLoadingStates.dataLoaded) {
@@ -53,7 +55,8 @@ class EmployeeBlocBuilder extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6)),
           );
         }
-      },
+        },
+      ),
     );
   }
 }

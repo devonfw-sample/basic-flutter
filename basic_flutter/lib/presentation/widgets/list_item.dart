@@ -4,8 +4,10 @@ import '../../data/employee.dart';
 import '../../data/routes.dart';
 
 class ListItem extends StatelessWidget {
-  const ListItem({Key? key, required this.employee, required this.deleteEntry})
-      : super(key: key);
+
+  const ListItem({Key? key, required this.employee, required this.deleteEntry});
+
+
 
   final Employee employee;
   final VoidCallback deleteEntry;

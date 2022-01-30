@@ -3,7 +3,9 @@ import 'dart:convert';
 import '../data/employee.dart';
 
 class DataProvider {
+
   List<Employee> response = [];
+
   bool isDeleted = false;
 
   Future<List<Employee>> getEmployeesList(String endpoint) async {
