@@ -1,30 +1,28 @@
-
 import 'package:bloc/bloc.dart';
 
 import '/../repository/data_provider.dart';
 import '/business_logic/cubits/response_state.dart';
 import '../../data/employee.dart';
 import '../../data/endpoints.dart';
-
+import '../../data/routes.dart';
 
 class ResponseCubit extends Cubit<ResponseState> {
-  late List<Employee> employeeList;
-  final DataProvider dataProvider;
-  late int currentListIndex;
+  List<Employee> employeeList = []; //remove late and create an empty list
+  final DataProvider dataProvider = DataProvider();
+  int currentListIndex = 0; //remove late and create a zero start value
   bool isDarkMode;
   bool isGridView;
-  late bool isDeleted;
-  ResponseCubit(
-      this.dataProvider, this.employeeList, this.isDarkMode, this.isGridView)
+  bool isDeleted = false; //remove late and set to true or false as start value
+  ResponseCubit(this.employeeList, this.isDarkMode, this.isGridView)
       : super(ResponseState(DataLoadingStates.dataLoading, employeeList,
-            isDarkMode, isGridView)) {
-    getStateData();
-  }
+            isDarkMode, isGridView));
 
-
-  Future<void> getStateData() async {
+  Future<void> getNewStateData() async {
     try {
-      employeeList = await dataProvider.getEmployeesList(Endpoints.searchEmployeeListEndpoint);
+      final Employee employee = await dataProvider.getEmployeeWithId(
+          Endpoints.getEmployeeWithIdEndpoint, (Routes.index + 1).toString());
+
+      employeeList.add(employee);
 
       currentListIndex = employeeList.length;
       if (currentListIndex != 0) {
@@ -37,15 +35,18 @@ class ResponseCubit extends Cubit<ResponseState> {
     } catch (error) {
       emit(ResponseState(DataLoadingStates.loadingError, employeeList,
           isDarkMode, isGridView));
-
     }
   }
 
+  //emit in deleteEmployeeEntry and update _detectListUpdate by removing all the logic
   bool _detectListUpdate() {
-    if (currentListIndex != state.employeeList.length) {
+    getNewStateData();
+    if (currentListIndex !=
+        state.employeeList.length) //write employeeList.length
+    {
       emit(ResponseState(
           DataLoadingStates.dataChanged, employeeList, isDarkMode, isGridView));
-      getStateData();
+
       return true;
     } else {
       return false;
@@ -59,13 +60,15 @@ class ResponseCubit extends Cubit<ResponseState> {
       isDeleted = true;
       dataProvider.response.removeWhere(
         (employee) {
-          return employee.id == dataProvider.response[index].id;
+          return employee.id ==
+              dataProvider.response[index]
+                  .id; // put the logic in the dataProvider class and just update the employeeList that you have here in cubit
         },
       );
-
     }
   }
 
+  //use the boolean isDeleted in the dataProvider properly and change the future<void> deleteEmployee in DataProvider to Future<bool> in order to use in cubit
   void toggleDarkMode() {
     isDarkMode = !isDarkMode;
     emit(ResponseState(

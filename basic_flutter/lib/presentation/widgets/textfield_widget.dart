@@ -4,7 +4,7 @@ class TextFieldWidget extends StatelessWidget {
   final int maxLines;
   final String label;
   final String text;
-  final ValueChanged<String> onChanged;
+  final Function onChanged;
 
   const TextFieldWidget({
     Key? key,
@@ -16,7 +16,7 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = TextEditingController(text: text);
+    final controller = TextEditingController();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -26,14 +26,16 @@ class TextFieldWidget extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextField(
+          onSubmitted: (enteredText) => controller.text = enteredText,
           controller: controller,
           decoration: InputDecoration(
+            hintText: label,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
             ),
           ),
           maxLines: maxLines,
-          onChanged: onChanged,
+          onChanged: (value) => onChanged,
         ),
       ],
     );

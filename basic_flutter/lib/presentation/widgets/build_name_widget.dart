@@ -8,34 +8,21 @@ class BuildNameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height *
-          0.18, // Abstand zwischen Detail und Contact
-      child: Column(
-        children: [
-          Text(
-            employee.firstName,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),
-          Text(
-            employee.lastName,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),
-          const SizedBox(height: 5),
-          Column(
-            children: <Widget>[
-              ListTile(
-                title: Column(
-                  children: [
-                    Text(employee.profession.toString()),
-                    Text(employee.country.toString()),
-                  ],
-                ),
-              )
-            ],
-          )
-        ],
-      ),
-    );
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height *
+            0.18, // Abstand zwischen Detail und Contact
+        child: Column(
+          children: [
+            Text(
+              employee.name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
+            Text(
+              employee.surname,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
+            const SizedBox(height: 5),
+          ],
+        ));
   }
 }

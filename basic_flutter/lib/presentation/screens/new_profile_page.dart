@@ -37,9 +37,6 @@ class _NewProfilePage extends State<NewProfilePage> {
               final name = basename(image.path);
               final imageFile = File('${directory.path}/$name');
               final newImage = await File(image.path).copy(imageFile.path);
-
-              setState(
-                  () => employee = employee.copy(imagePath: newImage.path));
             },
             child: const Icon(
               Icons.add_a_photo,
@@ -80,8 +77,6 @@ class _NewProfilePage extends State<NewProfilePage> {
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.28,
                       child: ProfileWidget(
-                        imagePath:
-                            'https://raw.githubusercontent.com/TugbaDalmaz/basic-flutter/d3d9b2ac55bf0a6b04a28d91f63f4af3cf59a8dc/basic_flutter/assets/image.png',
                         isEdit: true,
                         onClicked: () {},
                         sentWidget: Positioned(
@@ -92,12 +87,12 @@ class _NewProfilePage extends State<NewProfilePage> {
                       )),
                   const SizedBox(height: 40),
                   TextFieldWidget(
-                      label: 'First Name',
+                      label: 'Name',
                       text: '',
                       onChanged: (firstName) => setState(() {})),
                   const SizedBox(height: 40),
                   TextFieldWidget(
-                      label: 'Last Name',
+                      label: 'Surname',
                       text: '',
                       onChanged: (lastName) => setState(() {})),
                   const SizedBox(height: 20),

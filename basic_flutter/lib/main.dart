@@ -1,34 +1,95 @@
+import 'package:basic_flutter/presentation/screens/employees_list_screen.dart';
+import 'business_logic/cubits/response_cubit.dart';
+import 'business_logic/cubits/response_state.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import '../themes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/screens/profile_page.dart';
-import '../../presentation/screens/employee_preferences.dart';
+import 'business_logic/cubits/employee_cubit.dart';
+import 'business_logic/cubits/employee_state.dart';
+import './data/employee.dart';
+import './data/routes.dart';
+import './presentation/screens/edit_profile_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  EmployeePreferences.init();
-  await EmployeePreferences.init();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   static const String title = 'Employee Profile';
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+  final List<Employee> employeeList = [];
 
   @override
   Widget build(BuildContext context) {
-    const employee = EmployeePreferences.myEmployee;
-
-    return ThemeProvider(
-      initTheme: employee.isDarkMode ? MyThemes.darkTheme : MyThemes.lightTheme,
-      child: Builder(
-        builder: (context) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeProvider.of(context),
-          title: title,
-          home: const ProfilePage(employee: EmployeePreferences.myEmployee),
+    Employee employeeInitializer = Employee(
+      id: 1,
+      name: '',
+      surname: '',
+      email: '',
+    );
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => EmployeeCubit(
+              EmployeeState(employeeInitializer), employeeInitializer),
+        ),
+        BlocProvider(
+          create: (context) => ResponseCubit(
+            employeeList,
+            false,
+            false,
+          ),
+        ),
+      ],
+      child: ThemeProvider(
+        child: Builder(
+          builder: (context) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeProvider.of(context),
+            title: title,
+            routes: {
+              Routes.mainRouteName: (context) => const Homepage(),
+              Routes.employeeDialogRouteName: (context) => const ProfilePage(),
+              Routes.editProfilePageRouteName: (context) =>
+                  const EditProfilePage(),
+              Routes.employeeListScreenRouteName: (context) =>
+                  const EmployeesListScreen()
+            },
+          ),
         ),
       ),
+    );
+  }
+}
+
+class Homepage extends StatelessWidget {
+  const Homepage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final cubitInstance = context.read<ResponseCubit>();
+    return BlocBuilder<ResponseCubit, ResponseState>(
+      builder: (context, state) {
+        return Scaffold(
+            appBar: AppBar(
+              title: const Text("text"),
+              backgroundColor: Colors.blue.shade900,
+            ),
+            body: Center(
+                child: TextButton(
+              style:
+                  TextButton.styleFrom(backgroundColor: Colors.blue.shade900),
+              onPressed: () {
+                cubitInstance.getNewStateData();
+                Navigator.of(context)
+                    .pushNamed(Routes.employeeListScreenRouteName);
+              },
+              child: const Text("get next employee",
+                  style: TextStyle(color: Colors.white)),
+            )));
+      },
     );
   }
 }

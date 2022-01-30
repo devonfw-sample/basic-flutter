@@ -1,168 +1,101 @@
-import 'dart:io';
-import 'package:path/path.dart';
+import '/business_logic/cubits/employee_cubit.dart';
+import '/business_logic/cubits/employee_state.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import '../../data/employee.dart';
-import '../../presentation/screens/employee_preferences.dart';
+
 import '../../presentation/widgets/button_widget.dart';
-import '../../presentation/widgets/profile_widget.dart';
 import '../../presentation/widgets/textfield_widget.dart';
 import '../../themes.dart';
+import '../../data/employee.dart';
+import '../../business_logic/cubits/response_cubit.dart';
+import '../../business_logic/cubits/response_state.dart';
 
-class EditProfilePage extends StatefulWidget {
+class EditProfilePage extends StatelessWidget {
   const EditProfilePage({Key? key}) : super(key: key);
 
   @override
-  _EditProfilePageState createState() => _EditProfilePageState();
-}
-
-class _EditProfilePageState extends State<EditProfilePage> {
-  late Employee employee;
-
-  @override
-  void initState() {
-    super.initState();
-    employee = EmployeePreferences.getEmployee();
-  }
-
-  Widget buildEditIcon(Color color, BuildContext context) => buildCircle(
-        color: Colors.white,
-        all: 3,
-        child: buildCircle(
-          color: color,
-          all: 10,
-          child: GestureDetector(
-            onTap: () async {
-              final image =
-                  await ImagePicker().getImage(source: ImageSource.gallery);
-
-              if (image == null) return;
-
-              final directory = await getApplicationDocumentsDirectory();
-              final name = basename(image.path);
-              final imageFile = File('${directory.path}/$name');
-              final newImage = await File(image.path).copy(imageFile.path);
-
-              setState(
-                  () => employee = employee.copy(imagePath: newImage.path));
-            },
-            child: const Icon(
-              Icons.add_a_photo,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-        ),
-      );
-
-  Widget buildCircle({
-    required Widget child,
-    required double all,
-    required Color color,
-  }) =>
-      ClipOval(
-        child: Container(
-          padding: EdgeInsets.all(all),
-          color: color,
-          child: child,
-        ),
-      );
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: buildEditAppBar(context),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.1),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView(
+  Widget build(BuildContext context) {
+    final cubitInstance = context.read<EmployeeCubit>();
+    Employee receivedEmployeeInstance =
+        ModalRoute.of(context)!.settings.arguments as Employee;
+    return BlocBuilder<ResponseCubit, ResponseState>(
+      builder: (context, responseState) {
+        return BlocBuilder<EmployeeCubit, EmployeeState>(
+          builder: (context, state) {
+            return Scaffold(
+              appBar: buildEditAppBar(context),
+              body: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.1),
+                  child: Column(
                     children: [
                       SizedBox(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.28,
-                          child: ProfileWidget(
-                            imagePath: employee.imagePath,
-                            isEdit: true,
-                            onClicked: () {},
-                            sentWidget: Positioned(
-                              bottom: 0,
-                              right: 4,
-                              child:
-                                  buildEditIcon(Colors.blue.shade900, context),
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height,
+                        child: ListView(
+                          children: [
+                            // SizedBox(
+                            //     width: double.infinity,
+                            //     height: MediaQuery.of(context).size.height * 0.28,
+                            //     child: ProfileWidget(
+                            //       imagePath: state.employee.imagePath,
+                            //       isEdit: true,
+                            //       onClicked: () {},
+                            //       sentWidget: Positioned(
+                            //         bottom: 0,
+                            //         right: 4,
+                            //         child: EditIcon(color: Colors.blue.shade900),
+                            //       ),
+                            //     )),
+                            const SizedBox(height: 40),
+                            TextFieldWidget(
+                              label: 'First Name',
+                              text: receivedEmployeeInstance.name,
+                              onChanged: (name) => state.employee =
+                                  state.employee.copy(name: name),
                             ),
-                          )),
-                      const SizedBox(height: 40),
-                      TextFieldWidget(
-                        label: 'First Name',
-                        text: employee.firstName,
-                        onChanged: (firstName) =>
-                            employee = employee.copy(firstName: firstName),
+                            const SizedBox(height: 20),
+                            TextFieldWidget(
+                              label: 'Last Name',
+                              text: receivedEmployeeInstance.surname,
+                              onChanged: (surname) => receivedEmployeeInstance =
+                                  receivedEmployeeInstance.copy(
+                                      surname: surname),
+                            ),
+                            const SizedBox(height: 40),
+
+                            const SizedBox(height: 20),
+                            TextFieldWidget(
+                              label: 'Email address',
+                              text: receivedEmployeeInstance.email,
+                              onChanged: (email) => receivedEmployeeInstance =
+                                  receivedEmployeeInstance.copy(email: email),
+                            ),
+                            const SizedBox(height: 40),
+                            ButtonWidget(
+                                text: 'Save',
+                                onClicked: () {
+                                  cubitInstance.updateEmployeeData(
+                                      receivedEmployeeInstance,
+                                      responseState.employeeList);
+                                  Navigator.of(context).pop();
+                                }),
+                            const SizedBox(height: 150),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 20),
-                      TextFieldWidget(
-                        label: 'Last Name',
-                        text: employee.lastName,
-                        onChanged: (lastName) =>
-                            employee = employee.copy(lastName: lastName),
-                      ),
-                      const SizedBox(height: 40),
-                      TextFieldWidget(
-                        label: 'Profession',
-                        text: employee.profession,
-                        onChanged: (profession) =>
-                            employee = employee.copy(profession: profession),
-                      ),
-                      const SizedBox(height: 20),
-                      TextFieldWidget(
-                        label: 'Country',
-                        text: employee.country,
-                        onChanged: (country) =>
-                            employee = employee.copy(country: country),
-                      ),
-                      const SizedBox(height: 20),
-                      TextFieldWidget(
-                        label: 'Phone number',
-                        text: employee.phone,
-                        onChanged: (phone) =>
-                            employee = employee.copy(phone: phone),
-                      ),
-                      const SizedBox(height: 20),
-                      TextFieldWidget(
-                        label: 'Email address',
-                        text: employee.email,
-                        onChanged: (email) =>
-                            employee = employee.copy(email: email),
-                      ),
-                      const SizedBox(height: 20),
-                      TextFieldWidget(
-                        label: 'Location',
-                        text: employee.location,
-                        onChanged: (location) =>
-                            employee = employee.copy(location: location),
-                      ),
-                      const SizedBox(height: 40),
-                      ButtonWidget(
-                          text: 'Save',
-                          onClicked: () {
-                            EmployeePreferences.setEmployee(employee);
-                            Navigator.of(context).pop();
-                          }),
-                      const SizedBox(height: 150),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      );
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 }
 
 AppBar buildEditAppBar(BuildContext context) {

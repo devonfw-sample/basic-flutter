@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import '../../presentation/screens/edit_profile_page.dart';
 
 class ProfileWidget extends StatelessWidget {
-  final String imagePath;
   final bool isEdit;
   final VoidCallback onClicked;
   final Widget sentWidget;
 
   const ProfileWidget(
       {Key? key,
-      required this.imagePath,
       this.isEdit = false,
       required this.onClicked,
       required this.sentWidget})
@@ -21,28 +19,8 @@ class ProfileWidget extends StatelessWidget {
     return Center(
       child: Stack(
         children: [
-          buildImage(),
           sentWidget,
         ],
-      ),
-    );
-  }
-
-  Widget buildImage() {
-    final image = imagePath.contains('https://')
-        ? NetworkImage(imagePath)
-        : FileImage(File(imagePath));
-
-    return ClipOval(
-      child: Material(
-        color: Colors.transparent,
-        child: Ink.image(
-          image: image as ImageProvider,
-          fit: BoxFit.cover,
-          width: 200,
-          height: 200,
-          child: InkWell(onTap: onClicked),
-        ),
       ),
     );
   }

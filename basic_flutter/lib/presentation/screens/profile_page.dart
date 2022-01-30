@@ -1,23 +1,52 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+
+import '../../data/routes.dart';
+import '../../themes.dart';
 import '../widgets/build_name_widget.dart';
 import 'package:flutter/material.dart';
 import '../../data/employee.dart';
-import '../../presentation/screens/employee_preferences.dart';
 import '../widgets/profile_widget.dart';
 import '../widgets/build_contact_widget.dart';
-import '../../presentation/screens/edit_profile_page.dart';
-import '../../themes.dart';
 
 class ProfilePage extends StatelessWidget {
-  final Employee employee;
-  const ProfilePage({Key? key, required this.employee}) : super(key: key);
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final employee = EmployeePreferences.getEmployee();
+    final Employee employeeInstance =
+        ModalRoute.of(context)!.settings.arguments as Employee;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final icon = isDarkMode ? Icons.light_mode : Icons.dark_mode;
 
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: AppBar(
+        backgroundColor: Colors.blue.shade900,
+        title: const Text('Employee dialog'),
+        centerTitle: true,
+        leading: const BackButton(
+          color: Colors.white,
+        ),
+        elevation: 0,
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () {
+                Navigator.of(context).pushNamed(Routes.editProfilePageRouteName,
+                    arguments: employeeInstance);
+              }),
+          ThemeSwitcher(
+            builder: (context) => IconButton(
+              icon: Icon(icon),
+              onPressed: () {
+                final theme =
+                    isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
+                final switcher = ThemeSwitcher.of(context)!;
+                switcher.changeTheme(theme: theme);
+              },
+            ),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -30,7 +59,6 @@ class ProfilePage extends StatelessWidget {
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height * 0.30,
                     child: ProfileWidget(
-                      imagePath: employee.imagePath,
                       onClicked: () {},
                       sentWidget: const SizedBox(
                         width: 0.0,
@@ -39,9 +67,9 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  BuildNameWidget(employee: employee),
+                  BuildNameWidget(employee: employeeInstance),
                   const SizedBox(height: 5),
-                  BuildContactWidget(employee: employee),
+                  BuildContactWidget(employee: employeeInstance),
                 ],
               ),
             ),
@@ -50,37 +78,4 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
-}
-
-AppBar buildAppBar(BuildContext context) {
-  final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-  final icon = isDarkMode ? Icons.light_mode : Icons.dark_mode;
-
-  return AppBar(
-    backgroundColor: Colors.blue.shade900,
-    title: const Text('Employee dialog'),
-    centerTitle: true,
-    leading: const BackButton(
-      color: Colors.white,
-    ),
-    elevation: 0,
-    actions: [
-      IconButton(
-          icon: const Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const EditProfilePage()));
-          }),
-      ThemeSwitcher(
-        builder: (context) => IconButton(
-          icon: Icon(icon),
-          onPressed: () {
-            final theme = isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
-            final switcher = ThemeSwitcher.of(context)!;
-            switcher.changeTheme(theme: theme);
-          },
-        ),
-      ),
-    ],
-  );
 }

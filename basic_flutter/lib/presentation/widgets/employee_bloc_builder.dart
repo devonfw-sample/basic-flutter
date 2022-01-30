@@ -15,13 +15,12 @@ class EmployeeBlocBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubitInstance = context.read<ResponseCubit>();
     return RefreshIndicator(
-      onRefresh: () {
-        return cubitInstance.getStateData();
+      onRefresh: () async {
+        await cubitInstance.getNewStateData();
       },
       child: BlocBuilder<ResponseCubit, ResponseState>(
         builder: (context, state) {
           if (state.dataState == DataLoadingStates.dataLoaded) {
-
             if (state.isGridView) {
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -39,8 +38,7 @@ class EmployeeBlocBuilder extends StatelessWidget {
               return ListView.builder(
                 itemBuilder: (ctx, index) {
                   return ListItem(
-                    index: index,
-                    employeeList: state.employeeList,
+                    employee: state.employeeList[index],
                     deleteEntry: () => cubitInstance.deleteEmployeeEntry(
                         state.employeeList, index),
                   );
@@ -48,7 +46,6 @@ class EmployeeBlocBuilder extends StatelessWidget {
                 itemCount: state.employeeList.length,
               );
             }
-
           } else if (state.dataState == DataLoadingStates.dataLoading) {
             return Center(
                 child: Column(
@@ -67,12 +64,11 @@ class EmployeeBlocBuilder extends StatelessWidget {
             ));
           } else {
             return RefreshIndicator(
-              onRefresh: () => cubitInstance.getStateData(),
+              onRefresh: () async => await cubitInstance.getNewStateData(),
               child: Center(
                 child: Text('Data loading failed',
                     style: Theme.of(context).textTheme.headline6),
               ),
-
             );
           }
         },
