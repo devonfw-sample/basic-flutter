@@ -5,17 +5,12 @@ import '../../data/routes.dart';
 
 class ListItem extends StatelessWidget {
 
-  const ListItem(
-      {Key? key,
-      required this.index,
-      required this.employeeList,
-      required this.deleteEntry})
-      : super(key: key);
+  const ListItem({Key? key, required this.employee, required this.deleteEntry});
 
-  final List<Employee> employeeList;
-  final int index;
+
+
+  final Employee employee;
   final VoidCallback deleteEntry;
-
 
   void _switchToEmployeePage(BuildContext context) {
     Navigator.pushNamed(context, Routes.employeeDialogRouteName);
@@ -33,14 +28,13 @@ class ListItem extends StatelessWidget {
           child: ListTile(
             title: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  '${employeeList[index].firstName} ${employeeList[index].lastName} ',
+              child: Text('${employee.firstName} ${employee.lastName} ',
                   style: Theme.of(context).textTheme.headline6),
             ),
             subtitle: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                employeeList[index].email,
+                employee.email,
                 style: const TextStyle(
                     fontFamily: 'Raleway-ExtraBold', fontSize: 16),
                 softWrap: true,

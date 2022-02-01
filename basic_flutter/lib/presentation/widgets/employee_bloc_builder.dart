@@ -13,68 +13,48 @@ class EmployeeBlocBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubitInstance = context.read<ResponseCubit>();
-    return RefreshIndicator(
-      onRefresh: () {
-        return cubitInstance.getStateData();
-      },
-      child: BlocBuilder<ResponseCubit, ResponseState>(
-        builder: (context, state) {
-          if (state.dataState == DataLoadingStates.dataLoaded) {
 
-            if (state.isGridView) {
-              return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 2,
-                    childAspectRatio: 3 / 2,
-                    crossAxisSpacing: 10),
-                itemBuilder: (context, index) {
-                  return EmployeeGridItem(
-                      indexedEmployee: state.employeeList[index]);
-                },
-                itemCount: state.employeeList.length,
-              );
-            } else {
-              return ListView.builder(
-                itemBuilder: (ctx, index) {
-                  return ListItem(
-                    index: index,
-                    employeeList: state.employeeList,
-                    deleteEntry: () => cubitInstance.deleteEmployeeEntry(
-                        state.employeeList, index),
-                  );
-                },
-                itemCount: state.employeeList.length,
-              );
-            }
-
-          } else if (state.dataState == DataLoadingStates.dataLoading) {
-            return Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  'Data loading',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ],
-            ));
-          } else {
-            return RefreshIndicator(
-              onRefresh: () => cubitInstance.getStateData(),
-              child: Center(
-                child: Text('Data loading failed',
-                    style: Theme.of(context).textTheme.headline6),
+    return BlocBuilder<ResponseCubit, ResponseState>(
+      builder: (context, state) {
+        if (state.dataState == DataLoadingStates.dataLoaded) {
+          return RefreshIndicator(
+            onRefresh: () => context.read<ResponseCubit>().getStateData(),
+            child: ListView.builder(
+              itemBuilder: (ctx, index) {
+                return ListItem(
+                  employee: state.employeeList[index],
+                  deleteEntry: () => context
+                      .read<ResponseCubit>()
+                      .deleteEmployeeEntry(state.employeeList, index),
+                );
+              },
+              itemCount: state.employeeList.length,
+            ),
+          );
+        } else if (state.dataState == DataLoadingStates.dataLoading) {
+          return Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).primaryColor),
               ),
-
-            );
-          }
+              const SizedBox(height: 5),
+              Text(
+                'Data loading',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ],
+          ));
+        } else {
+          return RefreshIndicator(
+            onRefresh: () => context.read<ResponseCubit>().getStateData(),
+            child: Center(
+                child: Text('Data loading failed',
+                    style: Theme.of(context).textTheme.headline6)),
+          );
+        }
         },
       ),
     );
