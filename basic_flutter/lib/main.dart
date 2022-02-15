@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       name: '',
       surname: '',
       email: '',
+      employeeId: '',
     );
     return MultiBlocProvider(
       providers: [
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
               Routes.mainRouteName: (context) => const Homepage(),
               Routes.employeeDialogRouteName: (context) => const ProfilePage(),
               Routes.editProfilePageRouteName: (context) =>
-                  const EditProfilePage(),
+                   EditProfilePage(),
               Routes.employeeListScreenRouteName: (context) =>
                   const EmployeesListScreen()
             },

@@ -5,7 +5,8 @@ enum DataLoadingStates {
   dataLoaded,
   dataChanged,
   loadingFailed,
-  loadingError
+  loadingError,
+  noDataAvailable,
 }
 
 class ResponseState {

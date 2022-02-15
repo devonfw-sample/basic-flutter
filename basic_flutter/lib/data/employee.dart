@@ -1,27 +1,24 @@
-import 'dart:convert';
-
-// Employee employeeFromJson(String str) => Employee.fromJson(json.decode(str));
-
-// String employeeToJson(Employee data) => json.encode(data.toJson());
-
 class Employee {
   Employee({
     required this.surname,
     required this.name,
     required this.id,
     required this.email,
+    required this.employeeId,
   });
 
   String surname;
   String name;
   int id;
   String email;
+  String employeeId;
 
   static Employee fromJson(Map<String, dynamic> json) => Employee(
         surname: json["surname"],
         name: json["name"],
         id: json["id"],
         email: json["email"],
+        employeeId: json["employeeId"],
       );
   Employee copy({
     int? id,
@@ -30,15 +27,18 @@ class Employee {
     String? email,
   }) =>
       Employee(
-          id: id ?? this.id,
-          name: name ?? this.name,
-          surname: surname ?? this.surname,
-          email: email ?? this.email);
+        id: id ?? this.id,
+        name: name ?? this.name,
+        surname: surname ?? this.surname,
+        email: email ?? this.email,
+        employeeId: employeeId,
+      );
 
   Map<String, dynamic> toJson() => {
         "surname": surname,
         "name": name,
         "id": id,
         "email": email,
+        "employeeId": employeeId,
       };
 }

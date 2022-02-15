@@ -3,22 +3,33 @@ import 'dart:convert';
 import '../data/employee.dart';
 
 class DataProvider {
-  late List<Employee> response;
+  List<dynamic> response = [];
   bool isDeleted = false;
+  bool noData = false;
 
   Future<List<Employee>> getEmployeesList(String endpoint) async {
-    await http.post(
-      Uri.parse(endpoint),
-      body: [],
-    ).then((resp) {
+    final bodyMap = json.encode(
+        {'employeeId': 'whatever'}); //nur um die Endpoint weiterzulaufen
+    List<Employee> employeeList = [];
+
+    await http.post(Uri.parse(endpoint),
+        body: bodyMap,
+        headers: {"Content-Type": "application/json"}).then((resp) {
       if (resp.statusCode == 200) {
-        final employeeListJson = json.decode(resp.body);
-        for (dynamic currentEmployee in employeeListJson) {
-          response.add(Employee.fromJson(currentEmployee));
+        final Map<String, dynamic> employeeListJson = json.decode(resp.body);
+        response = employeeListJson['content'];
+        if (response.isEmpty) {
+          noData = true;
+          return employeeList;
         }
+        employeeList = response
+            .map((currentEmployee) => Employee.fromJson(currentEmployee))
+            .toList();
+      } else {
+        return Error();
       }
     });
-    return response;
+    return employeeList;
   }
 
   Future<Employee> getEmployeeWithId(String endpoint, String id) async {
@@ -33,6 +44,33 @@ class DataProvider {
       }
     });
     return newEmployee;
+  }
+
+  Future<void> updateEmployeeData(String deleteEndpoint, String insertEndpoint,
+      Employee newEmployee) async {
+    await http
+        .delete(Uri.parse('$deleteEndpoint${newEmployee.id}'))
+        .then((resp1) async {
+      if (resp1.statusCode == 200) {
+        final insertBody = {
+          {
+            "surname": newEmployee.surname,
+            "name": newEmployee.name,
+            "email": newEmployee.email,
+            "employeeId": newEmployee.employeeId,
+            "id": newEmployee.id,
+          }
+        };
+        await http
+            .post(Uri.parse(insertEndpoint), body: insertBody)
+            .then((resp2) {
+          if (resp2.statusCode == 200)
+            print("SHA8AAAAAL");
+          else
+            print('MESH SHA8AAAAAAAL' + resp2.statusCode.toString());
+        });
+      }
+    });
   }
 
   Future<void> deleteEmployee(String id, String endpoint) async {

@@ -19,17 +19,14 @@ class ResponseCubit extends Cubit<ResponseState> {
 
   Future<void> getNewStateData() async {
     try {
-      final Employee employee = await dataProvider.getEmployeeWithId(
-          Endpoints.getEmployeeWithIdEndpoint, (Routes.index + 1).toString());
+      employeeList = await dataProvider
+          .getEmployeesList(Endpoints.searchEmployeeListEndpoint);
 
-      employeeList.add(employee);
-
-      currentListIndex = employeeList.length;
-      if (currentListIndex != 0) {
+      if (employeeList.isNotEmpty) {
         emit(ResponseState(DataLoadingStates.dataLoaded, employeeList,
             isDarkMode, isGridView));
-      } else {
-        emit(ResponseState(DataLoadingStates.loadingFailed, employeeList,
+      } else if (dataProvider.noData) {
+        emit(ResponseState(DataLoadingStates.noDataAvailable, employeeList,
             isDarkMode, isGridView));
       }
     } catch (error) {

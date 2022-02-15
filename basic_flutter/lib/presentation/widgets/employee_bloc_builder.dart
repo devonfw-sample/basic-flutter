@@ -62,6 +62,11 @@ class EmployeeBlocBuilder extends StatelessWidget {
                 ),
               ],
             ));
+          } else if (state.dataState == DataLoadingStates.noDataAvailable) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('No Data Available'),
+            ));
+            return const Center(child: Text('Please try again later'));
           } else {
             return RefreshIndicator(
               onRefresh: () async => await cubitInstance.getNewStateData(),

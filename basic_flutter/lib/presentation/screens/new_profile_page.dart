@@ -61,77 +61,81 @@ class _NewProfilePage extends State<NewProfilePage> {
       );
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-      appBar: buildEditAppBar(context),
-      body: SingleChildScrollView(
-          child: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.1),
-        child: Column(children: [
-          SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              child: ListView(
-                children: [
-                  SizedBox(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.28,
-                      child: ProfileWidget(
-                        isEdit: true,
-                        onClicked: () {},
-                        sentWidget: Positioned(
-                          bottom: 0,
-                          right: 4,
-                          child: buildEditIcon(Colors.blue.shade900, context),
-                        ),
-                      )),
-                  const SizedBox(height: 40),
-                  TextFieldWidget(
-                      label: 'Name',
-                      text: '',
-                      onChanged: (firstName) => setState(() {})),
-                  const SizedBox(height: 40),
-                  TextFieldWidget(
-                      label: 'Surname',
-                      text: '',
-                      onChanged: (lastName) => setState(() {})),
-                  const SizedBox(height: 20),
-                  TextFieldWidget(
-                    label: 'Profession',
-                    text: '',
-                    onChanged: (profession) {},
-                  ),
-                  const SizedBox(height: 20),
-                  TextFieldWidget(
-                    label: 'Country',
-                    text: '',
-                    onChanged: (country) {},
-                  ),
-                  const SizedBox(height: 20),
-                  TextFieldWidget(
-                    label: 'Phone number',
-                    text: '',
-                    onChanged: (phone) {},
-                  ),
-                  const SizedBox(height: 20),
-                  TextFieldWidget(
-                    label: 'Email address',
-                    text: '',
-                    onChanged: (email) {},
-                  ),
-                  const SizedBox(height: 20),
-                  TextFieldWidget(
-                    label: 'Location',
-                    text: '',
-                    onChanged: (location) {},
-                  ),
-                  const SizedBox(height: 40),
-                  ButtonWidget(text: 'Save', onClicked: () {}),
-                  const SizedBox(height: 150),
-                ],
-              )),
-        ]),
-      )));
+  Widget build(BuildContext context) {
+    final Employee dummyEmployee = Employee(
+      email: '',
+      employeeId: '',
+      id: 0,
+      name: '',
+      surname: '',
+    );
+    return Scaffold(
+        appBar: buildEditAppBar(context),
+        body: SingleChildScrollView(
+            child: Container(
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.1),
+          child: Column(children: [
+            SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+                child: ListView(
+                  children: [
+                    SizedBox(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.28,
+                        child: ProfileWidget(
+                          isEdit: true,
+                          onClicked: () {},
+                          sentWidget: Positioned(
+                            bottom: 0,
+                            right: 4,
+                            child: buildEditIcon(Colors.blue.shade900, context),
+                          ),
+                        )),
+                    const SizedBox(height: 40),
+                    TextFieldWidget(
+                        label: 'Name',
+                        text: '',
+                        employeeUnderEdit: dummyEmployee),
+                    const SizedBox(height: 40),
+                    TextFieldWidget(
+                        label: 'Surname',
+                        text: '',
+                        employeeUnderEdit: dummyEmployee),
+                    // const SizedBox(height: 20),
+                    // TextFieldWidget(
+                    //     label: 'Profession',
+                    //     text: '',
+                    //     employeeUnderEdit: dummyEmployee),
+                    // const SizedBox(height: 20),
+                    // TextFieldWidget(
+                    //     label: 'Country',
+                    //     text: '',
+                    //     employeeUnderEdit: dummyEmployee),
+                    // const SizedBox(height: 20),
+                    // TextFieldWidget(
+                    //     label: 'Phone number',
+                    //     text: '',
+                    //     employeeUnderEdit: dummyEmployee),
+                    const SizedBox(height: 20),
+                    TextFieldWidget(
+                        label: 'Email address',
+                        text: '',
+                        employeeUnderEdit: dummyEmployee),
+                    const SizedBox(height: 20),
+                    // TextFieldWidget(
+                    //     label: 'Location',
+                    //     text: '',
+                    //     employeeUnderEdit: dummyEmployee),
+                    const SizedBox(height: 40),
+                    ButtonWidget(text: 'Save', onClicked: () {}),
+                    const SizedBox(height: 150),
+                  ],
+                )),
+          ]),
+        )));
+  }
 }
 
 AppBar buildEditAppBar(BuildContext context) {

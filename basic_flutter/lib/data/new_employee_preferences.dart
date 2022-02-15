@@ -6,5 +6,6 @@ class NewEmployeePreferences {
     name: '',
     surname: '',
     email: '',
+    employeeId: '',
   );
 }
