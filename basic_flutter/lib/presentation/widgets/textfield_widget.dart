@@ -27,7 +27,6 @@ class TextFieldWidget extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextField(
-          // onSubmitted: (enteredText) => _submitData(context, enteredText),
           controller: controller,
           decoration: InputDecoration(
             hintText: label,

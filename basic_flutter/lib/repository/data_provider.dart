@@ -9,7 +9,7 @@ class DataProvider {
 
   Future<List<Employee>> getEmployeesList(String endpoint) async {
     final bodyMap = json.encode(
-        {'employeeId': 'whatever'}); //nur um die Endpoint weiterzulaufen
+        {'employeeId': 'whatever'}); //nur um die Endpoint laufen zu kriegen
     List<Employee> employeeList = [];
 
     await http.post(Uri.parse(endpoint),
