@@ -23,6 +23,7 @@ class ResponseCubit extends Cubit<ResponseState> {
           .getEmployeesList(Endpoints.searchEmployeeListEndpoint);
 
       if (employeeList.isNotEmpty) {
+
         emit(ResponseState(DataLoadingStates.dataLoaded, employeeList,
             isDarkMode, isGridView));
       } else if (dataProvider.noData) {
@@ -35,15 +36,8 @@ class ResponseCubit extends Cubit<ResponseState> {
     }
   }
 
-  //emit in deleteEmployeeEntry and update _detectListUpdate by removing all the logic
   bool _detectListUpdate() {
-    getNewStateData();
-    if (currentListIndex !=
-        state.employeeList.length) //write employeeList.length
-    {
-      emit(ResponseState(
-          DataLoadingStates.dataChanged, employeeList, isDarkMode, isGridView));
-
+    if (currentListIndex != state.employeeList.length) {
       return true;
     } else {
       return false;
@@ -52,20 +46,16 @@ class ResponseCubit extends Cubit<ResponseState> {
 
   void deleteEmployeeEntry(List<Employee> employeeList, int index) async {
     if (_detectListUpdate()) {
-      await dataProvider.deleteEmployee(
-          index.toString(), Endpoints.deleteEmployeeEndpoint);
-      isDeleted = true;
-      dataProvider.response.removeWhere(
-        (employee) {
-          return employee.id ==
-              dataProvider.response[index]
-                  .id; // put the logic in the dataProvider class and just update the employeeList that you have here in cubit
-        },
-      );
+
+
+      getStateData();
+      isDeleted = await dataProvider.deleteEmployee(
+          index.toString(), Endpoints.deleteEmployeeEndpoint, index);
+      emit(ResponseState(DataLoadingStates.dataChanged, employeeList));
     }
   }
 
-  //use the boolean isDeleted in the dataProvider properly and change the future<void> deleteEmployee in DataProvider to Future<bool> in order to use in cubit
+
   void toggleDarkMode() {
     isDarkMode = !isDarkMode;
     emit(ResponseState(
@@ -77,6 +67,7 @@ class ResponseCubit extends Cubit<ResponseState> {
     emit(ResponseState(
         state.dataState, state.employeeList, state.isDarkMode, isGridView));
   }
+
 
   void toggleIsDeleted() {
     isDeleted = !isDeleted;

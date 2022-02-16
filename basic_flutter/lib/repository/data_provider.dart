@@ -3,7 +3,9 @@ import 'dart:convert';
 import '../data/employee.dart';
 
 class DataProvider {
-  List<dynamic> response = [];
+
+  List<Employee> response = [];
+
   bool isDeleted = false;
   bool noData = false;
 
@@ -67,9 +69,14 @@ class DataProvider {
 
   Future<void> deleteEmployee(String id, String endpoint) async {
     await http.delete(Uri.parse('$endpoint"\$"$id')).then((resp) {
+
       if (resp.statusCode == 200) {
+        response.removeWhere((employee) {
+          return employee.id == response[index].id;
+        });
         isDeleted = true;
       }
     });
+    return isDeleted;
   }
 }

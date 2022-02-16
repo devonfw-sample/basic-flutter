@@ -13,6 +13,7 @@ class EmployeeBlocBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final cubitInstance = context.read<ResponseCubit>();
     return RefreshIndicator(
       onRefresh: () async {

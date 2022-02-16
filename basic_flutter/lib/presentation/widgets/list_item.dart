@@ -7,8 +7,8 @@ class ListItem extends StatelessWidget {
   const ListItem({Key? key, required this.employee, required this.deleteEntry})
       : super(key: key);
 
-  final Employee employee;
 
+  final Employee employee;
   final VoidCallback deleteEntry;
 
   void _switchToEmployeePage(BuildContext context) {
@@ -35,6 +35,7 @@ class ListItem extends StatelessWidget {
               style: const TextStyle(
                   fontFamily: 'Raleway-ExtraBold', fontSize: 16),
               softWrap: true,
+
             ),
           ),
           trailing: TextButton.icon(
