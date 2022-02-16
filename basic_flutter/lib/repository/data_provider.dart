@@ -48,9 +48,8 @@ class DataProvider {
 
   Future<void> updateEmployeeData(String deleteEndpoint, String insertEndpoint,
       Employee newEmployee) async {
-    await http
-        .delete(Uri.parse('$deleteEndpoint${newEmployee.id}'))
-        .then((resp1) async {
+    await http.delete(Uri.parse('$deleteEndpoint${newEmployee.id}'),
+        headers: {"Content-Type": "application/json"}).then((resp1) async {
       if (resp1.statusCode == 200) {
         final insertBody = {
           {
@@ -61,14 +60,7 @@ class DataProvider {
             "id": newEmployee.id,
           }
         };
-        await http
-            .post(Uri.parse(insertEndpoint), body: insertBody)
-            .then((resp2) {
-          if (resp2.statusCode == 200)
-            print("SHA8AAAAAL");
-          else
-            print('MESH SHA8AAAAAAAL' + resp2.statusCode.toString());
-        });
+        await http.post(Uri.parse(insertEndpoint), body: insertBody);
       }
     });
   }

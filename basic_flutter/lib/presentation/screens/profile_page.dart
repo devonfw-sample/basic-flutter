@@ -66,7 +66,6 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
                   BuildNameWidget(employee: employeeInstance),
                   const SizedBox(height: 5),
                   BuildContactWidget(employee: employeeInstance),

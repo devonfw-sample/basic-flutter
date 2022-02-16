@@ -25,6 +25,10 @@ class BuildContactWidget extends StatelessWidget {
               leading: const Icon(Icons.email),
               title: Text(employee.email.toString()),
             ),
+            ListTile(
+              leading: const Icon(Icons.account_circle),
+              title: Text(employee.employeeId.toString()),
+            ),
           ],
         ),
       ),

@@ -114,18 +114,7 @@ class EditProfilePage extends StatelessWidget {
                           //         child: EditIcon(color: Colors.blue.shade900),
                           //       ),
                           //     )),
-                          const SizedBox(height: 40),
-                          // TextFieldWidget(
-                          //   label: 'First Name',
-                          //   text: receivedEmployeeInstance.name,
-                          //   employeeUnderEdit: emptyEmployee,
-                          // ),
-                          // const SizedBox(height: 20),
-                          // TextFieldWidget(
-                          //     label: 'Last Name',
-                          //     text: receivedEmployeeInstance.surname,
-                          //     employeeUnderEdit: emptyEmployee),
-                          const SizedBox(height: 40),
+                          const SizedBox(height: 10),
                           NameTextField(
                             label: 'ID',
                             controller: idController,
@@ -139,12 +128,14 @@ class EditProfilePage extends StatelessWidget {
                             submitData: _submitData,
                             employeeUnderEdit: receivedEmployeeInstance,
                           ),
+                          const SizedBox(height: 20),
                           NameTextField(
                             label: 'Last Name',
                             controller: lastNameController,
                             submitData: _submitData,
                             employeeUnderEdit: receivedEmployeeInstance,
                           ),
+                          const SizedBox(height: 20),
                           emailTextField(context),
                           const SizedBox(height: 40),
                           ButtonWidget(
