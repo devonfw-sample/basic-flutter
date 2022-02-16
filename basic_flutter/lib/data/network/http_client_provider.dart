@@ -1,3 +1,5 @@
+/// This class is used for handling the authorization of the jwt token
+/// sent on adding an authentication system to the application
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
