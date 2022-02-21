@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const MyHomePage(
-        title: "Employee App",
+        title: 'Employee App',
       ),
       theme: ThemeData(
         primaryColor: Colors.blue.shade900,
@@ -59,10 +59,15 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(
-              'https://raw.githubusercontent.com/devonfw-sample/basic-flutter/45cadd7afb1c0d891c380cd76f068c06426b50b6/basic_flutter/assets/logo.PNG',
-              height: 300,
+            // Image.network(
+            //   'https://raw.githubusercontent.com/devonfw-sample/basic-flutter/45cadd7afb1c0d891c380cd76f068c06426b50b6/basic_flutter/assets/logo.PNG',
+            //   height: 300,
+            //   width: 300,
+            // ),
+            const Image(
+              image: AssetImage('assets/logo.png'),
               width: 300,
+              height: 300,
             ),
             const SizedBox(height: 20),
             const CircularProgressIndicator(
