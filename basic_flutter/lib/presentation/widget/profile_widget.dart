@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
@@ -17,6 +16,7 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme.primary;
     return Center(
       child: Stack(
         children: [
@@ -28,15 +28,12 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = imagePath.contains('https://')
-        ? NetworkImage(imagePath)
-        : FileImage(File(imagePath));
-
+    final image = AssetImage(imagePath);
     return ClipOval(
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: image as ImageProvider,
+          image: image,
           fit: BoxFit.cover,
           width: 200,
           height: 200,
