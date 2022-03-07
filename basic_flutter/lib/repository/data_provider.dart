@@ -47,23 +47,28 @@ class DataProvider {
     return newEmployee;
   }
 
-  Future<void> updateEmployeeData(String deleteEndpoint, String insertEndpoint,
-      Employee newEmployee) async {
-    await http.delete(Uri.parse('$deleteEndpoint${newEmployee.id}'),
-        headers: {"Content-Type": "application/json"}).then((resp1) async {
-      if (resp1.statusCode == 200) {
-        final insertBody = {
-          {
-            "surname": newEmployee.surname,
-            "name": newEmployee.name,
-            "email": newEmployee.email,
-            "employeeId": newEmployee.employeeId,
-            "id": newEmployee.id,
-          }
-        };
-        await http.post(Uri.parse(insertEndpoint), body: insertBody);
+  Future<bool> updateEmployeeData(
+      String putEndpoint, Employee newEmployee) async {
+    final bodyMap = json.encode({
+      'name': newEmployee.name,
+      'surname': newEmployee.surname,
+      'employeeId': newEmployee.id,
+      'email': newEmployee.email,
+    });
+    final showEditSnackBar = await http
+        .put(
+            Uri.parse(
+              putEndpoint + newEmployee.id.toString(),
+            ),
+            body: bodyMap)
+        .then((resp) {
+      if (resp.statusCode == 200) {
+        return true;
+      } else {
+        return false;
       }
     });
+    return showEditSnackBar;
   }
 
   Future<bool> deleteEmployee(String id, String endpoint, int index) async {

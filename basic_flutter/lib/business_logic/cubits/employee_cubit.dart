@@ -16,8 +16,8 @@ class EmployeeCubit extends Cubit<EmployeeState> {
       for (Employee currentEmployee in stateEmployeeList) {
         if (currentEmployee.id == oldDataEmployee.id) {
           currentEmployee = newDataEmployee;
-          dataProvider.updateEmployeeData(Endpoints.deleteEmployeeEndpoint,
-              Endpoints.insertEmployeeEndpoint, currentEmployee);
+          dataProvider.updateEmployeeData(
+              Endpoints.deleteEmployeeEndpoint, currentEmployee);
           emit(EmployeeState(currentEmployee));
           break;
         }

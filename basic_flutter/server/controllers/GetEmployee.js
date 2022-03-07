@@ -7,6 +7,7 @@ module.exports.employeemanagementV1EmployeeIdGET = function employeemanagementV1
   GetEmployee.employeemanagementV1EmployeeIdGET(id)
     .then(function (response) {
       utils.writeJson(res, response);
+      console.log('get request result printed');
     })
     .catch(function (response) {
       utils.writeJson(res, response);
