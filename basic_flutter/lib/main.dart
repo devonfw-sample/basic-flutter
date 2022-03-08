@@ -59,11 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Image.network(
-            //   'https://raw.githubusercontent.com/devonfw-sample/basic-flutter/45cadd7afb1c0d891c380cd76f068c06426b50b6/basic_flutter/assets/logo.PNG',
-            //   height: 300,
-            //   width: 300,
-            // ),
             const Image(
               image: AssetImage('assets/logo.png'),
               width: 300,
