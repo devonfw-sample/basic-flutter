@@ -2,6 +2,9 @@ import '/presentation/screens/employee_dialog.dart';
 
 import '/presentation/screens/employees_list_screen.dart';
 import 'package:flutter/material.dart';
+
+import './screens/splash_screen.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
@@ -12,6 +15,7 @@ import 'business_logic/cubits/response_state.dart';
 import '/presentation/screens/employees_list_screen.dart';
 import './data/routes.dart';
 import '/presentation/screens/employee_dialog.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -25,6 +29,7 @@ class MyApp extends StatelessWidget {
   final bool isGridViewDefault = false;
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider(
       create: (context) => ResponseCubit(
           dataProvider, employeeList, isDarkModeDefault, isGridViewDefault),
@@ -86,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialStateProperty.all(Theme.of(context).primaryColor),
           ),
         ),
-      ),
+    ),
     );
   }
 }
