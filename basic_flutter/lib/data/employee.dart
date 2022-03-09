@@ -1,19 +1,44 @@
 class Employee {
-  late String firstName;
-  late String lastName;
-  late int id;
-  late String email;
+  Employee({
+    required this.surname,
+    required this.name,
+    required this.id,
+    required this.email,
+    required this.employeeId,
+  });
 
-  Employee(
-      {required this.firstName,
-      required this.email,
-      required this.id,
-      required this.lastName});
+  String surname;
+  String name;
+  int id;
+  String email;
+  String employeeId;
 
-  Employee.fromJson(Map<String, dynamic> json) {
-    firstName = json['name'];
-    lastName = json['surname'];
-    id = json['employeeId'];
-    email = json['email'];
-  }
+  static Employee fromJson(Map<String, dynamic> json) => Employee(
+        surname: json["surname"],
+        name: json["name"],
+        id: json["id"],
+        email: json["email"],
+        employeeId: json["employeeId"],
+      );
+  Employee copy({
+    int? id,
+    String? name,
+    String? surname,
+    String? email,
+  }) =>
+      Employee(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        surname: surname ?? this.surname,
+        email: email ?? this.email,
+        employeeId: employeeId,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "surname": surname,
+        "name": name,
+        "id": id,
+        "email": email,
+        "employeeId": employeeId,
+      };
 }

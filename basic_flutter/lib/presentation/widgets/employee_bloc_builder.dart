@@ -14,47 +14,69 @@ class EmployeeBlocBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return BlocBuilder<ResponseCubit, ResponseState>(
-      builder: (context, state) {
-        if (state.dataState == DataLoadingStates.dataLoaded) {
-          return RefreshIndicator(
-            onRefresh: () => context.read<ResponseCubit>().getStateData(),
-            child: ListView.builder(
-              itemBuilder: (ctx, index) {
-                return ListItem(
-                  employee: state.employeeList[index],
-                  deleteEntry: () => context
-                      .read<ResponseCubit>()
-                      .deleteEmployeeEntry(state.employeeList, index),
-                );
-              },
-              itemCount: state.employeeList.length,
-            ),
-          );
-        } else if (state.dataState == DataLoadingStates.dataLoading) {
-          return Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                    Theme.of(context).primaryColor),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                'Data loading',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ],
-          ));
-        } else {
-          return RefreshIndicator(
-            onRefresh: () => context.read<ResponseCubit>().getStateData(),
-            child: Center(
+    final cubitInstance = context.read<ResponseCubit>();
+    return RefreshIndicator(
+      onRefresh: () async {
+        await cubitInstance.getNewStateData();
+      },
+      child: BlocBuilder<ResponseCubit, ResponseState>(
+        builder: (context, state) {
+          if (state.dataState == DataLoadingStates.dataLoaded) {
+            if (state.isGridView) {
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: 10,
+                    crossAxisCount: 2,
+                    childAspectRatio: 3 / 2,
+                    crossAxisSpacing: 10),
+                itemBuilder: (context, index) {
+                  return EmployeeGridItem(
+                      indexedEmployee: state.employeeList[index]);
+                },
+                itemCount: state.employeeList.length,
+              );
+            } else {
+              return ListView.builder(
+                itemBuilder: (ctx, index) {
+                  return ListItem(
+                    employee: state.employeeList[index],
+                    deleteEntry: () => cubitInstance.deleteEmployeeEntry(
+                        state.employeeList, index),
+                  );
+                },
+                itemCount: state.employeeList.length,
+              );
+            }
+          } else if (state.dataState == DataLoadingStates.dataLoading) {
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  'Data loading',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
+            ));
+          } else if (state.dataState == DataLoadingStates.noDataAvailable) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('No Data Available'),
+            ));
+            return const Center(child: Text('Please try again later'));
+          } else {
+            return RefreshIndicator(
+              onRefresh: () async => await cubitInstance.getNewStateData(),
+              child: Center(
                 child: Text('Data loading failed',
-                    style: Theme.of(context).textTheme.headline6)),
-          );
-        }
+                    style: Theme.of(context).textTheme.headline6),
+              ),
+            );
+          }
         },
       ),
     );

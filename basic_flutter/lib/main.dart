@@ -1,49 +1,67 @@
-import '/presentation/screens/employee_dialog.dart';
-
-import '/presentation/screens/employees_list_screen.dart';
+import 'package:basic_flutter/presentation/screens/employees_list_screen.dart';
+import 'business_logic/cubits/response_cubit.dart';
+import 'business_logic/cubits/response_state.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 
 import './screens/splash_screen.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-
-import 'data/employee.dart';
-import '/repository/data_provider.dart';
-import '/business_logic/cubits/response_cubit.dart';
-import 'business_logic/cubits/response_state.dart';
-import '/presentation/screens/employees_list_screen.dart';
+import '../../presentation/screens/profile_page.dart';
+import 'business_logic/cubits/employee_cubit.dart';
+import 'business_logic/cubits/employee_state.dart';
+import './data/employee.dart';
 import './data/routes.dart';
-import '/presentation/screens/employee_dialog.dart';
+import './presentation/screens/edit_profile_page.dart';
 
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  static const String title = 'Employee Profile';
   MyApp({Key? key}) : super(key: key);
-  final DataProvider dataProvider = DataProvider();
   final List<Employee> employeeList = [];
-  final bool isDarkModeDefault = false;
-  final bool isGridViewDefault = false;
+
   @override
   Widget build(BuildContext context) {
-
-    return BlocProvider(
-      create: (context) => ResponseCubit(
-          dataProvider, employeeList, isDarkModeDefault, isGridViewDefault),
-      child: BlocBuilder<ResponseCubit, ResponseState>(
-        builder: (context, state) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "Employee App",
-          home: const MyHomePage(),
-          routes: {
-            Routes.employeeListScreenRouteName: (context) =>
-                const EmployeesListScreen(),
-            Routes.employeeDialogRouteName: (context) => const EmployeeDialog(),
-          },
-          darkTheme: ThemeData.dark(),
+    Employee employeeInitializer = Employee(
+      id: 1,
+      name: '',
+      surname: '',
+      email: '',
+      employeeId: '',
+    );
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => EmployeeCubit(
+              EmployeeState(employeeInitializer), employeeInitializer),
+        ),
+        BlocProvider(
+          create: (context) => ResponseCubit(
+            employeeList,
+            false,
+            false,
+          ),
+        ),
+      ],
+      child: ThemeProvider(
+        child: Builder(
+          builder: (context) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeProvider.of(context),
+            title: title,
+            routes: {
+              Routes.mainRouteName: (context) => const Homepage(),
+              Routes.employeeDialogRouteName: (context) => const ProfilePage(),
+              Routes.editProfilePageRouteName: (context) =>
+                   EditProfilePage(),
+              Routes.employeeListScreenRouteName: (context) =>
+                  const EmployeesListScreen()
+            },
+            darkTheme: ThemeData.dark(),
           theme: ThemeData(
             primaryColor: Colors.blue.shade900,
             splashColor: Colors.blue,
@@ -54,44 +72,41 @@ class MyApp extends StatelessWidget {
                       fontFamily: 'Raleway-Bold',
                       fontSize: 20,
                       color: state.isDarkMode ? Colors.white : Colors.black),
-                ),
+
           ),
         ),
-
       ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class Homepage extends StatelessWidget {
+  const Homepage({Key? key}) : super(key: key);
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Employee App'),
-        backgroundColor: Theme.of(context).primaryColor,
-        centerTitle: true,
-      ),
-      backgroundColor: Theme.of(context).canvasColor,
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.employeeListScreenRouteName);
-          },
-          child: const Text('Get Employees List'),
-          style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(Theme.of(context).primaryColor),
-          ),
-        ),
-    ),
+    final cubitInstance = context.read<ResponseCubit>();
+    return BlocBuilder<ResponseCubit, ResponseState>(
+      builder: (context, state) {
+        return Scaffold(
+            appBar: AppBar(
+              title: const Text("text"),
+              backgroundColor: Colors.blue.shade900,
+            ),
+            body: Center(
+                child: TextButton(
+              style:
+                  TextButton.styleFrom(backgroundColor: Colors.blue.shade900),
+              onPressed: () {
+                cubitInstance.getNewStateData();
+                Navigator.of(context)
+                    .pushNamed(Routes.employeeListScreenRouteName);
+              },
+              child: const Text("get next employee",
+                  style: TextStyle(color: Colors.white)),
+            )));
+      },
+
     );
   }
 }
