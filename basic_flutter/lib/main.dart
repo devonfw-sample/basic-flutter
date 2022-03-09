@@ -3,6 +3,8 @@ import 'business_logic/cubits/response_cubit.dart';
 import 'business_logic/cubits/response_state.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+
+import './screens/splash_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/screens/profile_page.dart';
 import 'business_logic/cubits/employee_cubit.dart';
@@ -13,6 +15,7 @@ import './presentation/screens/edit_profile_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MyApp());
 }
 
@@ -58,6 +61,18 @@ class MyApp extends StatelessWidget {
               Routes.employeeListScreenRouteName: (context) =>
                   const EmployeesListScreen()
             },
+            darkTheme: ThemeData.dark(),
+          theme: ThemeData(
+            primaryColor: Colors.blue.shade900,
+            splashColor: Colors.blue,
+            cardColor: Colors.white,
+            canvasColor: state.isDarkMode ? Colors.black87 : Colors.white,
+            textTheme: ThemeData.light().textTheme.copyWith(
+                  headline6: TextStyle(
+                      fontFamily: 'Raleway-Bold',
+                      fontSize: 20,
+                      color: state.isDarkMode ? Colors.white : Colors.black),
+
           ),
         ),
       ),
@@ -91,6 +106,7 @@ class Homepage extends StatelessWidget {
                   style: TextStyle(color: Colors.white)),
             )));
       },
+
     );
   }
 }
