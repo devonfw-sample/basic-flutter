@@ -1,47 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../widget/build_circle.dart';
-import '../widget/button_widget.dart';
-import '../widget/profile_widget.dart';
-import '../widget/textfield_widget.dart';
-import '../widget/build_edit_appbar.dart';
+import '../widgets/button_widget.dart';
+import '../widgets/profile_widget.dart';
+import '../widgets/textfield_widget.dart';
+import '../widgets/build_edit_appbar.dart';
 import '../../business_logic/cubits/dialog_cubit.dart';
 import '../../business_logic/cubits/dialog_state.dart';
 import '../../../../data/employee.dart';
 
-class NewProfilePage extends StatelessWidget {
-  NewProfilePage({Key? key}) : super(key: key);
+class NewProfilePage {
   Employee employee = const Employee(
     imagePath: 'assets/image.png',
-    id: '',
-    firstName: '',
-    lastName: '',
-    profession: '',
-    country: '',
+    name: '',
+    surename: '',
+    employeeId: '',
     email: '',
-    phone: '',
-    location: '',
-    isDarkMode: false,
   );
 
-  Widget buildEditIcon(Color color, BuildContext context, Employee employee) =>
-      BuildCircle();
-
-  @override
   Widget build(BuildContext context) {
     const List<String> labels = [
-      'First Name',
-      'Last Name',
-      'Profession',
-      'Country',
+      'Name',
+      'Surename',
+      'Employee ID',
       'Email address',
-      'Phone number',
-      'Location'
     ];
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
-        child: BuildEditAppbar().build(context),
+        preferredSize: const Size.fromHeight(50.0),
+        child: const BuildEditAppbar().build(context),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -62,15 +48,11 @@ class NewProfilePage extends StatelessWidget {
                           imagePath: 'assets/image.png',
                           isEdit: true,
                           onClicked: () {},
-                          sentWidget: Positioned(
-                            bottom: 0,
-                            right: 4,
-                            child: buildEditIcon(
-                                Colors.blue.shade900, context, employee),
-                          ),
                         ),
                       ),
-                      const SizedBox(height: 40),
+                      SizedBox(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.10),
                       ...labels.map(
                         (label) {
                           return Column(
@@ -81,12 +63,17 @@ class NewProfilePage extends StatelessWidget {
                                 onChanged: (editingText) => getLabelFunction(
                                     label, employee, editingText),
                               ),
-                              const SizedBox(height: 20)
+                              SizedBox(
+                                  width: double.infinity,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.05),
                             ],
                           );
                         },
                       ).toList(),
-                      const SizedBox(height: 40),
+                      SizedBox(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.02),
                       ButtonWidget(
                           text: 'Save',
                           onClicked: () {
@@ -94,7 +81,6 @@ class NewProfilePage extends StatelessWidget {
                                 .read<DialogCubit>()
                                 .changeEmployeeData(employee);
                           }),
-                      const SizedBox(height: 150),
                     ],
                   ),
                 ),
@@ -109,26 +95,17 @@ class NewProfilePage extends StatelessWidget {
   void getLabelFunction(
       String label, Employee employeeUnderEdit, String editingText) {
     switch (label) {
-      case 'First Name':
-        () => employeeUnderEdit.copy(firstName: editingText);
+      case 'Name':
+        () => employeeUnderEdit.copy(name: editingText);
         break;
-      case 'Last Name':
-        () => employeeUnderEdit.copy(lastName: editingText);
+      case 'Surename':
+        () => employeeUnderEdit.copy(surename: editingText);
         break;
-      case 'Country':
-        () => employeeUnderEdit.copy(country: editingText);
-        break;
-      case 'Profession':
-        () => employeeUnderEdit.copy(profession: editingText);
-        break;
-      case 'Phone number':
-        () => employeeUnderEdit.copy(phone: editingText);
+      case 'Employee Id':
+        () => employeeUnderEdit.copy(employeeId: editingText);
         break;
       case 'Email address':
         () => employeeUnderEdit.copy(email: editingText);
-        break;
-      case 'Location':
-        () => employeeUnderEdit.copy(location: editingText);
         break;
     }
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:basic_flutter/presentation/screens/new_profile_page.dart';
-import '../widget/build_edit_appbar.dart';
+import '../widgets/build_edit_appbar.dart';
 import '../../business_logic/cubits/dialog_cubit.dart';
 import '../../business_logic/cubits/dialog_state.dart';
 
@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
     return BlocBuilder<DialogCubit, DialogState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: PreferredSize(
+          appBar: const PreferredSize(
             preferredSize: Size.fromHeight(50.0),
             child: BuildEditAppbar(),
           ),
@@ -23,7 +23,7 @@ class Home extends StatelessWidget {
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     return ListTile(
-                        title: Text(state.employeeList[index].firstName));
+                        title: Text(state.employeeList[index].name));
                   },
                   itemCount: state.employeeList.isEmpty
                       ? 0
@@ -41,8 +41,8 @@ class Home extends StatelessWidget {
             foregroundColor: Colors.white,
             backgroundColor: Colors.blue.shade900,
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => NewProfilePage()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => NewProfilePage().build(context)));
             },
           ),
         );

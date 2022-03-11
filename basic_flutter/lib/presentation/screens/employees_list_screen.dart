@@ -39,6 +39,5 @@ class _EmployeesListScreenState extends State<EmployeesListScreen> {
         body: const EmployeeBlocBuilder(),
       );
     });
-
   }
 }

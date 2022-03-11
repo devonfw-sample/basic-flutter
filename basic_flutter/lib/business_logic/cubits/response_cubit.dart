@@ -1,11 +1,9 @@
-
 import 'package:bloc/bloc.dart';
 
 import '/../repository/data_provider.dart';
 import '/business_logic/cubits/response_state.dart';
 import '../../data/employee.dart';
 import '../../data/endpoints.dart';
-
 
 class ResponseCubit extends Cubit<ResponseState> {
   late List<Employee> employeeList;
@@ -21,10 +19,10 @@ class ResponseCubit extends Cubit<ResponseState> {
     getStateData();
   }
 
-
   Future<void> getStateData() async {
     try {
-      employeeList = await dataProvider.getEmployeesList(Endpoints.searchEmployeeListEndpoint);
+      employeeList = await dataProvider
+          .getEmployeesList(Endpoints.searchEmployeeListEndpoint);
 
       currentListIndex = employeeList.length;
       if (currentListIndex != 0) {
@@ -37,7 +35,6 @@ class ResponseCubit extends Cubit<ResponseState> {
     } catch (error) {
       emit(ResponseState(DataLoadingStates.loadingError, employeeList,
           isDarkMode, isGridView));
-
     }
   }
 
@@ -59,10 +56,9 @@ class ResponseCubit extends Cubit<ResponseState> {
       isDeleted = true;
       dataProvider.response.removeWhere(
         (employee) {
-          return employee.id == dataProvider.response[index].id;
+          return employee.employeeId == dataProvider.response[index].employeeId;
         },
       );
-
     }
   }
 

@@ -18,7 +18,6 @@ class ListItem extends StatelessWidget {
   final int index;
   final VoidCallback deleteEntry;
 
-
   void _switchToEmployeePage(BuildContext context) {
     Navigator.pushNamed(context, Routes.employeeDialogRouteName);
   }
@@ -36,7 +35,7 @@ class ListItem extends StatelessWidget {
             title: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                  '${employeeList[index].firstName} ${employeeList[index].lastName} ',
+                  '${employeeList[index].name} ${employeeList[index].surename} ',
                   style: Theme.of(context).textTheme.headline6),
             ),
             subtitle: Padding(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../widgets/list_item.dart';
 import '../../business_logic/cubits/response_cubit.dart';
 import '../../business_logic/cubits/response_state.dart';
@@ -21,7 +20,6 @@ class EmployeeBlocBuilder extends StatelessWidget {
       child: BlocBuilder<ResponseCubit, ResponseState>(
         builder: (context, state) {
           if (state.dataState == DataLoadingStates.dataLoaded) {
-
             if (state.isGridView) {
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -48,7 +46,6 @@ class EmployeeBlocBuilder extends StatelessWidget {
                 itemCount: state.employeeList.length,
               );
             }
-
           } else if (state.dataState == DataLoadingStates.dataLoading) {
             return Center(
                 child: Column(
@@ -72,7 +69,6 @@ class EmployeeBlocBuilder extends StatelessWidget {
                 child: Text('Data loading failed',
                     style: Theme.of(context).textTheme.headline6),
               ),
-
             );
           }
         },

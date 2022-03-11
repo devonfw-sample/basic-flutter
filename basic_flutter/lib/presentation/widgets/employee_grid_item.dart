@@ -10,7 +10,7 @@ class EmployeeGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridTile(
-        child: Text('${indexedEmployee.firstName} ${indexedEmployee.lastName}',
+        child: Text('${indexedEmployee.name} ${indexedEmployee.surename}',
             style: Theme.of(context).textTheme.headline6),
         footer: Text(
           indexedEmployee.email,

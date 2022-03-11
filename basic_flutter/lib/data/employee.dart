@@ -1,88 +1,53 @@
 class Employee {
   static const Employee employee = Employee(
     imagePath: 'assets/image.png',
-    id: '',
-    firstName: '',
-    lastName: '',
-    profession: '',
-    country: '',
+    name: '',
+    surename: '',
+    employeeId: '',
     email: '',
-    phone: '',
-    location: '',
-    isDarkMode: false,
   );
 
   final String imagePath;
-  final String id;
-  final String firstName;
-  final String lastName;
-  final String profession;
-  final String country;
+  final String name;
+  final String surename;
+  final String employeeId;
   final String email;
-  final String phone;
-  final String location;
-  final bool isDarkMode;
 
   const Employee({
     required this.imagePath,
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.profession,
-    required this.country,
+    required this.name,
+    required this.surename,
+    required this.employeeId,
     required this.email,
-    required this.phone,
-    required this.location,
-    required this.isDarkMode,
   });
 
   Employee copy({
     String? imagePath,
-    String? id,
-    String? firstName,
-    String? lastName,
-    String? profession,
-    String? country,
+    String? name,
+    String? surename,
+    String? employeeId,
     String? email,
-    String? phone,
-    String? location,
-    bool? isDarkMode,
   }) =>
       Employee(
           imagePath: imagePath ?? this.imagePath,
-          id: id ?? this.id,
-          firstName: firstName ?? this.firstName,
-          lastName: lastName ?? this.lastName,
-          profession: profession ?? this.profession,
-          country: country ?? this.country,
-          email: email ?? this.email,
-          phone: phone ?? this.phone,
-          location: location ?? this.location,
-          isDarkMode: isDarkMode ?? this.isDarkMode);
+          name: name ?? this.name,
+          surename: surename ?? this.surename,
+          employeeId: employeeId ?? this.employeeId,
+          email: email ?? this.email);
 
   static Employee fromJson(Map<String, dynamic> json) => Employee(
         imagePath: json['imagePath'],
-        id: json['ID'],
-        firstName: json['First Name'],
-        lastName: json['last Name'],
-        profession: json['profession'],
-        country: json['country'],
-        email: json['email'],
-        phone: json['phone'],
-        location: json['location'],
-        isDarkMode: json['isDarkMode'],
+        name: json['Name'],
+        surename: json['Surename'],
+        employeeId: json['Employee ID'],
+        email: json['Email address'],
       );
 
   Map<String, dynamic> toJson() => {
         'imagePath': imagePath,
-        'ID': id,
-        'First Name': firstName,
-        'Last Name': lastName,
-        'profession': profession,
-        'country': country,
-        'email': email,
-        'phone': phone,
-        'location': location,
-        'isDarkMode': isDarkMode,
+        'Name': name,
+        'Surename': surename,
+        'Employee ID': employeeId,
+        'Email address': email,
       };
 }
