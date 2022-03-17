@@ -7,12 +7,12 @@ import '../../data/endpoints.dart';
 import '../../data/routes.dart';
 
 class ResponseCubit extends Cubit<ResponseState> {
-  List<Employee> employeeList = []; //remove late and create an empty list
+  List<Employee> employeeList = [];
   final DataProvider dataProvider = DataProvider();
-  int currentListIndex = 0; //remove late and create a zero start value
+  int currentListIndex = 0;
   bool isDarkMode;
   bool isGridView;
-  bool isDeleted = false; //remove late and set to true or false as start value
+  bool isDeleted = false;
   ResponseCubit(this.employeeList, this.isDarkMode, this.isGridView)
       : super(ResponseState(DataLoadingStates.dataLoading, employeeList,
             isDarkMode, isGridView));

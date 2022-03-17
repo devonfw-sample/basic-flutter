@@ -19,9 +19,7 @@ exports.employeemanagementV1EmployeePOST = function(body) {
     body.modificationCounter = body.modificationCounter | 0;
     data.push(body);
     resolve(body);
-    }
-    
-    
+    }  
   });
 }
 

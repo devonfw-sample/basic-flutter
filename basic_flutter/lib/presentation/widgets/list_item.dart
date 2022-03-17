@@ -7,7 +7,6 @@ class ListItem extends StatelessWidget {
   const ListItem({Key? key, required this.employee, required this.deleteEntry})
       : super(key: key);
 
-
   final Employee employee;
   final VoidCallback deleteEntry;
 
@@ -19,9 +18,10 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      highlightColor: Colors.blue.shade900,
       onTap: () => _switchToEmployeePage(context),
       child: Card(
-        elevation: 10,
+        elevation: 1,
         child: ListTile(
           title: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -35,7 +35,6 @@ class ListItem extends StatelessWidget {
               style: const TextStyle(
                   fontFamily: 'Raleway-ExtraBold', fontSize: 16),
               softWrap: true,
-
             ),
           ),
           trailing: TextButton.icon(

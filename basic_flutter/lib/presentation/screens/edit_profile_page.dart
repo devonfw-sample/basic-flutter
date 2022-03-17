@@ -30,17 +30,17 @@ class EditProfilePage extends StatelessWidget {
   void _submitData(BuildContext context, String enteredText, String label,
       Employee employeeUnderEdit) {
     final String detectedLabel = detectLabel(label);
-    if (detectedLabel == 'First Name') {
+    if (detectedLabel == 'name') {
       if (checkName(enteredText)) employeeUnderEdit.name = enteredText;
-    } else if (detectedLabel == 'Last Name') {
+    } else if (detectedLabel == 'surname') {
       if (checkName(enteredText)) employeeUnderEdit.surname = enteredText;
-    } else if (detectedLabel == 'ID ') {
+    } else if (detectedLabel == 'employeId') {
       if (checkId(enteredText)) employeeUnderEdit.employeeId = enteredText;
     }
   }
 
   bool checkName(String name) {
-    return double.parse(name) == null;
+    return double.tryParse(name) == null;
   }
 
   bool checkId(String employeeId) {
@@ -113,21 +113,21 @@ class EditProfilePage extends StatelessWidget {
                           //     )),
                           const SizedBox(height: 10),
                           NameTextField(
-                            label: 'ID',
+                            label: 'employeeId',
                             controller: idController,
                             employeeUnderEdit: receivedEmployeeInstance,
                             submitData: _submitData,
                           ),
                           const SizedBox(height: 20),
                           NameTextField(
-                            label: 'First Name',
+                            label: 'name',
                             controller: nameController,
                             submitData: _submitData,
                             employeeUnderEdit: receivedEmployeeInstance,
                           ),
                           const SizedBox(height: 20),
                           NameTextField(
-                            label: 'Last Name',
+                            label: 'surname',
                             controller: lastNameController,
                             submitData: _submitData,
                             employeeUnderEdit: receivedEmployeeInstance,
@@ -142,6 +142,7 @@ class EditProfilePage extends StatelessWidget {
                                     emptyEmployee,
                                     receivedEmployeeInstance,
                                     responseState.employeeList);
+                                context.read<ResponseCubit>().getNewStateData();
                                 Navigator.of(context).pop();
                               }),
                           const SizedBox(height: 150),

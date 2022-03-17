@@ -12,6 +12,7 @@ class Employee {
   int id;
   String email;
   String employeeId;
+  bool isDeleted = false;
 
   static Employee fromJson(Map<String, dynamic> json) => Employee(
         surname: json["surname"],

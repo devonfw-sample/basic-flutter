@@ -25,12 +25,23 @@ class PopUpMenuWidget extends StatelessWidget {
       itemBuilder: (context) => [
         PopupMenuItem(
           value: 0,
-          child: Row(
-            children: const <Widget>[
-              Text(
-                'Grid View',
-                style: TextStyle(
-                  fontSize: 14,
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.all(8),
+                child: Text(
+                  'Grid View',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              Divider(height: 5),
+              Container(
+                margin: EdgeInsets.all(8),
+                child: Text(
+                  'Delete Items',
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
             ],

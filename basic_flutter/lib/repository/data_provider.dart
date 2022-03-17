@@ -7,10 +7,11 @@ class DataProvider {
 
   bool isDeleted = false;
   bool noData = false;
+  bool isUpdated = false;
 
   Future<List<Employee>> getEmployeesList(String endpoint) async {
-    final bodyMap = json.encode(
-        {'employeeId': 'whatever'}); //nur um die Endpoint laufen zu kriegen
+    final bodyMap =
+        json.encode({'employeeId': 'whatever'}); //just to run the endpoint
     List<Employee> employeeList = [];
 
     await http.post(Uri.parse(endpoint),
@@ -48,27 +49,27 @@ class DataProvider {
   }
 
   Future<bool> updateEmployeeData(
-      String putEndpoint, Employee newEmployee) async {
-    final bodyMap = json.encode({
-      'name': newEmployee.name,
-      'surname': newEmployee.surname,
-      'employeeId': newEmployee.id,
-      'email': newEmployee.email,
-    });
-    final showEditSnackBar = await http
-        .put(
-            Uri.parse(
-              putEndpoint + newEmployee.id.toString(),
-            ),
-            body: bodyMap)
-        .then((resp) {
-      if (resp.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-    return showEditSnackBar;
+      String updateEndpoint, Employee newEmployee) async {
+    try {
+      final queryParametersMap = json.encode({
+        'name': newEmployee.name,
+        'surname': newEmployee.surname,
+        'employeeId': newEmployee.employeeId,
+        'email': newEmployee.email,
+        'id': newEmployee.id
+      });
+      // final uri = Uri.http(
+      //     updateEndpoint, newEmployee.id.toString(), queryParametersMap);
+      final String endpoint = updateEndpoint + newEmployee.id.toString();
+      await http.put(Uri.parse(endpoint),
+          body: queryParametersMap,
+          headers: {"Content-Type": "application/json"}).then((resp) {
+        if (resp.statusCode == 200) isUpdated = true;
+      });
+    } catch (error) {
+      print(error);
+    }
+    return isUpdated;
   }
 
   Future<bool> deleteEmployee(String id, String endpoint, int index) async {
