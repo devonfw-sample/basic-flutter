@@ -22,21 +22,20 @@ class MyApp extends StatelessWidget {
   static const String title = 'Employee Profile';
   MyApp({Key? key}) : super(key: key);
   final List<Employee> employeeList = [];
+  Employee employeeInitializer = Employee(
+    id: 1,
+    name: '',
+    surname: '',
+    email: '',
+    employeeId: '',
+  );
 
   @override
   Widget build(BuildContext context) {
-    Employee employeeInitializer = Employee(
-      id: 1,
-      name: '',
-      surname: '',
-      email: '',
-      employeeId: '',
-    );
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => EmployeeCubit(
-              EmployeeState(employeeInitializer), employeeInitializer),
+          create: (context) => EmployeeCubit(employeeInitializer),
         ),
         BlocProvider(
           create: (context) => ResponseCubit(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../presentation/screens/edit_profile_page.dart';
+import 'build_circle.dart';
 
 class ProfileWidget extends StatelessWidget {
   final bool isEdit;
@@ -24,16 +25,16 @@ class ProfileWidget extends StatelessWidget {
     );
   }
 
-  Widget buildEditIcon(Color color, BuildContext context) => buildCircle(
+  Widget buildEditIcon(Color color, BuildContext context) => BuildCircle(
         color: Colors.white,
         all: 3,
-        child: buildCircle(
+        child: BuildCircle(
           color: color,
           all: 10,
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>  EditProfilePage()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => EditProfilePage()));
             },
             child: Icon(
               isEdit ? Icons.add_a_photo : Icons.edit,
@@ -41,19 +42,6 @@ class ProfileWidget extends StatelessWidget {
               size: 20,
             ),
           ),
-        ),
-      );
-
-  Widget buildCircle({
-    required Widget child,
-    required double all,
-    required Color color,
-  }) =>
-      ClipOval(
-        child: Container(
-          padding: EdgeInsets.all(all),
-          color: color,
-          child: child,
         ),
       );
 }

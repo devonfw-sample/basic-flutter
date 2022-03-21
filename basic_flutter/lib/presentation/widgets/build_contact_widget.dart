@@ -17,7 +17,7 @@ class BuildContactWidget extends StatelessWidget {
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text("Contact",
+              child: Text('Contact',
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
             ),

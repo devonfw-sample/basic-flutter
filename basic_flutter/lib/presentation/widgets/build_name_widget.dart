@@ -10,7 +10,7 @@ class BuildNameWidget extends StatelessWidget {
     return SizedBox(
         width: double.infinity,
         height: MediaQuery.of(context).size.height *
-            0.18, // Abstand zwischen Detail und Contact
+            0.18, // space between details and contact
         child: Column(
           children: [
             Text(
