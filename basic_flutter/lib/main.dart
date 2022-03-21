@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   showSnackBar(context, dummyemployee, index) {
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('$dummyemployee deleted'),
         action: SnackBarAction(
@@ -131,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 final theme =
                     isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
-                final switcher = ThemeSwitcher.of(context)!;
+                final switcher = ThemeSwitcher.of(context);
                 switcher.changeTheme(theme: theme);
               },
             ),
