@@ -1,31 +1,21 @@
-import 'package:basic_flutter/presentation/screens/employee_dialog.dart';
-
-import '/presentation/screens/employees_list_screen.dart';
 import 'package:flutter/material.dart';
-import './data/routes.dart';
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import '../themes.dart';
 
-import '/presentation/screens/employees_list_screen.dart';
-import './data/routes.dart';
-import '/presentation/screens/employee_dialog.dart';
-
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, this.onClicked}) : super(key: key);
+  final VoidCallback? onClicked;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       title: "Employee App",
       home: const MyHomePage(),
-      routes: {
-        Routes.employeeListScreenRouteName: (context) =>
-            const EmployeesListScreen(),
-        Routes.employeeDialogRouteName: (context) => const EmployeeDialog(),
-      },
       theme: ThemeData(
         primaryColor: Colors.blue.shade900,
         splashColor: Colors.blue,
@@ -49,26 +39,106 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late List<String> dummyemployees;
+
+  @override
+  void initState() {
+    super.initState();
+    dummyemployees = [];
+    addDummyEmployees();
+  }
+
+  addDummyEmployees() {
+    dummyemployees.add("Employee 1");
+    dummyemployees.add("Employee 2");
+    dummyemployees.add("Employee 3");
+  }
+
+  removeDummyEmployee(index) {
+    setState(() {
+      dummyemployees.removeAt(index);
+    });
+  }
+
+  Widget swipeDeleteButton() {
+    return Container(
+      alignment: Alignment.centerRight,
+      padding: const EdgeInsets.only(right: 20.0),
+      color: Colors.red,
+      child: const Icon(Icons.delete, color: Colors.white),
+    );
+  }
+
+  undoDelete(index, dummyemployee) {
+    setState(() {
+      dummyemployees.insert(index, dummyemployee);
+    });
+  }
+
+  showSnackBar(context, dummyemployee, index) {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text('$dummyemployee deleted'),
+        action: SnackBarAction(
+            label: "undo delete",
+            onPressed: () {
+              undoDelete(index, dummyemployee);
+            }),
+      ),
+    );
+  }
+
+  Widget list() {
+    return ListView.builder(
+      padding: const EdgeInsets.all(20.0),
+      itemCount: dummyemployees.length,
+      itemBuilder: (BuildContext context, int index) {
+        return row(context, index);
+      },
+    );
+  }
+
+  Widget row(context, index) {
+    return Dismissible(
+      key: Key(dummyemployees[index]),
+      onDismissed: (direction) {
+        var dummyemployee = dummyemployees[index];
+        showSnackBar(context, dummyemployee, index);
+        removeDummyEmployee(index);
+      },
+      background: swipeDeleteButton(),
+      child: Card(
+        child: ListTile(
+          title: Text(dummyemployees[index]),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final icon = isDarkMode ? Icons.light_mode : Icons.dark_mode;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Employee App'),
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.employeeListScreenRouteName);
-          },
-          child: const Text('Get Employees List'),
-          style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(Theme.of(context).primaryColor),
+        actions: [
+          ThemeSwitcher(
+            builder: (context) => IconButton(
+              icon: Icon(icon),
+              onPressed: () {
+                final theme =
+                    isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
+                final switcher = ThemeSwitcher.of(context)!;
+                switcher.changeTheme(theme: theme);
+              },
+            ),
           ),
-        ),
+        ],
       ),
+      body: list(),
     );
   }
 }
