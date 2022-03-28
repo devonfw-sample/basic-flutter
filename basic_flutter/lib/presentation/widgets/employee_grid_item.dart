@@ -16,6 +16,7 @@ class EmployeeGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
       onTap: () => _switchToEmployeePage(context),
       child: GridTile(
@@ -26,5 +27,6 @@ class EmployeeGridItem extends StatelessWidget {
             overflow: TextOverflow.clip,
           )),
     );
+
   }
 }
