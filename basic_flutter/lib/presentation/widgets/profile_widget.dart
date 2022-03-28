@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
   final bool isEdit;
@@ -30,8 +31,10 @@ class ProfileWidget extends StatelessWidget {
               ),
             ),
           ),
+
         ],
       ),
     );
   }
+
 }

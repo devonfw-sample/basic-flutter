@@ -4,12 +4,12 @@ import '../../data/employee.dart';
 import '../../data/routes.dart';
 
 class ListItem extends StatelessWidget {
-
-  const ListItem({Key? key, required this.employee, required this.deleteEntry});
-
+  const ListItem({Key? key, required this.employee, required this.deleteEntry})
+      : super(key: key);
 
   void _switchToEmployeePage(BuildContext context) {
-    Navigator.pushNamed(context, Routes.employeeDialogRouteName);
+    Navigator.pushNamed(context, Routes.employeeDialogRouteName,
+        arguments: employee);
   }
 
   @override
@@ -37,13 +37,15 @@ class ListItem extends StatelessWidget {
                 softWrap: true,
               ),
             ),
-            trailing: TextButton.icon(
-                onPressed: () => deleteEntry,
-                icon: const Icon(Icons.delete_forever),
-                label: const Text('Delete'),
-                style: TextButton.styleFrom(
-                    primary: Theme.of(context).errorColor)),
           ),
-        ));
+          trailing: TextButton.icon(
+              onPressed: () => deleteEntry,
+              icon: const Icon(Icons.delete_forever),
+              label: const Text('Delete'),
+              style:
+                  TextButton.styleFrom(primary: Theme.of(context).errorColor)),
+        ),
+      ),
+    );
   }
 }

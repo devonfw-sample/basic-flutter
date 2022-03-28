@@ -1,53 +1,46 @@
 class Employee {
-  static const Employee employee = Employee(
-    imagePath: 'assets/image.png',
-    name: '',
-    surename: '',
-    employeeId: '',
-    email: '',
-  );
 
-  final String imagePath;
-  final String name;
-  final String surename;
-  final String employeeId;
-  final String email;
-
-  const Employee({
-    required this.imagePath,
+  Employee({
+    required this.surname,
     required this.name,
-    required this.surename,
-    required this.employeeId,
+    required this.id,
     required this.email,
+    required this.employeeId,
   });
 
+  String surname;
+  String name;
+  int id;
+  String email;
+  String employeeId;
+
+  static Employee fromJson(Map<String, dynamic> json) => Employee(
+        surname: json["surname"],
+        name: json["name"],
+        id: json["id"],
+        email: json["email"],
+        employeeId: json["employeeId"],
+      );
   Employee copy({
-    String? imagePath,
+    int? id,
     String? name,
-    String? surename,
-    String? employeeId,
+    String? surname,
     String? email,
   }) =>
       Employee(
-          imagePath: imagePath ?? this.imagePath,
-          name: name ?? this.name,
-          surename: surename ?? this.surename,
-          employeeId: employeeId ?? this.employeeId,
-          email: email ?? this.email);
-
-  static Employee fromJson(Map<String, dynamic> json) => Employee(
-        imagePath: json['imagePath'],
-        name: json['Name'],
-        surename: json['Surename'],
-        employeeId: json['Employee ID'],
-        email: json['Email address'],
+        id: id ?? this.id,
+        name: name ?? this.name,
+        surname: surname ?? this.surname,
+        email: email ?? this.email,
+        employeeId: employeeId,
       );
 
   Map<String, dynamic> toJson() => {
-        'imagePath': imagePath,
-        'Name': name,
-        'Surename': surename,
-        'Employee ID': employeeId,
-        'Email address': email,
+        "surname": surname,
+        "name": name,
+        "id": id,
+        "email": email,
+        "employeeId": employeeId,
+
       };
 }

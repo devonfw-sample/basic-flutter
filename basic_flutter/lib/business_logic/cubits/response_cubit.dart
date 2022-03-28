@@ -5,31 +5,32 @@ import '/business_logic/cubits/response_state.dart';
 import '../../data/employee.dart';
 import '../../data/endpoints.dart';
 
+import '../../data/routes.dart';
+
 class ResponseCubit extends Cubit<ResponseState> {
-  late List<Employee> employeeList;
-  final DataProvider dataProvider;
-  late int currentListIndex;
+  List<Employee> employeeList = []; 
+  final DataProvider dataProvider = DataProvider();
+  int currentListIndex = 0; 
   bool isDarkMode;
   bool isGridView;
-  late bool isDeleted;
-  ResponseCubit(
-      this.dataProvider, this.employeeList, this.isDarkMode, this.isGridView)
+  bool isDeleted = false;
+  ResponseCubit(this.employeeList, this.isDarkMode, this.isGridView)
       : super(ResponseState(DataLoadingStates.dataLoading, employeeList,
-            isDarkMode, isGridView)) {
-    getStateData();
-  }
+            isDarkMode, isGridView));
 
-  Future<void> getStateData() async {
+
+  Future<void> getNewStateData() async {
     try {
       employeeList = await dataProvider
           .getEmployeesList(Endpoints.searchEmployeeListEndpoint);
 
-      currentListIndex = employeeList.length;
-      if (currentListIndex != 0) {
+
+      if (employeeList.isNotEmpty) {
+
         emit(ResponseState(DataLoadingStates.dataLoaded, employeeList,
             isDarkMode, isGridView));
-      } else {
-        emit(ResponseState(DataLoadingStates.loadingFailed, employeeList,
+      } else if (dataProvider.noData) {
+        emit(ResponseState(DataLoadingStates.noDataAvailable, employeeList,
             isDarkMode, isGridView));
       }
     } catch (error) {
@@ -51,14 +52,13 @@ class ResponseCubit extends Cubit<ResponseState> {
 
   void deleteEmployeeEntry(List<Employee> employeeList, int index) async {
     if (_detectListUpdate()) {
-      await dataProvider.deleteEmployee(
-          index.toString(), Endpoints.deleteEmployeeEndpoint);
-      isDeleted = true;
-      dataProvider.response.removeWhere(
-        (employee) {
-          return employee.employeeId == dataProvider.response[index].employeeId;
-        },
-      );
+
+      getNewStateData();
+      isDeleted = await dataProvider.deleteEmployee(
+          index.toString(), Endpoints.deleteEmployeeEndpoint, index);
+      emit(ResponseState(
+          DataLoadingStates.dataChanged, employeeList, isDarkMode, isGridView));
+
     }
   }
 

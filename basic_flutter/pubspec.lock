@@ -16,12 +16,12 @@ packages:
     source: hosted
     version: "2.8.2"
   bloc:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.0.1"
+    version: "8.0.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -124,7 +124,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.0.0"
+    version: "8.0.1"
   flutter_blurhash:
     dependency: transitive
     description:
@@ -193,6 +193,12 @@ packages:
     version: "4.0.0"
   image_picker:
     dependency: "direct main"
+  image_picker_for_web:
+    dependency: transitive
+    description:
+      name: image_picker_for_web
+      url: "https://pub.dartlang.org"
+    source: hosted
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
@@ -365,7 +371,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.1"
+    version: "6.0.2"
   rxdart:
     dependency: transitive
     description:

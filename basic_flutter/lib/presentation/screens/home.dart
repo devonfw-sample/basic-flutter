@@ -1,15 +1,20 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:basic_flutter/presentation/screens/new_profile_page.dart';
 import '../widgets/build_edit_appbar.dart';
 import '../../business_logic/cubits/dialog_cubit.dart';
 import '../../business_logic/cubits/dialog_state.dart';
+import '../../themes.dart';
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<DialogCubit, DialogState>(
       builder: (context, state) {
         return Scaffold(

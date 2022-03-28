@@ -12,10 +12,12 @@ class EmployeeBlocBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final cubitInstance = context.read<ResponseCubit>();
     return RefreshIndicator(
-      onRefresh: () {
-        return cubitInstance.getStateData();
+      onRefresh: () async {
+        await cubitInstance.getNewStateData();
+
       },
       child: BlocBuilder<ResponseCubit, ResponseState>(
         builder: (context, state) {
@@ -37,8 +39,9 @@ class EmployeeBlocBuilder extends StatelessWidget {
               return ListView.builder(
                 itemBuilder: (ctx, index) {
                   return ListItem(
-                    index: index,
-                    employeeList: state.employeeList,
+
+                    employee: state.employeeList[index],
+
                     deleteEntry: () => cubitInstance.deleteEmployeeEntry(
                         state.employeeList, index),
                   );
@@ -62,9 +65,15 @@ class EmployeeBlocBuilder extends StatelessWidget {
                 ),
               ],
             ));
+
+          } else if (state.dataState == DataLoadingStates.noDataAvailable) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('No Data Available'),
+            ));
+            return const Center(child: Text('Please try again later'));
           } else {
             return RefreshIndicator(
-              onRefresh: () => cubitInstance.getStateData(),
+              onRefresh: () async => await cubitInstance.getNewStateData(),
               child: Center(
                 child: Text('Data loading failed',
                     style: Theme.of(context).textTheme.headline6),
