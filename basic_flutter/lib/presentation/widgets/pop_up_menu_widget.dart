@@ -20,6 +20,8 @@ class PopUpMenuWidget extends StatelessWidget {
       onSelected: (value) {
         if (value == 0) {
           context.read<ResponseCubit>().toggleGridView();
+        } else if (value == 1) {
+          context.read<ResponseCubit>().toggleDeleteMode();
         }
       },
       itemBuilder: (context) => [
@@ -36,7 +38,7 @@ class PopUpMenuWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Divider(height: 5),
+              Divider(height: 10, color: Colors.grey),
               Container(
                 margin: EdgeInsets.all(8),
                 child: Text(

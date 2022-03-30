@@ -40,7 +40,8 @@ class EmployeeBlocBuilder extends StatelessWidget {
                   return ListItem(
                     employee: state.employeeList[index],
                     deleteEntry: () => cubitInstance.deleteEmployeeEntry(
-                        state.employeeList, index),
+                        state.employeeList[index].id), // fix this
+                    index: index,
                   );
                 },
                 itemCount: state.employeeList.length,
@@ -64,7 +65,8 @@ class EmployeeBlocBuilder extends StatelessWidget {
             ));
           } else if (state.dataState == DataLoadingStates.noDataAvailable) {
             return Center(
-              child: Text('Please try again later'),
+              child: Text('No data available, please try again later',
+                  style: Theme.of(context).textTheme.headline6),
             );
           } else {
             return RefreshIndicator(

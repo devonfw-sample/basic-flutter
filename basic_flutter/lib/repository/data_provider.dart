@@ -72,15 +72,19 @@ class DataProvider {
     return isUpdated;
   }
 
-  Future<bool> deleteEmployee(String id, String endpoint, int index) async {
-    await http.delete(Uri.parse('$endpoint"\$"$id')).then((resp) {
-      if (resp.statusCode == 200) {
-        response.removeWhere((employee) {
-          return employee.id == response[index].id;
-        });
-        isDeleted = true;
-      }
-    });
+  Future<bool> deleteEmployee(String id, String endpoint) async {
+    try {
+      await http.delete(Uri.parse(endpoint + id),
+          headers: {"Content-Type": "application/json"}).then(
+        (resp) {
+          if (resp.statusCode == 200) {
+            isDeleted = true;
+          }
+        },
+      );
+    } catch (error) {
+      print(error);
+    }
     return isDeleted;
   }
 }

@@ -7,11 +7,13 @@ import '../../data/endpoints.dart';
 
 class ResponseCubit extends Cubit<ResponseState> {
   List<Employee> employeeList = [];
+  List<Employee> employeeListToDelete = [];
   final DataProvider dataProvider = DataProvider();
   int currentListIndex = 0;
   bool isDarkMode;
   bool isGridView;
   bool isDeleted = false;
+  bool deleteMode = false;
   ResponseCubit(this.employeeList, this.isDarkMode, this.isGridView)
       : super(ResponseState(DataLoadingStates.dataLoading, employeeList,
             isDarkMode, isGridView));
@@ -34,21 +36,32 @@ class ResponseCubit extends Cubit<ResponseState> {
     }
   }
 
-  bool _detectListUpdate() {
-    if (currentListIndex != state.employeeList.length) {
-      return true;
-    } else {
-      return false;
-    }
+  void addEmployeeToDelete(Employee employee) {
+    employeeListToDelete.add(employee);
   }
 
-  void deleteEmployeeEntry(List<Employee> employeeList, int index) async {
-    if (_detectListUpdate()) {
+  Future<void> deleteEmployeeList() async {
+    employeeListToDelete.map(
+      (employee) async {
+        int index = 0;
+        for (var currentEmployee in employeeList) {
+          if (currentEmployee.id == employee.id) {
+            index = employeeList.indexOf(currentEmployee);
+            break;
+          }
+        }
+        await dataProvider.deleteEmployee(
+            employee.id.toString(), Endpoints.deleteEmployeeEndpoint);
+      },
+    );
+    await getNewStateData();
+  }
+
+  void deleteEmployeeEntry(int id) async {
+    isDeleted = await dataProvider.deleteEmployee(
+        id.toString(), Endpoints.deleteEmployeeEndpoint);
+    if (isDeleted) {
       getNewStateData();
-      isDeleted = await dataProvider.deleteEmployee(
-          index.toString(), Endpoints.deleteEmployeeEndpoint, index);
-      emit(ResponseState(
-          DataLoadingStates.dataChanged, employeeList, isDarkMode, isGridView));
     }
   }
 
@@ -66,5 +79,9 @@ class ResponseCubit extends Cubit<ResponseState> {
 
   void toggleIsDeleted() {
     isDeleted = !isDeleted;
+  }
+
+  void toggleDeleteMode() {
+    deleteMode = !deleteMode;
   }
 }

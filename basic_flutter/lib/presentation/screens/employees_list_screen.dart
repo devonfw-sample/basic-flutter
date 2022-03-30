@@ -7,14 +7,9 @@ import '../../business_logic/cubits/response_cubit.dart';
 import '../widgets/employee_bloc_builder.dart';
 import '../../business_logic/cubits/response_state.dart';
 
-class EmployeesListScreen extends StatefulWidget {
+class EmployeesListScreen extends StatelessWidget {
   const EmployeesListScreen({Key? key}) : super(key: key);
 
-  @override
-  State<EmployeesListScreen> createState() => _EmployeesListScreenState();
-}
-
-class _EmployeesListScreenState extends State<EmployeesListScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ResponseCubit, ResponseState>(builder: (context, state) {
