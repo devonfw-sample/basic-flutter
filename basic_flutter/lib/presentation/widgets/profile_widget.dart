@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../presentation/screens/edit_profile_page.dart';
+import 'build_circle.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
@@ -36,5 +38,4 @@ class ProfileWidget extends StatelessWidget {
       ),
     );
   }
-
 }

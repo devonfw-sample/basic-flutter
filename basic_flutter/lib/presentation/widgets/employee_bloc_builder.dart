@@ -12,7 +12,6 @@ class EmployeeBlocBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final cubitInstance = context.read<ResponseCubit>();
     return RefreshIndicator(
       onRefresh: () async {
@@ -67,10 +66,9 @@ class EmployeeBlocBuilder extends StatelessWidget {
             ));
 
           } else if (state.dataState == DataLoadingStates.noDataAvailable) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('No Data Available'),
-            ));
-            return const Center(child: Text('Please try again later'));
+            return Center(
+              child: Text('Please try again later'),
+            );
           } else {
             return RefreshIndicator(
               onRefresh: () async => await cubitInstance.getNewStateData(),

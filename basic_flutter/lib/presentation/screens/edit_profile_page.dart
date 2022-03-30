@@ -10,6 +10,8 @@ import '../../data/employee.dart';
 import '../../business_logic/cubits/response_cubit.dart';
 import '../../business_logic/cubits/response_state.dart';
 import '../widgets/name_textfield.dart';
+import '../widgets/edit_app_bar.dart';
+import '../widgets/email_text_field.dart';
 
 class EditProfilePage extends StatelessWidget {
   EditProfilePage({Key? key}) : super(key: key);
@@ -30,26 +32,24 @@ class EditProfilePage extends StatelessWidget {
   void _submitData(BuildContext context, String enteredText, String label,
       Employee employeeUnderEdit) {
     final String detectedLabel = detectLabel(label);
-    if (detectedLabel == 'First Name') {
+    if (detectedLabel == 'name') {
       if (checkName(enteredText)) employeeUnderEdit.name = enteredText;
-    } else if (detectedLabel == 'Last Name') {
+    } else if (detectedLabel == 'surname') {
       if (checkName(enteredText)) employeeUnderEdit.surname = enteredText;
-    } else if (detectedLabel == 'ID ') {
-      if (checkId(enteredText)) employeeUnderEdit.employeeId = enteredText;
+    } else if (detectedLabel == 'employeId') {
+      if (isNumeric(enteredText)) employeeUnderEdit.employeeId = enteredText;
     }
   }
 
   bool checkName(String name) {
-    return double.parse(name) == null;
+    return double.tryParse(name) == null;
   }
 
-  bool checkId(String employeeId) {
-    final double parsedNumber = double.parse(employeeId);
-    if (parsedNumber == null) {
+  bool isNumeric(String s) {
+    if (s == null) {
       return false;
-    } else {
-      return true;
     }
+    return double.tryParse(s) != null;
   }
 
   Function executeLabelFunction(
@@ -70,24 +70,24 @@ class EditProfilePage extends StatelessWidget {
     return SnackBar(content: Text("Please enter a valid $text"));
   }
 
+  Employee emptyEmployee = Employee(
+      surname: 'surname', name: 'name', id: 1, email: 'email', employeeId: '');
+
   @override
   Widget build(BuildContext context) {
     final cubitInstance = context.read<EmployeeCubit>();
     Employee receivedEmployeeInstance =
         ModalRoute.of(context)!.settings.arguments as Employee;
-    Employee emptyEmployee = Employee(
-        surname: 'surname',
-        name: 'name',
-        id: 1,
-        email: 'email',
-        employeeId: '');
 
     return BlocBuilder<ResponseCubit, ResponseState>(
       builder: (context, responseState) {
         return BlocBuilder<EmployeeCubit, EmployeeState>(
           builder: (context, state) {
             return Scaffold(
-              appBar: buildEditAppBar(context),
+              appBar: const PreferredSize(
+                child: EditAppBar(),
+                preferredSize: Size.fromHeight(50.0),
+              ),
               body: SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.symmetric(
@@ -98,42 +98,31 @@ class EditProfilePage extends StatelessWidget {
                       height: MediaQuery.of(context).size.height,
                       child: ListView(
                         children: [
-                          // SizedBox(
-                          //     width: double.infinity,
-                          //     height: MediaQuery.of(context).size.height * 0.28,
-                          //     child: ProfileWidget(
-                          //       imagePath: state.employee.imagePath,
-                          //       isEdit: true,
-                          //       onClicked: () {},
-                          //       sentWidget: Positioned(
-                          //         bottom: 0,
-                          //         right: 4,
-                          //         child: EditIcon(color: Colors.blue.shade900),
-                          //       ),
-                          //     )),
                           const SizedBox(height: 10),
                           NameTextField(
-                            label: 'ID',
+                            label: 'employeeId',
                             controller: idController,
                             employeeUnderEdit: receivedEmployeeInstance,
                             submitData: _submitData,
                           ),
                           const SizedBox(height: 20),
                           NameTextField(
-                            label: 'First Name',
+                            label: 'name',
                             controller: nameController,
                             submitData: _submitData,
                             employeeUnderEdit: receivedEmployeeInstance,
                           ),
                           const SizedBox(height: 20),
                           NameTextField(
-                            label: 'Last Name',
+                            label: 'surname',
                             controller: lastNameController,
                             submitData: _submitData,
                             employeeUnderEdit: receivedEmployeeInstance,
                           ),
                           const SizedBox(height: 20),
-                          emailTextField(context),
+                          EmailTextField(
+                              controller: emailController,
+                              submitEmailData: _submitEmailData),
                           const SizedBox(height: 40),
                           ButtonWidget(
                               text: 'Save',
@@ -142,9 +131,11 @@ class EditProfilePage extends StatelessWidget {
                                     emptyEmployee,
                                     receivedEmployeeInstance,
                                     responseState.employeeList);
+                                context.read<ResponseCubit>().getNewStateData();
                                 Navigator.of(context).pop();
                               }),
-                          const SizedBox(height: 150),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.3),
                         ],
                       ),
                     ),
@@ -155,54 +146,6 @@ class EditProfilePage extends StatelessWidget {
           },
         );
       },
-    );
-  }
-
-  Column emailTextField(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Email',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          onSubmitted: (enteredText) => _submitEmailData(context, enteredText),
-          controller: emailController,
-          decoration: InputDecoration(
-            hintText: 'Email',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Column nameTextField(
-      BuildContext context, String label, Employee employeeUnderEdit) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          onSubmitted: (enteredText) =>
-              _submitData(context, enteredText, label, employeeUnderEdit),
-          controller: nameController,
-          decoration: InputDecoration(
-            hintText: '',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -218,31 +161,4 @@ class EditProfilePage extends StatelessWidget {
         return 'nothing';
     }
   }
-}
-
-AppBar buildEditAppBar(BuildContext context) {
-  final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-  final icon = isDarkMode ? Icons.light_mode : Icons.dark_mode;
-
-  return AppBar(
-    backgroundColor: Colors.blue.shade900,
-    title: const Text('Employee dialog'),
-    centerTitle: true,
-    leading: const BackButton(
-      color: Colors.white,
-    ),
-    elevation: 0,
-    actions: [
-      ThemeSwitcher(
-        builder: (context) => IconButton(
-          icon: Icon(icon),
-          onPressed: () {
-            final theme = isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
-            final switcher = ThemeSwitcher.of(context)!;
-            switcher.changeTheme(theme: theme);
-          },
-        ),
-      ),
-    ],
-  );
 }

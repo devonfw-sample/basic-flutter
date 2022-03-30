@@ -5,12 +5,10 @@ import '/business_logic/cubits/response_state.dart';
 import '../../data/employee.dart';
 import '../../data/endpoints.dart';
 
-import '../../data/routes.dart';
-
 class ResponseCubit extends Cubit<ResponseState> {
-  List<Employee> employeeList = []; 
+  List<Employee> employeeList = [];
   final DataProvider dataProvider = DataProvider();
-  int currentListIndex = 0; 
+  int currentListIndex = 0;
   bool isDarkMode;
   bool isGridView;
   bool isDeleted = false;
