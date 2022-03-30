@@ -178,7 +178,7 @@ packages:
     source: sdk
     version: "0.0.0"
   http:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -193,6 +193,12 @@ packages:
     version: "4.0.0"
   image_picker:
     dependency: "direct main"
+  image_picker_for_web:
+    dependency: transitive
+    description:
+      name: image_picker_for_web
+      url: "https://pub.dartlang.org"
+    source: hosted
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
@@ -261,6 +267,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  path_drawing:
+    dependency: transitive
+    description:
+      name: path_drawing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.1+1"
+  path_parsing:
+    dependency: transitive
+    description:
+      name: path_parsing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   path_provider:
     dependency: "direct main"
     description:
@@ -426,6 +446,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
+
     version: "2.0.2"
   sqflite_common:
     dependency: transitive
@@ -511,6 +532,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  xml:
+    dependency: transitive
+    description:
+      name: xml
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.3.1"
 sdks:
   dart: ">=2.15.0 <3.0.0"
   flutter: ">=2.5.0"

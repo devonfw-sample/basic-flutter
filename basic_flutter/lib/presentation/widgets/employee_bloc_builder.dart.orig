@@ -14,9 +14,8 @@ class EmployeeBlocBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubitInstance = context.read<ResponseCubit>();
     return RefreshIndicator(
-      onRefresh: () async {
-        await cubitInstance.getNewStateData();
-
+      onRefresh: () {
+        return cubitInstance.getStateData();
       },
       child: BlocBuilder<ResponseCubit, ResponseState>(
         builder: (context, state) {
@@ -38,9 +37,8 @@ class EmployeeBlocBuilder extends StatelessWidget {
               return ListView.builder(
                 itemBuilder: (ctx, index) {
                   return ListItem(
-
-                    employee: state.employeeList[index],
-
+                    index: index,
+                    employeeList: state.employeeList,
                     deleteEntry: () => cubitInstance.deleteEmployeeEntry(
                         state.employeeList, index),
                   );
@@ -64,14 +62,9 @@ class EmployeeBlocBuilder extends StatelessWidget {
                 ),
               ],
             ));
-
-          } else if (state.dataState == DataLoadingStates.noDataAvailable) {
-            return Center(
-              child: Text('Please try again later'),
-            );
           } else {
             return RefreshIndicator(
-              onRefresh: () async => await cubitInstance.getNewStateData(),
+              onRefresh: () => cubitInstance.getStateData(),
               child: Center(
                 child: Text('Data loading failed',
                     style: Theme.of(context).textTheme.headline6),

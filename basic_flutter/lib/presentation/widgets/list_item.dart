@@ -7,6 +7,7 @@ class ListItem extends StatelessWidget {
   const ListItem({Key? key, required this.employee, required this.deleteEntry})
       : super(key: key);
 
+
   final Employee employee;
   final VoidCallback deleteEntry;
 
