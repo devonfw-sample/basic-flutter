@@ -24,24 +24,4 @@ class ProfileWidget extends StatelessWidget {
       ),
     );
   }
-
-  Widget buildEditIcon(Color color, BuildContext context) => BuildCircle(
-        color: Colors.white,
-        all: 3,
-        child: BuildCircle(
-          color: color,
-          all: 10,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => EditProfilePage()));
-            },
-            child: Icon(
-              isEdit ? Icons.add_a_photo : Icons.edit,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-        ),
-      );
 }

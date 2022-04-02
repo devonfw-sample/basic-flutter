@@ -38,11 +38,7 @@ class MyApp extends StatelessWidget {
           create: (context) => EmployeeCubit(employeeInitializer),
         ),
         BlocProvider(
-          create: (context) => ResponseCubit(
-            employeeList,
-            false,
-            false,
-          ),
+          create: (context) => ResponseCubit(employeeList, false, false, []),
         ),
       ],
       child: BlocBuilder<ResponseCubit, ResponseState>(
@@ -66,12 +62,14 @@ class MyApp extends StatelessWidget {
                 cardColor: Colors.white,
                 canvasColor: state.isDarkMode ? Colors.black87 : Colors.white,
                 textTheme: ThemeData.light().textTheme.copyWith(
-                      headline6: TextStyle(
-                          fontFamily: 'Raleway-Bold',
-                          fontSize: 20,
-                          color:
-                              state.isDarkMode ? Colors.white : Colors.black),
-                    ),
+                    headline6: TextStyle(
+                        fontFamily: 'Raleway-Bold',
+                        fontSize: 20,
+                        color: state.isDarkMode ? Colors.white : Colors.black),
+                    headline5: TextStyle(
+                        fontFamily: 'Raleway-Bold',
+                        fontSize: 14,
+                        color: state.isDarkMode ? Colors.white : Colors.black)),
               ),
             ),
           ),

@@ -13,25 +13,41 @@ class EmployeesListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ResponseCubit, ResponseState>(builder: (context, state) {
-      return Scaffold(
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.white),
-          title: const Text('Employees List',
-              style: TextStyle(color: Colors.white)),
-          centerTitle: true,
-          backgroundColor: Theme.of(context).primaryColor,
-          actions: [
-            const DarkModeButton(),
-            Theme(
-                data: Theme.of(context).copyWith(
-                    iconTheme: const IconThemeData(color: Colors.white)),
-                child: PopUpMenuWidget(
-                    isDarkMode: state.isDarkMode,
-                    isGridView: state.isGridView)),
-          ],
+      return GestureDetector(
+        onTap: () {
+          if (context.read<ResponseCubit>().deleteMode) {
+            context.read<ResponseCubit>().toggleDeleteMode();
+          }
+        },
+        child: Scaffold(
+          floatingActionButton: context.read<ResponseCubit>().deleteMode
+              ? FloatingActionButton(
+                  foregroundColor: Colors.white,
+                  child: Icon(Icons.delete_forever),
+                  backgroundColor: Theme.of(context).errorColor,
+                  onPressed: () async =>
+                      await context.read<ResponseCubit>().deleteEmployeeList(),
+                )
+              : null,
+          appBar: AppBar(
+            iconTheme: const IconThemeData(color: Colors.white),
+            title: const Text('Employees List',
+                style: TextStyle(color: Colors.white)),
+            centerTitle: true,
+            backgroundColor: Theme.of(context).primaryColor,
+            actions: [
+              const DarkModeButton(),
+              Theme(
+                  data: Theme.of(context).copyWith(
+                      iconTheme: const IconThemeData(color: Colors.white)),
+                  child: PopUpMenuWidget(
+                      isDarkMode: state.isDarkMode,
+                      isGridView: state.isGridView)),
+            ],
+          ),
+          backgroundColor: Theme.of(context).canvasColor,
+          body: const EmployeeBlocBuilder(),
         ),
-        backgroundColor: Theme.of(context).canvasColor,
-        body: const EmployeeBlocBuilder(),
       );
     });
   }

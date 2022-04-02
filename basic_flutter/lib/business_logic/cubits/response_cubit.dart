@@ -14,9 +14,10 @@ class ResponseCubit extends Cubit<ResponseState> {
   bool isGridView;
   bool isDeleted = false;
   bool deleteMode = false;
-  ResponseCubit(this.employeeList, this.isDarkMode, this.isGridView)
+  ResponseCubit(this.employeeList, this.isDarkMode, this.isGridView,
+      this.employeeListToDelete)
       : super(ResponseState(DataLoadingStates.dataLoading, employeeList,
-            isDarkMode, isGridView));
+            isDarkMode, isGridView, employeeList));
 
   Future<void> getNewStateData() async {
     try {
@@ -25,14 +26,14 @@ class ResponseCubit extends Cubit<ResponseState> {
 
       if (employeeList.isNotEmpty) {
         emit(ResponseState(DataLoadingStates.dataLoaded, employeeList,
-            isDarkMode, isGridView));
+            isDarkMode, isGridView, employeeListToDelete));
       } else if (dataProvider.noData) {
         emit(ResponseState(DataLoadingStates.noDataAvailable, employeeList,
-            isDarkMode, isGridView));
+            isDarkMode, isGridView, employeeListToDelete));
       }
     } catch (error) {
       emit(ResponseState(DataLoadingStates.loadingError, employeeList,
-          isDarkMode, isGridView));
+          isDarkMode, isGridView, employeeListToDelete));
     }
   }
 
@@ -41,19 +42,12 @@ class ResponseCubit extends Cubit<ResponseState> {
   }
 
   Future<void> deleteEmployeeList() async {
-    employeeListToDelete.map(
-      (employee) async {
-        int index = 0;
-        for (var currentEmployee in employeeList) {
-          if (currentEmployee.id == employee.id) {
-            index = employeeList.indexOf(currentEmployee);
-            break;
-          }
-        }
-        await dataProvider.deleteEmployee(
-            employee.id.toString(), Endpoints.deleteEmployeeEndpoint);
-      },
-    );
+    for (Employee employee in employeeListToDelete) {
+      await dataProvider.deleteEmployee(
+          employee.id.toString(), Endpoints.deleteEmployeeEndpoint);
+    }
+
+    employeeListToDelete = [];
     await getNewStateData();
   }
 
@@ -67,14 +61,18 @@ class ResponseCubit extends Cubit<ResponseState> {
 
   void toggleDarkMode() {
     isDarkMode = !isDarkMode;
-    emit(ResponseState(
-        state.dataState, state.employeeList, isDarkMode, state.isGridView));
+    emit(
+      ResponseState(state.dataState, state.employeeList, isDarkMode,
+          state.isGridView, state.employeeListToDelete),
+    );
   }
 
   void toggleGridView() {
     isGridView = !isGridView;
-    emit(ResponseState(
-        state.dataState, state.employeeList, state.isDarkMode, isGridView));
+    emit(
+      ResponseState(state.dataState, state.employeeList, state.isDarkMode,
+          isGridView, state.employeeListToDelete),
+    );
   }
 
   void toggleIsDeleted() {
@@ -83,5 +81,12 @@ class ResponseCubit extends Cubit<ResponseState> {
 
   void toggleDeleteMode() {
     deleteMode = !deleteMode;
+    emit(ResponseState(state.dataState, state.employeeList, state.isDarkMode,
+        state.isGridView, state.employeeListToDelete));
+  }
+
+  void declareStateChange() {
+    emit(ResponseState(state.dataState, state.employeeList, state.isDarkMode,
+        state.isGridView, state.employeeListToDelete));
   }
 }

@@ -1,3 +1,4 @@
+import 'package:basic_flutter/presentation/widgets/selected_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,12 +38,12 @@ class EmployeeBlocBuilder extends StatelessWidget {
             } else {
               return ListView.builder(
                 itemBuilder: (ctx, index) {
-                  return ListItem(
-                    employee: state.employeeList[index],
-                    deleteEntry: () => cubitInstance.deleteEmployeeEntry(
-                        state.employeeList[index].id), // fix this
-                    index: index,
-                  );
+                  return cubitInstance.deleteMode
+                      ? SelectedItem(employee: state.employeeList[index])
+                      : ListItem(
+                          employee: state.employeeList[index],
+                          index: index,
+                        );
                 },
                 itemCount: state.employeeList.length,
               );

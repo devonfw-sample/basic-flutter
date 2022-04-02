@@ -12,6 +12,8 @@ class PopUpMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
+      elevation: 10,
+      enableFeedback: true,
       color: Colors.white,
       icon: const Icon(
         Icons.more_vert,
@@ -22,33 +24,23 @@ class PopUpMenuWidget extends StatelessWidget {
           context.read<ResponseCubit>().toggleGridView();
         } else if (value == 1) {
           context.read<ResponseCubit>().toggleDeleteMode();
+        } else if (value == 2) {
+          context.read<ResponseCubit>().getNewStateData();
         }
       },
       itemBuilder: (context) => [
         PopupMenuItem(
           value: 0,
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.all(8),
-                child: Text(
-                  'Grid View',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              Divider(height: 10, color: Colors.grey),
-              Container(
-                margin: EdgeInsets.all(8),
-                child: Text(
-                  'Delete Items',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-            ],
-          ),
+          child: Text('Grid View'),
         ),
+        PopupMenuItem(
+          value: 1,
+          child: Text('Delete Multiple Items'),
+        ),
+        PopupMenuItem(
+          value: 2,
+          child: Text('Reload List'),
+        )
       ],
     );
   }

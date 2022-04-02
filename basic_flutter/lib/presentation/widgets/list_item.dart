@@ -4,18 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/employee.dart';
 import '../../data/routes.dart';
 import '../../business_logic/cubits/response_cubit.dart';
-import '../../business_logic/cubits/response_state.dart';
 
 class ListItem extends StatelessWidget {
-  const ListItem(
-      {Key? key,
-      required this.employee,
-      required this.deleteEntry,
-      required this.index})
+  const ListItem({Key? key, required this.employee, required this.index})
       : super(key: key);
 
   final Employee employee;
-  final VoidCallback deleteEntry;
   final int index;
 
   void _switchToEmployeePage(BuildContext context) {
@@ -52,7 +46,8 @@ class ListItem extends StatelessWidget {
                   ],
                 ));
       },
-      onDismissed: (_) => deleteEntry,
+      onDismissed: (_) => BlocProvider.of<ResponseCubit>(context)
+          .deleteEmployeeEntry(employee.id),
       background: Container(
         color: Theme.of(context).errorColor,
         child: const Icon(
@@ -66,6 +61,7 @@ class ListItem extends StatelessWidget {
         child: Card(
           elevation: 1,
           child: ListTile(
+            tileColor: Theme.of(context).canvasColor,
             title: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text('${employee.name} ${employee.surname}',
@@ -75,24 +71,12 @@ class ListItem extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 employee.email,
-                style: const TextStyle(
-                    fontFamily: 'Raleway-ExtraBold', fontSize: 16),
+                style: Theme.of(context).textTheme.headline5,
                 softWrap: true,
               ),
             ),
-            trailing: BlocConsumer<ResponseCubit, ResponseState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                return TextButton(
-                  onPressed: () async {
-                    context
-                        .read<ResponseCubit>()
-                        .deleteEmployeeEntry(employee.id);
-                  },
-                  child: Text('delete'),
-                );
-              },
-            ),
+            trailing: Text(employee.employeeId,
+                style: Theme.of(context).textTheme.headline5),
           ),
         ),
       ),

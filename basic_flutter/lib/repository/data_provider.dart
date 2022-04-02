@@ -58,8 +58,6 @@ class DataProvider {
         'email': newEmployee.email,
         'id': newEmployee.id
       });
-      // final uri = Uri.http(
-      //     updateEndpoint, newEmployee.id.toString(), queryParametersMap);
       final String endpoint = updateEndpoint + newEmployee.id.toString();
       await http.put(Uri.parse(endpoint),
           body: queryParametersMap,
