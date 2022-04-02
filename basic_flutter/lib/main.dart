@@ -1,3 +1,4 @@
+
 import 'package:basic_flutter/presentation/screens/employees_list_screen.dart';
 import 'business_logic/cubits/response_cubit.dart';
 import 'business_logic/cubits/response_state.dart';
@@ -14,12 +15,13 @@ import './presentation/screens/edit_profile_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   static const String title = 'Employee Profile';
+
+
   MyApp({Key? key}) : super(key: key);
   final List<Employee> employeeList = [];
   Employee employeeInitializer = Employee(
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ResponseCubit(employeeList, false, false, []),
+          BlocProvider(create: (BuildContext context) =>
+              DialogCubit(Employee.employee, employeeList),))
         ),
       ],
       child: BlocBuilder<ResponseCubit, ResponseState>(

@@ -19,12 +19,15 @@ class ResponseCubit extends Cubit<ResponseState> {
       : super(ResponseState(DataLoadingStates.dataLoading, employeeList,
             isDarkMode, isGridView, employeeList));
 
+
   Future<void> getNewStateData() async {
     try {
       employeeList = await dataProvider
           .getEmployeesList(Endpoints.searchEmployeeListEndpoint);
 
+
       if (employeeList.isNotEmpty) {
+
         emit(ResponseState(DataLoadingStates.dataLoaded, employeeList,
             isDarkMode, isGridView, employeeListToDelete));
       } else if (dataProvider.noData) {
@@ -44,7 +47,6 @@ class ResponseCubit extends Cubit<ResponseState> {
   Future<void> deleteEmployeeList() async {
     for (Employee employee in employeeListToDelete) {
       await dataProvider.deleteEmployee(
-          employee.id.toString(), Endpoints.deleteEmployeeEndpoint);
     }
 
     employeeListToDelete = [];
@@ -78,6 +80,7 @@ class ResponseCubit extends Cubit<ResponseState> {
   void toggleIsDeleted() {
     isDeleted = !isDeleted;
   }
+
 
   void toggleDeleteMode() {
     deleteMode = !deleteMode;
