@@ -15,11 +15,11 @@ class BuildNameWidget extends StatelessWidget {
           children: [
             Text(
               employee.name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: Theme.of(context).textTheme.headline6,
             ),
             Text(
               employee.surname,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: Theme.of(context).textTheme.headline6,
             ),
             const SizedBox(height: 5),
           ],

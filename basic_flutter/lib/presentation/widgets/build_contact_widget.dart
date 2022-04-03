@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/employee.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../business_logic/cubits/response_cubit.dart';
 
 class BuildContactWidget extends StatelessWidget {
   const BuildContactWidget({Key? key, required this.employee})
@@ -15,19 +17,28 @@ class BuildContactWidget extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.3,
         child: ListView(
           children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Text('Contact',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                  style: Theme.of(context).textTheme.headline5,
+                  textAlign: TextAlign.left),
             ),
             ListTile(
-              leading: const Icon(Icons.email),
-              title: Text(employee.email.toString()),
-            ),
+                leading: Icon(Icons.email,
+                    color: BlocProvider.of<ResponseCubit>(context).isDarkMode
+                        ? Colors.white
+                        : Colors.black),
+                title: Text(
+                  employee.email.toString(),
+                  style: Theme.of(context).textTheme.headline5,
+                )),
             ListTile(
-              leading: const Icon(Icons.account_circle),
-              title: Text(employee.employeeId.toString()),
+              leading: Icon(Icons.account_circle,
+                  color: BlocProvider.of<ResponseCubit>(context).isDarkMode
+                      ? Colors.white
+                      : Colors.black),
+              title: Text(employee.employeeId.toString(),
+                  style: Theme.of(context).textTheme.headline5),
             ),
           ],
         ),

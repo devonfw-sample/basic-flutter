@@ -1,10 +1,10 @@
 import '../../data/employee.dart';
 
 class NewEmployeePreferences {
-  static const newEmployee = Employee(
-    imagePath: 'assets/image.png',
+  static Employee newEmployee = Employee(
+    id: 0,
     name: '',
-    surename: '',
+    surname: '',
     employeeId: '',
     email: '',
   );
