@@ -28,7 +28,7 @@ class PopUpMenuWidget extends StatelessWidget {
           context.read<ResponseCubit>().getNewStateData();
         }
       },
-      itemBuilder: (context) => [
+      itemBuilder: (context) => const [
         PopupMenuItem(
           value: 0,
           child: Text('Grid View'),

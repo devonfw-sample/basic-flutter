@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:http/http.dart';
 
 import '/../repository/data_provider.dart';
 import '/business_logic/cubits/response_state.dart';
@@ -17,7 +18,7 @@ class ResponseCubit extends Cubit<ResponseState> {
   ResponseCubit(this.employeeList, this.isDarkMode, this.isGridView,
       this.employeeListToDelete)
       : super(ResponseState(DataLoadingStates.dataLoading, employeeList,
-            isDarkMode, isGridView, employeeList));
+            isDarkMode, isGridView, employeeListToDelete));
 
   Future<void> getNewStateData() async {
     try {
@@ -37,42 +38,41 @@ class ResponseCubit extends Cubit<ResponseState> {
     }
   }
 
-  void addEmployeeToDelete(Employee employee) {
-    employeeListToDelete.add(employee);
+  bool _detectListUpdate() {
+    if (currentListIndex != state.employeeList.length) {
+      emit(ResponseState(DataLoadingStates.dataChanged, employeeList,
+          isDarkMode, isGridView, employeeListToDelete));
+      getNewStateData();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> deleteEmployeeEntry(int id) async {
+    isDeleted = await dataProvider.deleteEmployee(
+        id.toString(), Endpoints.deleteEmployeeEndpoint);
+    emit(ResponseState(DataLoadingStates.dataChanged, employeeList, isDarkMode,
+        isGridView, employeeListToDelete));
   }
 
   Future<void> deleteEmployeeList() async {
-    for (Employee employee in employeeListToDelete) {
-      await dataProvider.deleteEmployee(
-          employee.id.toString(), Endpoints.deleteEmployeeEndpoint);
+    for (int i = 0; i < employeeListToDelete.length; i++) {
+      await deleteEmployeeEntry(employeeListToDelete[i].id);
     }
-
-    employeeListToDelete = [];
     await getNewStateData();
-  }
-
-  void deleteEmployeeEntry(int id) async {
-    isDeleted = await dataProvider.deleteEmployee(
-        id.toString(), Endpoints.deleteEmployeeEndpoint);
-    if (isDeleted) {
-      getNewStateData();
-    }
   }
 
   void toggleDarkMode() {
     isDarkMode = !isDarkMode;
-    emit(
-      ResponseState(state.dataState, state.employeeList, isDarkMode,
-          state.isGridView, state.employeeListToDelete),
-    );
+    emit(ResponseState(state.dataState, state.employeeList, isDarkMode,
+        state.isGridView, employeeListToDelete));
   }
 
   void toggleGridView() {
     isGridView = !isGridView;
-    emit(
-      ResponseState(state.dataState, state.employeeList, state.isDarkMode,
-          isGridView, state.employeeListToDelete),
-    );
+    emit(ResponseState(state.dataState, state.employeeList, state.isDarkMode,
+        isGridView, employeeListToDelete));
   }
 
   void toggleIsDeleted() {
@@ -82,11 +82,17 @@ class ResponseCubit extends Cubit<ResponseState> {
   void toggleDeleteMode() {
     deleteMode = !deleteMode;
     emit(ResponseState(state.dataState, state.employeeList, state.isDarkMode,
-        state.isGridView, state.employeeListToDelete));
+        isGridView, employeeListToDelete));
+  }
+
+  void addEmployeeToDelete(Employee employee) {
+    employeeListToDelete.add(employee);
+    emit(ResponseState(state.dataState, state.employeeList, state.isDarkMode,
+        isGridView, employeeListToDelete));
   }
 
   void declareStateChange() {
     emit(ResponseState(state.dataState, state.employeeList, state.isDarkMode,
-        state.isGridView, state.employeeListToDelete));
+        isGridView, employeeListToDelete));
   }
 }

@@ -14,14 +14,15 @@ import './presentation/screens/edit_profile_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   static const String title = 'Employee Profile';
+
   MyApp({Key? key}) : super(key: key);
   final List<Employee> employeeList = [];
+
   Employee employeeInitializer = Employee(
     id: 1,
     name: '',
@@ -29,7 +30,6 @@ class MyApp extends StatelessWidget {
     email: '',
     employeeId: '',
   );
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -41,38 +41,44 @@ class MyApp extends StatelessWidget {
           create: (context) => ResponseCubit(employeeList, false, false, []),
         ),
       ],
-      child: BlocBuilder<ResponseCubit, ResponseState>(
-        builder: (context, state) => ThemeProvider(
-          child: Builder(
-            builder: (context) => MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: title,
-              routes: {
-                Routes.mainRouteName: (context) => const Homepage(),
-                Routes.employeeDialogRouteName: (context) =>
-                    const ProfilePage(),
-                Routes.editProfilePageRouteName: (context) => EditProfilePage(),
-                Routes.employeeListScreenRouteName: (context) =>
-                    const EmployeesListScreen()
-              },
-              darkTheme: ThemeData.dark(),
-              theme: ThemeData(
-                primaryColor: Colors.blue.shade900,
-                splashColor: Colors.blue,
-                cardColor: Colors.white,
-                canvasColor: state.isDarkMode ? Colors.black87 : Colors.white,
-                textTheme: ThemeData.light().textTheme.copyWith(
-                    headline6: TextStyle(
-                        fontFamily: 'Raleway-Bold',
-                        fontSize: 20,
-                        color: state.isDarkMode ? Colors.white : Colors.black),
-                    headline5: TextStyle(
-                        fontFamily: 'Raleway-Bold',
-                        fontSize: 14,
-                        color: state.isDarkMode ? Colors.white : Colors.black)),
+      child: ThemeProvider(
+        child: BlocBuilder<ResponseCubit, ResponseState>(
+          builder: (context, state) {
+            return Builder(
+              builder: (context) => MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: title,
+                routes: {
+                  Routes.mainRouteName: (context) => const Homepage(),
+                  Routes.employeeDialogRouteName: (context) =>
+                      const ProfilePage(),
+                  Routes.editProfilePageRouteName: (context) =>
+                      EditProfilePage(),
+                  Routes.employeeListScreenRouteName: (context) =>
+                      const EmployeesListScreen()
+                },
+                darkTheme: ThemeData.dark(),
+                theme: ThemeData(
+                  primaryColor: Colors.blue.shade900,
+                  splashColor: Colors.blue,
+                  cardColor: Colors.white,
+                  canvasColor: state.isDarkMode ? Colors.black87 : Colors.white,
+                  textTheme: ThemeData.light().textTheme.copyWith(
+                        headline5: TextStyle(
+                            fontFamily: 'Raleway-Bold',
+                            fontSize: 16,
+                            color:
+                                state.isDarkMode ? Colors.white : Colors.black),
+                        headline6: TextStyle(
+                            fontFamily: 'Raleway-Bold',
+                            fontSize: 20,
+                            color:
+                                state.isDarkMode ? Colors.white : Colors.black),
+                      ),
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );
@@ -88,12 +94,12 @@ class Homepage extends StatelessWidget {
     return BlocBuilder<ResponseCubit, ResponseState>(
       builder: (context, state) {
         return Scaffold(
-            appBar: AppBar(
-              title: const Text("text"),
-              backgroundColor: Colors.blue.shade900,
-            ),
-            body: Center(
-                child: TextButton(
+          appBar: AppBar(
+            title: const Text("text"),
+            backgroundColor: Colors.blue.shade900,
+          ),
+          body: Center(
+            child: TextButton(
               style:
                   TextButton.styleFrom(backgroundColor: Colors.blue.shade900),
               onPressed: () {
@@ -103,7 +109,9 @@ class Homepage extends StatelessWidget {
               },
               child: const Text("get next employee",
                   style: TextStyle(color: Colors.white)),
-            )));
+            ),
+          ),
+        );
       },
     );
   }
