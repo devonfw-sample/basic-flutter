@@ -1,4 +1,5 @@
 class Employee {
+
   Employee({
     required this.surname,
     required this.name,
@@ -41,5 +42,6 @@ class Employee {
         "id": id,
         "email": email,
         "employeeId": employeeId,
+
       };
 }
