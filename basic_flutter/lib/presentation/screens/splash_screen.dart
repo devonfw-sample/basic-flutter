@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
 import '../../dummy_page.dart';
+import '../../data/routes.dart';
+import '../../business_logic/cubits/response_cubit.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  static const mainRouteName = '/';
+  const MyHomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -14,14 +19,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<ResponseCubit>(context).getNewStateData();
     Timer(
       const Duration(seconds: 3),
       () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (_) => const DummyPage(),
-          ),
-        );
+        Navigator.of(context)
+            .pushReplacementNamed(Routes.employeeListScreenRouteName);
       },
     );
   }

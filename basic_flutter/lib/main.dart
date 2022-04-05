@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/screens/profile_page.dart';
 import 'business_logic/cubits/employee_cubit.dart';
 import 'business_logic/cubits/employee_state.dart';
+import 'presentation/screens/splash_screen.dart';
 import './data/employee.dart';
 import './data/routes.dart';
 import './presentation/screens/edit_profile_page.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 title: title,
                 routes: {
-                  Routes.mainRouteName: (context) => const Homepage(),
+                  Routes.mainRouteName: (context) => const MyHomePage(),
                   Routes.employeeDialogRouteName: (context) =>
                       const ProfilePage(),
                   Routes.editProfilePageRouteName: (context) =>

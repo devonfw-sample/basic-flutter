@@ -18,7 +18,9 @@ class ResponseCubit extends Cubit<ResponseState> {
   ResponseCubit(this.employeeList, this.isDarkMode, this.isGridView,
       this.employeeListToDelete)
       : super(ResponseState(DataLoadingStates.dataLoading, employeeList,
-            isDarkMode, isGridView, employeeListToDelete));
+            isDarkMode, isGridView, employeeListToDelete)) {
+    getNewStateData();
+  }
 
   Future<void> getNewStateData() async {
     try {
