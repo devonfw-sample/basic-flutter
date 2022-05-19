@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/routes.dart';
 import '../../themes.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../../data/employee.dart';
 import '../widgets/profile_widget.dart';
 import '../widgets/build_contact_widget.dart';
+import '../../business_logic/cubits/response_cubit.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -38,10 +40,7 @@ class ProfilePage extends StatelessWidget {
             builder: (context) => IconButton(
               icon: Icon(icon),
               onPressed: () {
-                final theme =
-                    isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
-                final switcher = ThemeSwitcher.of(context)!;
-                switcher.changeTheme(theme: theme);
+                BlocProvider.of<ResponseCubit>(context).toggleDarkMode();
               },
             ),
           ),
@@ -60,10 +59,7 @@ class ProfilePage extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.30,
                     child: ProfileWidget(
                       onClicked: () {},
-                      sentWidget: const SizedBox(
-                        width: 0.0,
-                        height: 0.0,
-                      ),
+                      imagePath: '',
                     ),
                   ),
                   BuildNameWidget(employee: employeeInstance),

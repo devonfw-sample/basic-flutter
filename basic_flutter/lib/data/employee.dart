@@ -1,5 +1,4 @@
 class Employee {
-
   Employee({
     required this.surname,
     required this.name,
@@ -13,6 +12,7 @@ class Employee {
   int id;
   String email;
   String employeeId;
+  bool isSelected = false;
 
   static Employee fromJson(Map<String, dynamic> json) => Employee(
         surname: json["surname"],
@@ -26,13 +26,14 @@ class Employee {
     String? name,
     String? surname,
     String? email,
+    String? employeeId,
   }) =>
       Employee(
         id: id ?? this.id,
         name: name ?? this.name,
         surname: surname ?? this.surname,
         email: email ?? this.email,
-        employeeId: employeeId,
+        employeeId: employeeId ?? this.employeeId,
       );
 
   Map<String, dynamic> toJson() => {
@@ -41,6 +42,5 @@ class Employee {
         "id": id,
         "email": email,
         "employeeId": employeeId,
-
       };
 }

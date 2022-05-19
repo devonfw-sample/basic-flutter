@@ -1,3 +1,4 @@
+import 'package:basic_flutter/presentation/widgets/selected_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/list_item.dart';
@@ -37,13 +38,12 @@ class EmployeeBlocBuilder extends StatelessWidget {
             } else {
               return ListView.builder(
                 itemBuilder: (ctx, index) {
-                  return ListItem(
-
-                    employee: state.employeeList[index],
-
-                    deleteEntry: () => cubitInstance.deleteEmployeeEntry(
-                        state.employeeList, index),
-                  );
+                  return cubitInstance.deleteMode
+                      ? SelectedItem(employee: state.employeeList[index])
+                      : ListItem(
+                          employee: state.employeeList[index],
+                          index: index,
+                        );
                 },
                 itemCount: state.employeeList.length,
               );
@@ -67,7 +67,8 @@ class EmployeeBlocBuilder extends StatelessWidget {
 
           } else if (state.dataState == DataLoadingStates.noDataAvailable) {
             return Center(
-              child: Text('Please try again later'),
+              child: Text('No data available, please try again later',
+                  style: Theme.of(context).textTheme.headline6),
             );
           } else {
             return RefreshIndicator(

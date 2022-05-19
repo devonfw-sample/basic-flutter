@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/button_widget.dart';
@@ -10,10 +9,10 @@ import '../../business_logic/cubits/dialog_state.dart';
 import '../../../../data/employee.dart';
 
 class NewProfilePage {
-  Employee employee = const Employee(
-    imagePath: 'assets/image.png',
+  Employee employee = Employee(
+    id: 0,
     name: '',
-    surename: '',
+    surname: '',
     employeeId: '',
     email: '',
   );
@@ -100,7 +99,7 @@ class NewProfilePage {
         () => employeeUnderEdit.copy(name: editingText);
         break;
       case 'Surename':
-        () => employeeUnderEdit.copy(surename: editingText);
+        () => employeeUnderEdit.copy(surname: editingText);
         break;
       case 'Employee Id':
         () => employeeUnderEdit.copy(employeeId: editingText);
@@ -110,5 +109,4 @@ class NewProfilePage {
         break;
     }
   }
-
 }
